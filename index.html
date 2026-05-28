@@ -546,8 +546,8 @@ const days = [
   },
   {
     n:2, date:"6/28", dow:"日", city:"nagoya", cityLabel:"名古屋",
-    title:"跨區移動：大須商店街與名古屋夜景",
-    focus:"新幹線、大須動漫藥妝、榮商圈地標",
+    title:"跨區移動：抵達名古屋・取車・大須探索",
+    focus:"新幹線移動、TOYOTA 取車、大須商店街、榮商圈夜景",
     hotel:"名古屋 Minn STATION Ai Nagoya",
     hotelAddress:"愛知縣名古屋市中村區名駅 4-27-1",
     hotelTel:null, hotelTelLink:null,
@@ -556,7 +556,11 @@ const days = [
       { time:"12:24", title:"🚄 NOZOMI 386 號｜新大阪 → 名古屋", note:"13:13 抵達名古屋・約 49 分鐘",
         mapUrl: gmap("新大阪駅"), addr:"大阪市淀川區西中島 5-16-1",
         guide: "shinkansen-d2" },
-      { time:"中午", title:"🧳 飯店寄放行李", note:"STATION Ai Hotel",
+      { time:"13:30", title:"🚶 名古屋站周邊閒逛", note:"下車後輕鬆散步・順路探索名駅地下街" },
+      { time:"14:00", title:"🚗 TOYOTA 租車・取車", note:"名古屋站前店・步行即達",
+        mapUrl: gmap("トヨタレンタカー 名古屋駅前店"), addr:"名古屋市中村區名駅 4-5-26 ユニモール桜ビル",
+        guide: "car-rental" },
+      { time:"14:30", title:"🏨 開車前往飯店 Check-in", note:"STATION Ai Hotel・停好車正式入住",
         mapUrl: gmap("Minn STATION Ai Nagoya"), addr:"名古屋市中村區名駅 4-27-1" },
       { time:"下午", title:"🛍 大須商店街", note:"炸雞、鯛魚燒、扭蛋、動漫周邊、藥妝採購",
         mapUrl: gmap("大須商店街 名古屋"), addr:"名古屋市中區大須 2–18–42" },
@@ -916,6 +920,105 @@ function guideData(key) {
           <div style="font-size:12px;color:#7a2929;line-height:1.8">❌ 一進去亂走亂拍照 → 下午熱門全排爆<br>❌ 下午才衝 The Dragon → 等待時間翻倍</div>
         </div>`
     },
+    "car-rental": {
+      icon: "🚗",
+      title: "TOYOTA 租車 預約資訊",
+      sub: "名古屋站前店・6/28 14:00 取車・7/1 14:00 還車",
+      color: "#b45309",
+      body: `
+        <!-- 標題卡 -->
+        <div style="background:linear-gradient(135deg,#b45309,#92400e);border-radius:12px;padding:14px 16px;margin-bottom:16px;color:#fff">
+          <div style="font-size:11px;opacity:0.8;letter-spacing:1px;margin-bottom:10px">TOYOTA 租車 · 預約確認</div>
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="font-size:34px">🚗</div>
+            <div>
+              <div style="font-size:15px;font-weight:700;line-height:1.3">Toyota 禁煙車（W1）</div>
+              <div style="font-size:12px;opacity:0.85;margin-top:2px">名古屋站前店</div>
+            </div>
+            <div style="margin-left:auto;text-align:right">
+              <div style="font-size:11px;opacity:0.8">費用合計</div>
+              <div style="font-size:16px;font-weight:700">¥45,100</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 預約號碼 -->
+        <div style="background:#FEF3C7;border-radius:10px;padding:11px 14px;border:0.5px solid #FCD34D;margin-bottom:14px;display:flex;align-items:center;gap:10px">
+          <span style="font-size:18px">🔑</span>
+          <div>
+            <div style="font-size:11px;color:#92400e;margin-bottom:2px">預約號碼</div>
+            <div style="font-size:16px;font-weight:700;color:#78350f;letter-spacing:1px">123102082</div>
+          </div>
+          <div style="margin-left:auto">
+            <div style="font-size:11px;color:#92400e;margin-bottom:2px">密碼</div>
+            <div style="font-size:14px;font-weight:700;color:#78350f">76457964</div>
+          </div>
+        </div>
+
+        <!-- 取還車資訊 -->
+        <div style="border:0.5px solid #e8e5da;border-radius:12px;overflow:hidden;margin-bottom:14px">
+          <div style="padding:12px 14px;border-bottom:0.5px solid #f0ede2">
+            <div style="display:flex;gap:8px">
+              <div style="flex:1">
+                <div style="font-size:11px;color:#888;margin-bottom:4px">🟢 取車</div>
+                <div style="font-size:13px;font-weight:600">2026/6/28（日）</div>
+                <div style="font-size:15px;font-weight:700;color:#b45309">14:00</div>
+              </div>
+              <div style="width:0.5px;background:#f0ede2"></div>
+              <div style="flex:1;padding-left:12px">
+                <div style="font-size:11px;color:#888;margin-bottom:4px">🔴 還車</div>
+                <div style="font-size:13px;font-weight:600">2026/7/1（三）</div>
+                <div style="font-size:15px;font-weight:700;color:#b45309">14:00</div>
+              </div>
+            </div>
+          </div>
+          <div style="padding:12px 14px;border-bottom:0.5px solid #f0ede2">
+            <div style="font-size:11px;color:#888;margin-bottom:4px">📍 取車 / 還車店舖</div>
+            <div style="font-size:13px;font-weight:600;margin-bottom:3px">TOYOTA 租車 名古屋站前店</div>
+            <div style="font-size:12px;color:#555;margin-bottom:6px">愛知県名古屋市中村区名駅 4-5-26 ユニモール桜ビル</div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <a href="https://www.google.com/maps/search/?api=1&query=%E3%83%88%E3%83%A8%E3%82%BF%E3%83%AC%E3%83%B3%E3%82%BF%E3%82%AB%E3%83%BC+%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85%E5%89%8D%E5%BA%97" target="_blank" class="map-link" style="margin-top:0">
+                <span>🗺</span><span>開啟地圖導航</span>
+              </a>
+              <a href="tel:0525410100" style="display:inline-flex;align-items:center;gap:4px;padding:4px 10px;background:#FEF3C7;color:#92400e;border-radius:14px;font-size:11.5px;font-weight:500;text-decoration:none;border:0.5px solid #FCD34D">
+                📞 052-541-0100
+              </a>
+            </div>
+          </div>
+          <div style="padding:12px 14px">
+            <div style="font-size:11px;color:#888;margin-bottom:4px">💳 付款方式</div>
+            <div style="font-size:13px;font-weight:600">現場付款（取車當天店鋪付款）</div>
+          </div>
+        </div>
+
+        <!-- 附加項目 -->
+        <div style="background:#f5f5f0;border-radius:10px;padding:12px 14px;margin-bottom:14px">
+          <div style="font-size:12px;font-weight:700;color:#444;margin-bottom:8px">📦 附加選項</div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:#555;margin-bottom:6px">
+            <span>🛡 免除支付 NOC（1台）</span>
+            <span style="font-weight:600">¥1,650</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:#555;margin-bottom:8px">
+            <span>💳 ETC 卡租用（1台）</span>
+            <span style="font-weight:600">¥550</span>
+          </div>
+          <div style="height:0.5px;background:#e0ddd2;margin-bottom:8px"></div>
+          <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:700;color:#1a1a1a">
+            <span>合計</span>
+            <span>¥45,100</span>
+          </div>
+        </div>
+
+        <!-- 提醒 -->
+        <div class="tc-tip" style="margin-bottom:8px">
+          <span class="tip-icon">🪪</span>
+          <span>取車時請帶：<strong>台灣駕照正本 + 日文譯本 + 護照</strong>，三件缺一不可！</span>
+        </div>
+        <div class="tc-tip">
+          <span class="tip-icon">💡</span>
+          <span>ETC 卡已含在選項內，上高速公路直接走 ETC 車道刷卡，省去排隊繳費時間。</span>
+        </div>`
+    },
     "airport-transfer-d9": {
       icon: "🚐",
       title: "送機專車 訂單資訊",
@@ -1167,6 +1270,7 @@ function renderGuide(key) {
     "#f0a500": { bg: "#FFF8E7", border: "#F5D87A", text: "#7a5800" },
     "#7c3aed": { bg: "#F3EEFF", border: "#D4BCFF", text: "#5b21b6" },
     "#0e7490": { bg: "#ECFEFF", border: "#A5F3FC", text: "#155e75" },
+    "#b45309": { bg: "#FEF3C7", border: "#FCD34D", text: "#78350f" },
     "#27ae60": { bg: "#E8F8EF", border: "#A8E6C0", text: "#1a5c38" }
   };
   const c = colorMap[g.color] || { bg: "#EBF4FF", border: "#C3DEFF", text: "#0C4E8C" };
