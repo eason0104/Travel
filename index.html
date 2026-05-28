@@ -197,6 +197,129 @@
 
   .hidden { display: none !important; }
 
+  /* ── Transport Guide Card ── */
+  .transport-card {
+    margin-top: 10px;
+    border-radius: 14px;
+    border: 1.5px solid #1a6fb5;
+    overflow: hidden;
+  }
+  .transport-card-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, #1a6fb5 0%, #0e4f87 100%);
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .transport-card-header-left { display: flex; align-items: center; gap: 10px; }
+  .transport-card-header .tc-icon {
+    font-size: 20px; line-height: 1;
+  }
+  .transport-card-header .tc-title {
+    color: #fff; font-size: 14px; font-weight: 600; line-height: 1.3;
+  }
+  .transport-card-header .tc-sub {
+    color: rgba(255,255,255,0.8); font-size: 11px; margin-top: 2px;
+  }
+  .transport-card-header .tc-chevron {
+    color: #fff; font-size: 13px;
+    transition: transform 0.25s;
+    flex-shrink: 0;
+  }
+  .transport-card-header.open .tc-chevron { transform: rotate(180deg); }
+
+  .transport-card-body {
+    background: #fff;
+    display: none;
+    padding: 0 16px 16px;
+  }
+  .transport-card-body.open { display: block; }
+
+  /* Route summary bar */
+  .route-bar {
+    display: flex; align-items: center; gap: 6px;
+    padding: 12px 0 14px;
+    border-bottom: 0.5px solid #eee;
+    margin-bottom: 14px;
+    font-size: 13px; font-weight: 600;
+    overflow-x: auto; white-space: nowrap;
+  }
+  .route-bar .r-stop {
+    display: inline-flex; flex-direction: column; align-items: center;
+    font-size: 11px; font-weight: 600; color: #1a1a1a;
+    text-align: center; gap: 3px;
+  }
+  .route-bar .r-stop .r-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: #1a6fb5; flex-shrink: 0;
+  }
+  .route-bar .r-arrow {
+    color: #aaa; font-size: 12px; flex-shrink: 0;
+    display: flex; align-items: center; gap: 2px;
+  }
+  .route-bar .r-arrow span { font-size: 10px; color: #888; white-space: nowrap; }
+
+  /* Steps */
+  .tc-step {
+    display: flex; gap: 12px; margin-bottom: 14px;
+  }
+  .tc-step:last-child { margin-bottom: 0; }
+  .tc-step-num {
+    flex-shrink: 0;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    font-size: 12px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff;
+    margin-top: 1px;
+  }
+  .tc-step-num.s1 { background: #f0a500; }
+  .tc-step-num.s2 { background: #27ae60; }
+  .tc-step-num.s3 { background: #2980e4; }
+  .tc-step-num.s4 { background: #8b5cf6; }
+  .tc-step-num.s5 { background: #e84040; }
+
+  .tc-step-body { flex: 1; }
+  .tc-step-title { font-size: 13.5px; font-weight: 600; line-height: 1.4; margin-bottom: 4px; }
+  .tc-step-desc { font-size: 12.5px; color: #555; line-height: 1.6; }
+
+  .tc-tip {
+    display: flex; gap: 8px; align-items: flex-start;
+    background: #FFF8E7; border-radius: 10px;
+    padding: 10px 12px; margin-top: 10px;
+    font-size: 12px; color: #7a5800; line-height: 1.6;
+    border: 0.5px solid #F5D87A;
+  }
+  .tc-tip .tip-icon { flex-shrink: 0; font-size: 14px; }
+
+  .tc-info-row {
+    display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px;
+  }
+  .tc-badge {
+    padding: 5px 11px; border-radius: 16px;
+    font-size: 11.5px; font-weight: 500;
+    background: #EBF4FF; color: #0C6EBD;
+    border: 0.5px solid #C3DEFF;
+  }
+  .tc-badge.green { background: #E8F8EF; color: #1a7a45; border-color: #A8E6C0; }
+  .tc-badge.purple { background: #F3EEFF; color: #6b21a8; border-color: #D4BCFF; }
+
+  .tc-divider {
+    height: 0.5px; background: #f0ede2;
+    margin: 14px 0;
+  }
+
+  .tc-time-row {
+    display: flex; align-items: center; gap: 8px;
+    background: #f5f5f0; border-radius: 10px;
+    padding: 10px 12px; margin-top: 10px;
+    font-size: 12.5px;
+  }
+  .tc-time-row .t-icon { font-size: 16px; flex-shrink: 0; }
+  .tc-time-row .t-label { color: #888; font-size: 11px; }
+  .tc-time-row .t-val { font-weight: 600; color: #1a1a1a; }
+
   .fab {
     position: fixed; bottom: calc(20px + env(safe-area-inset-bottom)); right: 16px;
     width: 44px; height: 44px; border-radius: 50%;
@@ -357,10 +480,12 @@ const days = [
     hotelMapUrl: gmap("Hotel Intergate Osaka Umeda"),
     schedule:[
       { time:"15:40", title:"✈️ 台灣起飛", note:"" },
-      { time:"19:30", title:"🛬 關西國際機場 KIX 入境", note:"",
-        mapUrl: gmap("Kansai International Airport"), addr:"大阪府泉佐野市泉州空港北 1" },
-      { time:"20:30", title:"🚆 南海電鐵 → 御堂筋線", note:"難波轉車至梅田，約 1h15m" },
-      { time:"22:00", title:"🏨 飯店 Check-in", note:"Intergate Osaka Umeda",
+      { time:"19:30", title:"🛬 關西國際機場 KIX 入境", note:"入境 → 領行李 → 出海關，約 40–60 分鐘",
+        mapUrl: gmap("Kansai International Airport"), addr:"大阪府泉佐野市泉州空港北 1",
+        guide: "jr-haruka" },
+      { time:"21:00", title:"🚄 JR Haruka 特急 → 大阪站", note:"直達梅田大阪站，約 50–55 分鐘，免換車",
+        mapUrl: gmap("関西空港駅 JR"), addr:"關西機場 JR 站" },
+      { time:"22:00", title:"🏨 飯店 Check-in", note:"從大阪站步行約 8–10 分鐘",
         mapUrl: gmap("Hotel Intergate Osaka Umeda"), addr:"大阪市北區梅田 2-5-2" },
       { time:"深夜", title:"🍜 梅田簡單晚餐", note:"拉麵或松屋、便利商店補貨",
         mapUrl: gmap("梅田 ラーメン"), addr:"梅田周邊" }
@@ -398,7 +523,8 @@ const days = [
     schedule:[
       { time:"08:30", title:"🚗 名古屋市區取車出發", note:"自駕前往三重縣長島，約 40–50 分鐘" },
       { time:"白天", title:"🎢 長島溫泉樂園 Nagashima Spa Land", note:"Steel Dragon 2000、水樂園消暑",
-        mapUrl: gmap("Nagashima Spa Land 三重"), addr:"三重縣桑名市長島町浦安 333" },
+        mapUrl: gmap("Nagashima Spa Land 三重"), addr:"三重縣桑名市長島町浦安 333",
+        guide: "nagashima" },
       { time:"傍晚", title:"🛍 爵士之夢長島 Outlet", note:"日本最大規模 Outlet，購物 + 晚餐",
         mapUrl: gmap("ジャズドリーム長島 アウトレット"), addr:"三重縣桑名市長島町浦安 368" },
       { time:"晚上", title:"🚗 駕車返回名古屋", note:"還車回飯店休息" }
@@ -416,7 +542,8 @@ const days = [
       { time:"09:00", title:"🚆 青波線至金城埠頭站", note:"從名古屋站直達，約 24 分鐘",
         mapUrl: gmap("金城ふ頭駅 名古屋"), addr:"名古屋市港區金城ふ頭 2" },
       { time:"全天", title:"🧱 LEGOLAND Japan", note:"The Dragon、Submarine Adventure、Driving School、Miniland 名勝",
-        mapUrl: gmap("LEGOLAND Japan 名古屋"), addr:"名古屋市港區金城ふ頭 2-2-1" },
+        mapUrl: gmap("LEGOLAND Japan 名古屋"), addr:"名古屋市港區金城ふ頭 2-2-1",
+        guide: "legoland" },
       { time:"傍晚", title:"🍴 Maker's Pier 商場晚餐", note:"園外商場美食街",
         mapUrl: gmap("Maker's Pier 名古屋"), addr:"名古屋市港區金城ふ頭 2-1-1" }
     ]
@@ -538,6 +665,344 @@ function renderScroller() {
   });
 }
 
+function renderGuide(key) {
+  if (key === "jr-haruka") return `
+    <div class="transport-card">
+      <div class="transport-card-header" onclick="toggleGuide(this)">
+        <div class="transport-card-header-left">
+          <span class="tc-icon">🚄</span>
+          <div>
+            <div class="tc-title">JR Haruka 入境攻略</div>
+            <div class="tc-sub">關西機場 → 大阪站（梅田）· 超簡單版</div>
+          </div>
+        </div>
+        <span class="tc-chevron">▼</span>
+      </div>
+      <div class="transport-card-body">
+
+        <!-- Route Bar -->
+        <div class="route-bar">
+          <div class="r-stop"><div class="r-dot"></div>關西機場</div>
+          <div class="r-arrow">──── <span>JR Haruka 約 50–55 分</span> ────</div>
+          <div class="r-stop"><div class="r-dot"></div>大阪站</div>
+          <div class="r-arrow">────</div>
+          <div class="r-stop"><div class="r-dot" style="background:#d85a30"></div>飯店 🏨</div>
+        </div>
+
+        <!-- Step 1 -->
+        <div class="tc-step">
+          <div class="tc-step-num s1">1</div>
+          <div class="tc-step-body">
+            <div class="tc-step-title">🟡 出關 ＋ 拿行李</div>
+            <div class="tc-step-desc">入境 → 領行李 → 出海關</div>
+            <div class="tc-time-row">
+              <span class="t-icon">⏱</span>
+              <div>
+                <div class="t-label">預估時間</div>
+                <div class="t-val">40–60 分鐘</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tc-divider"></div>
+
+        <!-- Step 2 -->
+        <div class="tc-step">
+          <div class="tc-step-num s2">2</div>
+          <div class="tc-step-body">
+            <div class="tc-step-title">🟢 找 JR 線入口</div>
+            <div class="tc-step-desc">出關後跟著藍色指標走即可</div>
+            <div class="tc-info-row">
+              <span class="tc-badge">🔵 JR Line</span>
+              <span class="tc-badge">🚄 JR HARUKA</span>
+            </div>
+            <div class="tc-tip">
+              <span class="tip-icon">⭐</span>
+              <span>關西機場不複雜！JR 跟南海在同一層附近，指標超多，跟著走就到。</span>
+            </div>
+          </div>
+        </div>
+        <div class="tc-divider"></div>
+
+        <!-- Step 3 -->
+        <div class="tc-step">
+          <div class="tc-step-num s3">3</div>
+          <div class="tc-step-body">
+            <div class="tc-step-title">🔵 買票 ／ 直接感應</div>
+            <div class="tc-step-desc">推薦直接感應，免排隊買票</div>
+            <div class="tc-info-row">
+              <span class="tc-badge green">✔ Apple Pay Suica</span>
+              <span class="tc-badge green">✔ ICOCA</span>
+              <span class="tc-badge green">✔ 西瓜卡</span>
+            </div>
+            <div class="tc-tip">
+              <span class="tip-icon">💡</span>
+              <span>也可現場自動售票機購買 Haruka 車票，選「大阪」即可。</span>
+            </div>
+          </div>
+        </div>
+        <div class="tc-divider"></div>
+
+        <!-- Step 4 -->
+        <div class="tc-step">
+          <div class="tc-step-num s4">4</div>
+          <div class="tc-step-body">
+            <div class="tc-step-title">🟣 搭 JR Haruka 特急</div>
+            <div class="tc-step-desc">認準車頭文字，上車就對了！</div>
+            <div class="tc-info-row">
+              <span class="tc-badge purple">HARUKA</span>
+              <span class="tc-badge purple">京都 / 新大阪 / 大阪</span>
+            </div>
+            <div class="tc-time-row">
+              <span class="t-icon">⏱</span>
+              <div>
+                <div class="t-label">關西機場 → 大阪站</div>
+                <div class="t-val">約 50–55 分鐘・免換車</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tc-divider"></div>
+
+        <!-- Step 5 -->
+        <div class="tc-step">
+          <div class="tc-step-num s5">5</div>
+          <div class="tc-step-body">
+            <div class="tc-step-title">🔴 大阪站下車 → 飯店</div>
+            <div class="tc-step-desc">下車後跟著「Central Gate 中央口」出站</div>
+            <div class="tc-time-row">
+              <span class="t-icon">🚶</span>
+              <div>
+                <div class="t-label">大阪站 → Intergate 飯店</div>
+                <div class="t-val">步行約 8–10 分鐘</div>
+              </div>
+            </div>
+            <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Hotel+Intergate+Osaka+Umeda" target="_blank" style="margin-top:8px">
+              <span>🗺</span><span>在 Google Maps 開啟導航</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  `;
+  if (key === "nagashima") return `
+    <div class="transport-card" style="border-color:#e84040">
+      <div class="transport-card-header" onclick="toggleGuide(this)" style="background:linear-gradient(135deg,#e84040 0%,#b52c2c 100%)">
+        <div class="transport-card-header-left">
+          <span class="tc-icon">🎢</span>
+          <div>
+            <div class="tc-title">長島樂園必勝攻略 🔥</div>
+            <div class="tc-sub">正確玩法順序・先刺激 → 再放鬆 → 最後購物</div>
+          </div>
+        </div>
+        <span class="tc-chevron">▼</span>
+      </div>
+      <div class="transport-card-body">
+
+        <!-- 黃金順序 -->
+        <div style="display:flex;gap:6px;align-items:center;padding:12px 0 14px;border-bottom:0.5px solid #eee;margin-bottom:14px;overflow-x:auto;white-space:nowrap">
+          <span style="background:#f0a500;color:#fff;padding:4px 12px;border-radius:16px;font-size:12px;font-weight:700;flex-shrink:0">🎢 遊樂</span>
+          <span style="color:#bbb;font-size:14px">→</span>
+          <span style="background:#2980e4;color:#fff;padding:4px 12px;border-radius:16px;font-size:12px;font-weight:700;flex-shrink:0">💦 水樂園</span>
+          <span style="color:#bbb;font-size:14px">→</span>
+          <span style="background:#27ae60;color:#fff;padding:4px 12px;border-radius:16px;font-size:12px;font-weight:700;flex-shrink:0">🛍 Outlet</span>
+        </div>
+
+        <!-- 早上 -->
+        <div class="tc-step">
+          <div class="tc-step-num s1">早</div>
+          <div class="tc-step-body">
+            <div class="tc-step-title">🟡 09:30–12:30｜先衝遊樂設施</div>
+            <div class="tc-step-desc">早上排隊最短，直接衝熱門</div>
+            <div class="tc-info-row" style="margin-top:8px">
+              <span class="tc-badge" style="background:#FFF0F0;color:#c0392b;border-color:#ffb3b3">🏆 Steel Dragon 2000</span>
+              <span class="tc-badge" style="background:#FFF0F0;color:#c0392b;border-color:#ffb3b3">✈️ Acrobat 飛行型</span>
+              <span class="tc-badge" style="background:#FFF0F0;color:#c0392b;border-color:#ffb3b3">👨‍👩‍👧 親子設施</span>
+            </div>
+            <div class="tc-tip">
+              <span class="tip-icon">📌</span>
+              <span>早上人最少！熱門設施等待時間可能只要 10–20 分，下午可能爆到 60 分以上。</span>
+            </div>
+          </div>
+        </div>
+        <div class="tc-divider"></div>
+
+        <!-- 中午 -->
+        <div class="tc-step">
+          <div class="tc-step-num s2">午</div>
+          <div class="tc-step-body">
+            <div class="tc-step-title">🔵 12:30–13:30｜園內吃飯 + 休息</div>
+            <div class="tc-step-desc">補充體力，準備衝水樂園</div>
+            <div class="tc-time-row">
+              <span class="t-icon">💡</span>
+              <div>
+                <div class="t-label">重要提醒</div>
+                <div class="t-val">換好泳裝，準備下午水戰</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tc-divider"></div>
+
+        <!-- 下午 -->
+        <div class="tc-step">
+          <div class="tc-step-num s3">午</div>
+          <div class="tc-step-body">
+            <div class="tc-step-title">🟢 13:30–16:30｜水上樂園（夏天重點 🔥）</div>
+            <div class="tc-step-desc">小孩瘋、大人放鬆，夏天必玩</div>
+            <div class="tc-info-row" style="margin-top:8px">
+              <span class="tc-badge green">👟 帶拖鞋</span>
+              <span class="tc-badge green">🏖 帶毛巾</span>
+              <span class="tc-badge green">🔒 租置物櫃</span>
+            </div>
+          </div>
+        </div>
+        <div class="tc-divider"></div>
+
+        <!-- 傍晚 -->
+        <div class="tc-step">
+          <div class="tc-step-num s4">晚</div>
+          <div class="tc-step-body">
+            <div class="tc-step-title">🟣 17:00–19:00｜爵士之夢 Outlet</div>
+            <div class="tc-step-desc">就在樂園旁邊，走過去就到</div>
+            <div class="tc-info-row" style="margin-top:8px">
+              <span class="tc-badge purple">Nike</span>
+              <span class="tc-badge purple">Adidas</span>
+              <span class="tc-badge purple">各大運動品牌</span>
+            </div>
+            <a class="map-link" href="${gmap("ジャズドリーム長島 アウトレット")}" target="_blank" style="margin-top:8px">
+              <span>🗺</span><span>三重縣桑名市長島町浦安 368</span>
+            </a>
+          </div>
+        </div>
+        <div class="tc-divider"></div>
+
+        <!-- NG玩法 -->
+        <div style="background:#FFF5F5;border-radius:10px;padding:12px 14px;border:0.5px solid #FFCDD2">
+          <div style="font-size:12px;font-weight:700;color:#c0392b;margin-bottom:8px">⚠️ 最大錯誤玩法（千萬別這樣）</div>
+          <div style="font-size:12px;color:#7a2929;line-height:1.8">
+            ❌ 一開始就玩水 → 濕答答排隊很痛苦<br>
+            ❌ 下午才玩雲霄飛車 → 排隊排爆根本玩不到
+          </div>
+        </div>
+
+      </div>
+    </div>
+  `;
+
+  if (key === "legoland") return `
+    <div class="transport-card" style="border-color:#f0a500">
+      <div class="transport-card-header" onclick="toggleGuide(this)" style="background:linear-gradient(135deg,#f0a500 0%,#c47d00 100%)">
+        <div class="transport-card-header-left">
+          <span class="tc-icon">🧱</span>
+          <div>
+            <div class="tc-title">LEGOLAND 必勝攻略</div>
+            <div class="tc-sub">早到先熱門 → 中午休息 → 下午輕鬆玩</div>
+          </div>
+        </div>
+        <span class="tc-chevron">▼</span>
+      </div>
+      <div class="transport-card-body">
+
+        <!-- 黃金順序 -->
+        <div style="display:flex;gap:6px;align-items:center;padding:12px 0 14px;border-bottom:0.5px solid #eee;margin-bottom:14px;overflow-x:auto;white-space:nowrap">
+          <span style="background:#e84040;color:#fff;padding:4px 12px;border-radius:16px;font-size:12px;font-weight:700;flex-shrink:0">⚡ 早衝熱門</span>
+          <span style="color:#bbb;font-size:14px">→</span>
+          <span style="background:#888;color:#fff;padding:4px 12px;border-radius:16px;font-size:12px;font-weight:700;flex-shrink:0">🍱 中午休息</span>
+          <span style="color:#bbb;font-size:14px">→</span>
+          <span style="background:#27ae60;color:#fff;padding:4px 12px;border-radius:16px;font-size:12px;font-weight:700;flex-shrink:0">📸 下午輕鬆</span>
+        </div>
+
+        <!-- 早上 -->
+        <div class="tc-step">
+          <div class="tc-step-num s1">早</div>
+          <div class="tc-step-body">
+            <div class="tc-step-title">🟡 09:30–12:00｜先衝熱門設施</div>
+            <div class="tc-step-desc">一進去直接往熱門跑，別拍照別逛</div>
+            <div class="tc-info-row" style="margin-top:8px">
+              <span class="tc-badge" style="background:#FFF0F0;color:#c0392b;border-color:#ffb3b3">🐉 The Dragon 雲霄飛車</span>
+              <span class="tc-badge" style="background:#FFF0F0;color:#c0392b;border-color:#ffb3b3">🚢 Submarine Adventure</span>
+              <span class="tc-badge" style="background:#FFF0F0;color:#c0392b;border-color:#ffb3b3">🚗 Driving School</span>
+            </div>
+            <div class="tc-tip">
+              <span class="tip-icon">💡</span>
+              <span>Driving School 小孩超愛，會有「真正的駕照」可以帶回家當紀念品！</span>
+            </div>
+          </div>
+        </div>
+        <div class="tc-divider"></div>
+
+        <!-- 中午 -->
+        <div class="tc-step">
+          <div class="tc-step-num s2">午</div>
+          <div class="tc-step-body">
+            <div class="tc-step-title">🔵 中午｜園內吃飯 + 充電休息</div>
+            <div class="tc-step-desc">避開熱門設施的下午人潮高峰</div>
+            <div class="tc-time-row">
+              <span class="t-icon">🍔</span>
+              <div>
+                <div class="t-label">小提示</div>
+                <div class="t-val">園內餐廳主題感十足，值得體驗</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tc-divider"></div>
+
+        <!-- 下午 -->
+        <div class="tc-step">
+          <div class="tc-step-num s3">午</div>
+          <div class="tc-step-body">
+            <div class="tc-step-title">🟢 下午｜輕鬆拍照 + 慢慢逛</div>
+            <div class="tc-step-desc">熱門設施早上都玩完，下午悠閒欣賞</div>
+            <div class="tc-info-row" style="margin-top:8px">
+              <span class="tc-badge green">🏙 Miniland 迷你城市</span>
+              <span class="tc-badge green">👶 小孩專屬區</span>
+              <span class="tc-badge green">🛍 樂高紀念品店</span>
+            </div>
+            <div class="tc-tip">
+              <span class="tip-icon">⭐</span>
+              <span>Miniland 用數百萬塊樂高重現日本名勝，超級壯觀！建議下午光線好時拍照。</span>
+            </div>
+          </div>
+        </div>
+        <div class="tc-divider"></div>
+
+        <!-- 傍晚 -->
+        <div class="tc-step">
+          <div class="tc-step-num s4">晚</div>
+          <div class="tc-step-body">
+            <div class="tc-step-title">🟣 傍晚｜Maker's Pier 商場晚餐</div>
+            <div class="tc-step-desc">園外步行即達，美食 + 購物收尾</div>
+            <a class="map-link" href="${gmap("Maker's Pier 名古屋")}" target="_blank" style="margin-top:8px">
+              <span>🗺</span><span>名古屋市港區金城ふ頭 2-1-1</span>
+            </a>
+          </div>
+        </div>
+        <div class="tc-divider"></div>
+
+        <!-- NG玩法 -->
+        <div style="background:#FFF5F5;border-radius:10px;padding:12px 14px;border:0.5px solid #FFCDD2">
+          <div style="font-size:12px;font-weight:700;color:#c0392b;margin-bottom:8px">⚠️ 最大錯誤玩法</div>
+          <div style="font-size:12px;color:#7a2929;line-height:1.8">
+            ❌ 一進去亂走亂拍照 → 下午熱門全排爆<br>
+            ❌ 下午才衝 The Dragon → 等待時間翻倍
+          </div>
+        </div>
+
+      </div>
+    </div>
+  `;
+
+  return '';
+}
+
+function toggleGuide(header) {
+  header.classList.toggle("open");
+  header.nextElementSibling.classList.toggle("open");
+}
+
 function renderDay() {
   const d = days.find(x => x.n === activeDay);
 
@@ -556,6 +1021,7 @@ function renderDay() {
             <span class="map-icon">🗺</span>
             <span>${s.addr || '開啟地圖'}</span>
           </a>` : ''}
+        ${s.guide ? renderGuide(s.guide) : ''}
       </div>
     </div>
   `).join("");
