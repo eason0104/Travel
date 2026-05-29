@@ -708,6 +708,16 @@ const viewOverview = document.getElementById("view-overview");
 const viewTips = document.getElementById("view-tips");
 const overviewList = document.getElementById("overviewList");
 
+function switchTicketTab(tab) {
+  const tabs = { '711': ['ticketContent711','tab711'], 'lawson': ['ticketContentLawson','tabLawson'], 'tips': ['ticketContentTips','tabTips'] };
+  Object.entries(tabs).forEach(([k,[contentId,btnId]]) => {
+    const el = document.getElementById(contentId);
+    const btn = document.getElementById(btnId);
+    if (el) el.style.display = k===tab ? 'block' : 'none';
+    if (btn) { btn.style.background = k===tab ? '#1a1a1a' : 'transparent'; btn.style.color = k===tab ? '#fff' : '#6b6a64'; }
+  });
+}
+
 function renderScroller() {
   scroller.innerHTML = days.map(d => `
     <div class="day-pill ${d.n===activeDay?'active':''}" data-day="${d.n}">
@@ -925,20 +935,7 @@ function guideData(key) {
             </div>
           </div>
         </div>
-
-        <script>
-        function switchTicketTab(tab) {
-          document.getElementById('ticketContent711').style.display = tab==='711' ? 'block' : 'none';
-          document.getElementById('ticketContentLawson').style.display = tab==='lawson' ? 'block' : 'none';
-          document.getElementById('ticketContentTips').style.display = tab==='tips' ? 'block' : 'none';
-          ['711','lawson','tips'].forEach(t => {
-            const btn = document.getElementById('tab'+t.charAt(0).toUpperCase()+t.slice(1));
-            if (btn) { btn.style.background = t===tab ? '#1a1a1a' : 'transparent'; btn.style.color = t===tab ? '#fff' : '#6b6a64'; }
-          });
-          const btn711 = document.getElementById('tab711');
-          if (tab==='711' && btn711) { btn711.style.background='#1a1a1a'; btn711.style.color='#fff'; }
-        }
-        <\/script>`
+`
     },
     "nagashima": {
       icon: "🎢",
