@@ -579,6 +579,8 @@ const days = [
     hotelTel:null, hotelTelLink:null,
     hotelMapUrl: gmap("Minn STATION Ai Nagoya"),
     schedule:[
+      { time:"前一晚", title:"🏪 超商購票（出發前完成）", note:"7-11 / 全家 / Lawson 機台現場列印門票",
+        guide: "ticket-convenience" },
       { time:"08:30", title:"🚗 名古屋市區取車出發", note:"自駕前往三重縣長島，約 40–50 分鐘" },
       { time:"白天", title:"🎢 長島溫泉樂園 Nagashima Spa Land", note:"Steel Dragon 2000、水樂園消暑",
         mapUrl: gmap("Nagashima Spa Land 三重"), addr:"三重縣桑名市長島町浦安 333",
@@ -787,6 +789,156 @@ function guideData(key) {
             <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Hotel+Intergate+Osaka+Umeda" target="_blank" style="margin-top:8px"><span>🗺</span><span>在 Google Maps 開啟導航</span></a>
           </div>
         </div>`
+    },
+    "ticket-convenience": {
+      icon: "🏪",
+      title: "超商購票完整教學",
+      sub: "7-11 / 全家 / Lawson・長島溫泉樂園門票",
+      color: "#16a34a",
+      body: `
+        <!-- 價格總覽卡 -->
+        <div style="background:linear-gradient(135deg,#16a34a,#15803d);border-radius:12px;padding:14px 16px;margin-bottom:16px;color:#fff">
+          <div style="font-size:11px;opacity:0.8;letter-spacing:1px;margin-bottom:10px">長島溫泉樂園 · 推薦購票方案（2大3小）</div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px">
+              <span>🎟 暢玩護照 大人 × 2</span>
+              <span style="font-weight:700">¥6,000 × 2 = ¥12,000</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px">
+              <span>🎟 暢玩護照 小學生 × 2（11歲、8歲）</span>
+              <span style="font-weight:700">¥4,500 × 2 = ¥9,000</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px">
+              <span>🎫 純入園券 幼兒 × 1（5歲）</span>
+              <span style="font-weight:700">¥600 × 1 = ¥600</span>
+            </div>
+            <div style="height:0.5px;background:rgba(255,255,255,0.3);margin:4px 0"></div>
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <span style="font-size:13px;font-weight:600">5 張合計</span>
+              <span style="font-size:18px;font-weight:700">¥21,600</span>
+            </div>
+          </div>
+        </div>
+        <div class="tc-tip" style="margin-bottom:16px">
+          <span class="tip-icon">💡</span>
+          <span>超商票價與現場定價<strong>完全相同</strong>，沒有額外手續費。建議前一晚在名古屋超商購好，隔天直接入場！</span>
+        </div>
+
+        <!-- Tab 切換 -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;background:#f5f5f0;border-radius:10px;padding:4px;margin-bottom:16px" id="ticketTabBar">
+          <button onclick="switchTicketTab('711')" id="tab711"
+            style="padding:8px 4px;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;background:#1a1a1a;color:#fff;font-family:inherit;transition:all 0.15s">
+            7-11 / 全家
+          </button>
+          <button onclick="switchTicketTab('lawson')" id="tabLawson"
+            style="padding:8px 4px;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;background:transparent;color:#6b6a64;font-family:inherit;transition:all 0.15s">
+            Lawson
+          </button>
+          <button onclick="switchTicketTab('tips')" id="tabTips"
+            style="padding:8px 4px;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;background:transparent;color:#6b6a64;font-family:inherit;transition:all 0.15s">
+            注意事項
+          </button>
+        </div>
+
+        <!-- 7-11 / 全家 步驟 -->
+        <div id="ticketContent711">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+            <span style="font-size:20px">🏪</span>
+            <div>
+              <div style="font-size:13px;font-weight:700">7-ELEVEN / FamilyMart</div>
+              <div style="font-size:11px;color:#888">多功能事務機（大台印表機）</div>
+            </div>
+          </div>
+          ${[
+            ["1","切換語言","點螢幕右上角「Language」→ 選「繁體中文」"],
+            ["2","選票券分類","主畫面點「票券 (Ticket)」→「JTB 娛樂票券」"],
+            ["3","搜尋樂園","選「依地區搜尋」→「東海地區（愛知・岐阜・三重）」→ 找到「長島溫泉樂園」"],
+            ["4","選票種與數量","選方案（暢玩護照 / 純入園券），輸入大人、小學生、幼兒張數"],
+            ["5","列印繳費單","確認內容無誤 → 按確認 → 機器印出長條繳費單"],
+            ["6","櫃檯付款取票","30分鐘內到櫃台，現金或信用卡付款 → 店員當場印出正式門票 🎟"]
+          ].map(([n,t,d]) => `
+            <div style="display:flex;gap:10px;margin-bottom:12px">
+              <div style="width:24px;height:24px;border-radius:50%;background:#16a34a;color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">${n}</div>
+              <div>
+                <div style="font-size:13px;font-weight:600;margin-bottom:2px">${t}</div>
+                <div style="font-size:12px;color:#555;line-height:1.6">${d}</div>
+              </div>
+            </div>`).join('')}
+        </div>
+
+        <!-- Lawson 步驟 -->
+        <div id="ticketContentLawson" style="display:none">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+            <span style="font-size:20px">🔴</span>
+            <div>
+              <div style="font-size:13px;font-weight:700">Lawson（Loppi 機台）</div>
+              <div style="font-size:11px;color:#888">紅色專用機台・通常在 ATM 旁</div>
+            </div>
+          </div>
+          ${[
+            ["1","切換語言","螢幕右上角「Language」→ 選「繁體中文」"],
+            ["2","進入票券專區","主畫面選「各種チケット (Ticket)」"],
+            ["3","選交通娛樂票券","點「交通票券・主題樂園・活動」"],
+            ["4","搜尋樂園","選「主題樂園」→「東海地區（三重・愛知・岐阜）」→ 找到「長島溫泉樂園」"],
+            ["5","選票種與數量","選暢玩護照 × 2大2小學生 + 純入園 × 1幼兒"],
+            ["6","輸入姓名（若需要）","可用護照拼音，不影響入場"],
+            ["7","列印繳費單","確認明細 → 按確認 → 印出白色長條繳費單"],
+            ["8","櫃檯付款領票","30分鐘內到櫃台，支援現金、信用卡、Apple Pay → 當場印出正式門票 🎟"]
+          ].map(([n,t,d]) => `
+            <div style="display:flex;gap:10px;margin-bottom:12px">
+              <div style="width:24px;height:24px;border-radius:50%;background:#dc2626;color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">${n}</div>
+              <div>
+                <div style="font-size:13px;font-weight:600;margin-bottom:2px">${t}</div>
+                <div style="font-size:12px;color:#555;line-height:1.6">${d}</div>
+              </div>
+            </div>`).join('')}
+        </div>
+
+        <!-- 注意事項 -->
+        <div id="ticketContentTips" style="display:none">
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="background:#FFF5F5;border-radius:10px;padding:12px 14px;border:0.5px solid #FFCDD2">
+              <div style="font-size:12px;font-weight:700;color:#c0392b;margin-bottom:6px">⏰ 30分鐘內完成付款</div>
+              <div style="font-size:12px;color:#7a2929;line-height:1.7">列印繳費單後，<strong>務必在 30 分鐘內</strong>到櫃台付款，逾時需重新操作機台。</div>
+            </div>
+            <div style="background:#EBF4FF;border-radius:10px;padding:12px 14px;border:0.5px solid #C3DEFF">
+              <div style="font-size:12px;font-weight:700;color:#0C4E8C;margin-bottom:6px">🎟 票券說明</div>
+              <div style="font-size:12px;color:#1e3a5f;line-height:1.8">
+                <strong>暢玩護照（Passport）</strong>：門票 + 遊樂設施無限搭<br>
+                <strong>純入園券（Admission）</strong>：只含入園，設施需另付費<br>
+                5 歲幼兒選純入園券即可，不用買護照
+              </div>
+            </div>
+            <div style="background:#E8F8EF;border-radius:10px;padding:12px 14px;border:0.5px solid #A8E6C0">
+              <div style="font-size:12px;font-weight:700;color:#1a7a45;margin-bottom:6px">✅ 購票建議時機</div>
+              <div style="font-size:12px;color:#2d6a4f;line-height:1.8">
+                建議 <strong>Day 2（名古屋）晚上</strong>就近超商購票<br>
+                避免 Day 3 早上取車後還要找超商，節省時間
+              </div>
+            </div>
+            <div style="background:#FEF3C7;border-radius:10px;padding:12px 14px;border:0.5px solid #FCD34D">
+              <div style="font-size:12px;font-weight:700;color:#92400e;margin-bottom:6px">💳 付款方式</div>
+              <div style="font-size:12px;color:#78350f;line-height:1.8">
+                7-11 / 全家：現金、信用卡<br>
+                Lawson：現金、信用卡、Apple Pay（富邦J卡、吉鶴卡）
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <script>
+        function switchTicketTab(tab) {
+          document.getElementById('ticketContent711').style.display = tab==='711' ? 'block' : 'none';
+          document.getElementById('ticketContentLawson').style.display = tab==='lawson' ? 'block' : 'none';
+          document.getElementById('ticketContentTips').style.display = tab==='tips' ? 'block' : 'none';
+          ['711','lawson','tips'].forEach(t => {
+            const btn = document.getElementById('tab'+t.charAt(0).toUpperCase()+t.slice(1));
+            if (btn) { btn.style.background = t===tab ? '#1a1a1a' : 'transparent'; btn.style.color = t===tab ? '#fff' : '#6b6a64'; }
+          });
+          const btn711 = document.getElementById('tab711');
+          if (tab==='711' && btn711) { btn711.style.background='#1a1a1a'; btn711.style.color='#fff'; }
+        }
+        <\/script>`
     },
     "nagashima": {
       icon: "🎢",
@@ -1271,6 +1423,7 @@ function renderGuide(key) {
     "#7c3aed": { bg: "#F3EEFF", border: "#D4BCFF", text: "#5b21b6" },
     "#0e7490": { bg: "#ECFEFF", border: "#A5F3FC", text: "#155e75" },
     "#b45309": { bg: "#FEF3C7", border: "#FCD34D", text: "#78350f" },
+    "#16a34a": { bg: "#F0FDF4", border: "#86EFAC", text: "#15803d" },
     "#27ae60": { bg: "#E8F8EF", border: "#A8E6C0", text: "#1a5c38" }
   };
   const c = colorMap[g.color] || { bg: "#EBF4FF", border: "#C3DEFF", text: "#0C4E8C" };
