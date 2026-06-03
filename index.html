@@ -167,6 +167,96 @@
   }
   .tab-btn.active { background: #1a1a1a; color: #fff; }
 
+  /* ── Checklist ── */
+  .cl-section { margin-bottom: 14px; }
+  .cl-section-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 13px 16px;
+    background: #fff; border-radius: 14px;
+    border: 0.5px solid #e8e5da;
+    cursor: pointer; user-select: none; -webkit-user-select: none;
+    margin-bottom: 2px;
+  }
+  .cl-section-header-left { display: flex; align-items: center; gap: 10px; }
+  .cl-section-icon { font-size: 20px; }
+  .cl-section-title { font-size: 14px; font-weight: 700; color: #1a1a1a; }
+  .cl-section-sub { font-size: 11px; color: #888; margin-top: 1px; }
+  .cl-section-badge {
+    display: flex; align-items: center; gap: 6px; flex-shrink: 0;
+  }
+  .cl-progress-text { font-size: 11px; color: #888; }
+  .cl-chevron { font-size: 12px; color: #aaa; transition: transform 0.2s; }
+  .cl-section.open .cl-chevron { transform: rotate(180deg); }
+  .cl-items {
+    display: none; flex-direction: column; gap: 2px;
+    padding: 0 4px;
+  }
+  .cl-section.open .cl-items { display: flex; }
+  .cl-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 11px 14px;
+    background: #fff; border-radius: 10px;
+    border: 0.5px solid #e8e5da;
+    cursor: pointer;
+    transition: background 0.12s;
+    -webkit-user-select: none; user-select: none;
+  }
+  .cl-item:active { background: #f5f5f0; }
+  .cl-item.checked { background: #f0fdf4; border-color: #86efac; }
+  .cl-checkbox {
+    width: 22px; height: 22px; border-radius: 6px;
+    border: 2px solid #d0d0d0;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 1px;
+    transition: all 0.15s;
+    background: #fff;
+  }
+  .cl-item.checked .cl-checkbox {
+    background: #16a34a; border-color: #16a34a;
+  }
+  .cl-checkbox-tick { display: none; color: #fff; font-size: 13px; font-weight: 700; }
+  .cl-item.checked .cl-checkbox-tick { display: block; }
+  .cl-item-body { flex: 1; }
+  .cl-item-title {
+    font-size: 13.5px; font-weight: 600; line-height: 1.4; color: #1a1a1a;
+    transition: color 0.15s;
+  }
+  .cl-item.checked .cl-item-title { color: #888; text-decoration: line-through; }
+  .cl-item-note { font-size: 12px; color: #6b6a64; line-height: 1.55; margin-top: 3px; }
+  .cl-item.checked .cl-item-note { color: #aaa; }
+  .cl-badge-must {
+    display: inline-flex; align-items: center;
+    font-size: 10px; font-weight: 700;
+    padding: 2px 7px; border-radius: 8px;
+    background: #FFF0F0; color: #c0392b; border: 0.5px solid #ffb3b3;
+    margin-left: 6px; vertical-align: middle; flex-shrink: 0;
+  }
+  .cl-header-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 14px; padding: 0 2px;
+  }
+  .cl-header-title { font-size: 16px; font-weight: 700; }
+  .cl-reset-btn {
+    font-size: 11px; color: #888; background: none; border: none;
+    cursor: pointer; padding: 4px 8px; border-radius: 8px;
+    font-family: inherit;
+  }
+  .cl-reset-btn:active { background: #f0ede2; }
+  .cl-total-bar {
+    background: #fff; border-radius: 12px; border: 0.5px solid #e8e5da;
+    padding: 12px 16px; margin-bottom: 14px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .cl-total-bar .ct-label { font-size: 12px; color: #888; flex-shrink: 0; }
+  .cl-total-bar .ct-track {
+    flex: 1; height: 8px; background: #f0ede2; border-radius: 4px; overflow: hidden;
+  }
+  .cl-total-bar .ct-fill {
+    height: 100%; background: #16a34a; border-radius: 4px;
+    transition: width 0.3s ease;
+  }
+  .cl-total-bar .ct-num { font-size: 12px; font-weight: 700; color: #16a34a; flex-shrink: 0; }
+
   /* Overview */
   .city-bar { display: flex; gap: 4px; height: 36px; margin: 16px 0 20px; border-radius: 8px; overflow: hidden; }
   .city-bar > div { display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: #fff; }
@@ -194,6 +284,88 @@
     border-radius: 16px; font-size: 11.5px; font-weight: 500; text-decoration: none;
   }
   .hotel-map-inline:active { opacity: 0.75; }
+
+  /* ── Packing Checklist ── */
+  .checklist-tabs {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 4px; background: #f5f5f0; border-radius: 10px;
+    padding: 4px; margin-bottom: 14px;
+  }
+  .checklist-tab-btn {
+    padding: 8px 4px; border: none; border-radius: 8px;
+    font-size: 12px; font-weight: 600; cursor: pointer;
+    background: transparent; color: #6b6a64; font-family: inherit;
+    transition: all 0.15s;
+  }
+  .checklist-tab-btn.active { background: #1a1a1a; color: #fff; }
+
+  .checklist-group { display: none; }
+  .checklist-group.active { display: block; }
+
+  .checklist-progress {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 12px;
+  }
+  .checklist-progress-bar-wrap {
+    flex: 1; height: 6px; background: #e8e5da;
+    border-radius: 3px; overflow: hidden;
+  }
+  .checklist-progress-bar {
+    height: 100%; background: #16a34a;
+    border-radius: 3px; transition: width 0.3s;
+  }
+  .checklist-progress-label {
+    font-size: 11px; color: #888; white-space: nowrap; flex-shrink: 0;
+  }
+
+  .checklist-section-title {
+    font-size: 12px; font-weight: 700; color: #888;
+    letter-spacing: 0.5px; margin: 14px 0 8px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .checklist-section-title:first-child { margin-top: 0; }
+
+  .checklist-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 0; border-bottom: 0.5px solid #f0ede2;
+    cursor: pointer; transition: opacity 0.2s;
+    -webkit-user-select: none; user-select: none;
+  }
+  .checklist-item:last-child { border-bottom: none; }
+  .checklist-item.checked { opacity: 0.45; }
+
+  .checklist-checkbox {
+    flex-shrink: 0; width: 22px; height: 22px;
+    border: 2px solid #d0cdc4; border-radius: 6px;
+    background: #fff; margin-top: 1px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; transition: all 0.15s;
+  }
+  .checklist-item.checked .checklist-checkbox {
+    background: #16a34a; border-color: #16a34a; color: #fff;
+  }
+  .checklist-item-text { flex: 1; }
+  .checklist-item-title {
+    font-size: 13px; font-weight: 600; line-height: 1.4; margin-bottom: 2px;
+  }
+  .checklist-item-note {
+    font-size: 11.5px; color: #6b6a64; line-height: 1.5;
+  }
+  .checklist-badge {
+    display: inline-block; font-size: 10px; font-weight: 700;
+    padding: 2px 7px; border-radius: 8px; margin-right: 4px;
+    vertical-align: middle;
+  }
+  .checklist-badge.red { background: #FFF0F0; color: #c0392b; border: 0.5px solid #ffb3b3; }
+  .checklist-badge.blue { background: #EBF4FF; color: #0C6EBD; border: 0.5px solid #C3DEFF; }
+
+  .checklist-reset-btn {
+    width: 100%; margin-top: 14px; padding: 10px;
+    background: transparent; border: 1px solid #e0ddd2;
+    border-radius: 10px; color: #888; font-size: 12px;
+    cursor: pointer; font-family: inherit; transition: all 0.15s;
+  }
+  .checklist-reset-btn:active { background: #f5f5f0; }
 
   .hidden { display: none !important; }
 
@@ -395,10 +567,11 @@
 </div>
 
 <main>
-  <div class="tab-nav">
-    <button class="tab-btn active" data-tab="day">📅 每日行程</button>
-    <button class="tab-btn" data-tab="overview">🗺 旅程總覽</button>
-    <button class="tab-btn" data-tab="tips">💡 實用備忘</button>
+  <div class="tab-nav" style="grid-template-columns:repeat(4,1fr)">
+    <button class="tab-btn active" data-tab="day">📅 行程</button>
+    <button class="tab-btn" data-tab="overview">🗺 總覽</button>
+    <button class="tab-btn" data-tab="checklist">✅ 清單</button>
+    <button class="tab-btn" data-tab="tips">💡 備忘</button>
   </div>
 
   <section id="view-day"></section>
@@ -451,16 +624,273 @@
     </div>
   </section>
 
+  <section id="view-checklist" class="hidden">
+    <div class="cl-header-bar">
+      <div class="cl-header-title">🎒 出發前準備清單</div>
+      <button class="cl-reset-btn" onclick="resetChecklist()">重置全部</button>
+    </div>
+    <div class="cl-total-bar">
+      <span class="ct-label">整體進度</span>
+      <div class="ct-track"><div class="ct-fill" id="clTotalFill" style="width:0%"></div></div>
+      <span class="ct-num" id="clTotalNum">0 / 0</span>
+    </div>
+    <div id="checklistRoot"></div>
+  </section>
+
   <section id="view-tips" class="hidden">
+
+    <!-- 準備清單 -->
+    <div class="info-section">
+      <h3>🎒 出發前準備清單</h3>
+      <div class="checklist-tabs">
+        <button class="checklist-tab-btn active" onclick="switchChecklistTab('core')">🔑 隨身核心包</button>
+        <button class="checklist-tab-btn" onclick="switchChecklistTab('luggage')">🧳 大行李箱</button>
+        <button class="checklist-tab-btn" onclick="switchChecklistTab('water')">🏊 水樂園裝備</button>
+        <button class="checklist-tab-btn" onclick="switchChecklistTab('kids')">💊 小孩護理</button>
+      </div>
+
+      <!-- 進度條 -->
+      <div class="checklist-progress">
+        <div class="checklist-progress-bar-wrap">
+          <div class="checklist-progress-bar" id="checklistProgressBar" style="width:0%"></div>
+        </div>
+        <div class="checklist-progress-label" id="checklistProgressLabel">0 / 0 完成</div>
+      </div>
+
+      <!-- 隨身核心包 -->
+      <div class="checklist-group active" id="cl-core">
+        <div class="checklist-section-title">✈️ 絕對不能遺漏・全程隨身攜帶</div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="c1">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">🛂 護照正本 × 5 本</div>
+            <div class="checklist-item-note">全家 2大3小，確認有效期限 6 個月以上</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="c2">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title"><span class="checklist-badge red">自駕必備</span>台灣駕照正本</div>
+            <div class="checklist-item-note">租車登記大人必備，缺少譯本無法取車</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="c3">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title"><span class="checklist-badge red">自駕必備</span>日文駕照譯本</div>
+            <div class="checklist-item-note">提前去監理所辦理，規費約 NT$100</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="c4">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">💳 海外高回饋信用卡 × 2–3 張</div>
+            <div class="checklist-item-note">富邦J卡、吉鶴卡、玉山熊本熊卡等</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="c5">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">💴 日圓現金</div>
+            <div class="checklist-item-note">長島幼兒設施單次投幣 300–500 日圓，建議備硬幣</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="c6">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title"><span class="checklist-badge blue">出發前完成</span>eSIM QR Code</div>
+            <div class="checklist-item-note">確認收到 Klook eSIM 信件，截圖備用</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="c7">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title"><span class="checklist-badge blue">出發前完成</span>Visit Japan Web</div>
+            <div class="checklist-item-note">填妥全家入境申報，QR Code 截圖存手機</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 大行李箱 -->
+      <div class="checklist-group" id="cl-luggage">
+        <div class="checklist-section-title">🚗 汽車自駕相關</div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="l1">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">🛺 輕便摺疊推車（可登機款）</div>
+            <div class="checklist-item-note">5歲小孩長距離行走救星，放後車廂不佔空間</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="l2">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">📱 車用手機支架（夾式/磁吸）</div>
+            <div class="checklist-item-note">自駕用 Google Maps 導航必備神物</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="l3">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">🔌 車用多孔充電器 / 車充</div>
+            <div class="checklist-item-note">自駕途中全家手機同步充電</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="l4">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">☂️ 推車雨罩 / 遮陽罩</div>
+            <div class="checklist-item-note">梅雨季防雨、大太陽遮陽必備</div>
+          </div>
+        </div>
+        <div class="checklist-section-title">🔌 3C 數位設備</div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="l5">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">🔋 大容量行動電源 × 2</div>
+            <div class="checklist-item-note">⚠️ 必須隨身攜帶上飛機，不能托運</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="l6">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">🔌 充電線 + 多孔充電頭</div>
+            <div class="checklist-item-note">一顆多孔充電頭搞定全家設備</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="l7">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">📌 取卡針</div>
+            <div class="checklist-item-note">以備 eSIM 需要重啟或更換實體卡</div>
+          </div>
+        </div>
+        <div class="checklist-section-title">👕 衣物與生活用品</div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="l8">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">🧥 輕薄抗UV外套（大人小孩各一件）</div>
+            <div class="checklist-item-note">白天熱、室內冷氣強，早晚溫差大</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="l9">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">🌧 輕便雨衣 / 折疊傘</div>
+            <div class="checklist-item-note">樂園遇雷陣雨，雨衣比撐傘更好照顧小孩</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="l10">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">👟 舒適運動鞋（全家）</div>
+            <div class="checklist-item-note">每天基本一萬步起跳，穿習慣的鞋最重要</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="l11">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">👜 空摺疊旅行袋</div>
+            <div class="checklist-item-note">最後一天藥妝、樂高玩具爆買後緊急托運用</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 水樂園裝備 -->
+      <div class="checklist-group" id="cl-water">
+        <div class="checklist-section-title">🏊 長島溫泉水上樂園專用</div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="w1">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">👙 全家泳衣 / 泳褲</div>
+            <div class="checklist-item-note">建議長袖水母衣，防曬防磨效果最佳</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="w2">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">🥽 泳鏡 / 防水泳帽</div>
+            <div class="checklist-item-note">部分設施有規定需配戴</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="w3">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">📱 防水手機袋</div>
+            <div class="checklist-item-note">水上一邊顧小孩一邊拍照必備</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="w4">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">👡 輕便海灘鞋 / 防滑水鞋</div>
+            <div class="checklist-item-note">曝曬地面超燙，防滑水鞋保護小孩最安全</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="w5">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">🏊 充氣游泳圈 / 手臂圈（空的）</div>
+            <div class="checklist-item-note">5歲小孩造浪池必備，空的帶上飛機即可</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="w6">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">🛍 大防水袋</div>
+            <div class="checklist-item-note">玩完水後裝全家濕泳衣</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 小孩護理 -->
+      <div class="checklist-group" id="cl-kids">
+        <div class="checklist-section-title">💊 小孩安心保障</div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="k1">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title"><span class="checklist-badge red">重要</span>兒童常備藥</div>
+            <div class="checklist-item-note">退燒藥水、感冒藥、止瀉藥、止吐藥、抗組織胺。出發前請小兒科醫生開立「出國常備藥」</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="k2">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">🦟 防蚊液 + 水性防蚊貼片</div>
+            <div class="checklist-item-note">戶外樂園長時間玩耍必備</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="k3">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">🧴 防曬乳（海洋友善/兒童專用）</div>
+            <div class="checklist-item-note">水上樂園 + 陸地樂園長時間曝曬</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="k4">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">🧻 濕紙巾 / 酒精棉片</div>
+            <div class="checklist-item-note">超商吃東西、車上隨時擦手</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="k5">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">🧴 兒童屁屁膏 / 萬用膏</div>
+            <div class="checklist-item-note">防止大熱天行走摩擦、流汗起紅疹（如理膚寶水 B5）</div>
+          </div>
+        </div>
+      </div>
+
+      <button class="checklist-reset-btn" onclick="resetChecklist()">↺ 重置所有勾選</button>
+    </div>
+
+    <!-- 其他備忘 -->
     <div class="info-section">
       <h3>🚄 交通票券</h3>
       <div class="item">
         <div class="k">新幹線（大阪 ⇄ 名古屋）</div>
-        <div class="v">現場或 SMART EX APP 提前購買「東海道新幹線（希望號 NOZOMI）」單程票，自由席或指定席皆可，單程約 5,900–6,500 日圓。</div>
-      </div>
-      <div class="item">
-        <div class="k">自駕（Day 3）</div>
-        <div class="v">出發前換好駕照日本譯本。取車時需帶：<br>🪪 台灣駕照正本 + 譯本 + 護照<br>建議加購 ETC 卡 與 CEP（中日本高速公路周遊券）省過路費。</div>
+        <div class="v">Smart EX APP 預購「NOZOMI 希望號」，單程約 5,900–6,500 日圓。</div>
       </div>
       <div class="item">
         <div class="k">市區交通</div>
@@ -469,30 +899,11 @@
     </div>
     <div class="info-section">
       <h3>🌤 天氣與穿著</h3>
-      <p>6/27 – 7/5 正值日本梅雨季末期至初夏，氣溫約 22°C – 30°C。</p>
-      <div class="item">
-        <div class="k">衣物</div>
-        <div class="v">短袖、排汗透氣材質為主。室內冷氣強，建議帶薄外套。</div>
-      </div>
-      <div class="item">
-        <div class="k">必帶裝備</div>
-        <div class="v">☂️ 折疊傘 / 雨衣（梅雨陣雨）<br>👟 好走的運動鞋（Day 2/4/7/8 步行量大）</div>
-      </div>
-    </div>
-    <div class="info-section">
-      <h3>🎫 提前預訂</h3>
-      <div class="item">
-        <div class="k">長島溫泉樂園 / 樂高樂園</div>
-        <div class="v">建議出發前在 Klook 或 KKday 買好電子門票，現場掃 QR Code 入場省去排隊時間。</div>
-      </div>
-      <div class="item">
-        <div class="k">海遊館</div>
-        <div class="v">提早上網預約參觀場次，熱門時段現場排隊常會完售。</div>
-      </div>
+      <p>6/27 – 7/5 梅雨季末期至初夏，氣溫約 22°C – 30°C。短袖為主，室內冷氣強建議帶薄外套。</p>
     </div>
     <div class="info-section">
       <h3>🛍 伴手禮清單</h3>
-      <p>白色戀人 · 東京香蕉 · Royce 巧克力 · 抹茶系列<br>建議最後一天在 KIX 機場免稅店一次補齊，輕便又免稅。</p>
+      <p>白色戀人 · 東京香蕉 · Royce 巧克力 · 抹茶系列<br>建議最後一天在 KIX 機場免稅店一次補齊。</p>
     </div>
   </section>
 </main>
@@ -629,25 +1040,8 @@ const days = [
   },
   {
     n:6, date:"7/2", dow:"四", city:"osaka", cityLabel:"大阪",
-    title:"祈運與娛樂：勝尾寺與 Round1",
-    focus:"滿山祈願達摩、日式室內遊樂場放電",
-    hotel:"Eslead Hotel Namba East",
-    hotelAddress:"大阪府大阪市浪速區難波中 3-5-10",
-    hotelTel:null, hotelTelLink:null,
-    hotelMapUrl: gmap("Eslead Hotel Namba East Osaka"),
-    schedule:[
-      { time:"早上", title:"⛩ 勝尾寺（箕面市）", note:"御堂筋線至千里中央站，轉公車或計程車。滿山勝達摩 + 山景古剎",
-        mapUrl: gmap("勝尾寺 箕面"), addr:"大阪府箕面市粟生間谷 2977-1" },
-      { time:"下午", title:"🎳 Round1 Stadium 梅田店", note:"保齡球、棒球打擊、街機、Spo-cha 運動設施吃到飽",
-        mapUrl: gmap("Round1 Stadium 梅田"), addr:"大阪市北區梅田 3-1-3 ヨドバシ梅田 B1" },
-      { time:"晚上", title:"🥩 難波燒肉・居酒屋", note:"返難波吃燒肉或居酒屋",
-        mapUrl: gmap("難波 焼肉"), addr:"大阪市中央區難波周邊" }
-    ]
-  },
-  {
-    n:7, date:"7/3", dow:"五", city:"osaka", cityLabel:"大阪",
-    title:"港灣與購物：海遊館與門真新 Outlet",
-    focus:"巨大鯨鯊療癒、最新雙合一商場",
+    title:"港灣與購物：海遊館與門真 Outlet",
+    focus:"巨大鯨鯊療癒、天保山摩天輪、Nike Adidas 血拼",
     hotel:"Eslead Hotel Namba East",
     hotelAddress:"大阪府大阪市浪速區難波中 3-5-10",
     hotelTel:null, hotelTelLink:null,
@@ -659,6 +1053,37 @@ const days = [
         mapUrl: gmap("天保山大観覧車 大阪"), addr:"大阪市港區海岸通 2-1-10" },
       { time:"下午", title:"🛍 三井 Outlet Park 大阪鶴見 / LaLaport 門真", note:"Nike、Adidas 齊全 + 美食街",
         mapUrl: gmap("三井アウトレットパーク 大阪鶴見"), addr:"大阪市鶴見區茨田大宮 2-7-70" }
+    ]
+  },
+  {
+    n:7, date:"7/3", dow:"五", city:"osaka", cityLabel:"奈良",
+    title:"山頂樂園 × 奈良鹿：生駒山上遊樂園 + 奈良公園",
+    focus:"近鐵一日券、百年山頂樂園纜車、奈良餵鹿",
+    hotel:"Eslead Hotel Namba East",
+    hotelAddress:"大阪府大阪市浪速區難波中 3-5-10",
+    hotelTel:null, hotelTelLink:null,
+    hotelMapUrl: gmap("Eslead Hotel Namba East Osaka"),
+    schedule:[
+      { time:"09:00", title:"🎟 出發前：購買近鐵一日券", note:"難波站購買，¥1,800／人，含纜車＋奈良巴士，全程通用",
+        mapUrl: gmap("近鉄大阪難波駅"), addr:"大阪市中央區難波 5-1-60" },
+      { time:"09:20", title:"🚃 近鐵難波 → 生駒站", note:"近鐵快速急行，約 20–24 分鐘",
+        mapUrl: gmap("近鉄大阪難波駅"), addr:"大阪市中央區難波 5-1-60" },
+      { time:"09:50", title:"🚠 生駒纜車 → 生駒山上站", note:"鳥居前站搭纜車，寶山寺站換乘山上線，約 16 分鐘",
+        mapUrl: gmap("生駒ケーブル 鳥居前駅"), addr:"奈良縣生駒市門前町 1-1" },
+      { time:"10:10", title:"🎢 生駒山上遊樂園", note:"海拔 642m 百年山頂樂園・入園免費・飛行塔、空中單軌單車、空中鞦韆，俯瞰大阪平原 + 奈良盆地",
+        mapUrl: gmap("生駒山上遊園地"), addr:"奈良縣生駒市菜畑 2312-1",
+        guide: "ikoma-guide" },
+      { time:"13:00", title:"🍱 園內或山下午餐", note:"下山後生駒站周邊用餐，補充體力準備奈良" },
+      { time:"14:00", title:"🚃 生駒站 → 近鐵奈良站", note:"近鐵奈良線，約 25 分鐘直達",
+        mapUrl: gmap("近鉄奈良駅"), addr:"奈良市東向中町 29" },
+      { time:"14:30", title:"🦌 奈良公園・餵鹿去！", note:"鹿仙貝 ¥200／束，東大寺大佛殿步行可達・1,200 頭神鹿自由漫步",
+        mapUrl: gmap("奈良公園"), addr:"奈良市雜司町 469" },
+      { time:"16:00", title:"⛩ 東大寺大佛殿（可選）", note:"世界最大木造建築，日本必看景點",
+        mapUrl: gmap("東大寺大仏殿 奈良"), addr:"奈良市雑司町 406-1" },
+      { time:"17:30", title:"🚃 近鐵奈良 → 大阪難波", note:"近鐵直達，約 35 分鐘返回難波",
+        mapUrl: gmap("近鉄奈良駅"), addr:"奈良市東向中町 29" },
+      { time:"晚上", title:"🍜 難波晚餐收尾", note:"道頓堀或心齋橋周邊用餐",
+        mapUrl: gmap("道頓堀 大阪"), addr:"大阪市中央區道頓堀 1-7" }
     ]
   },
   {
@@ -706,7 +1131,75 @@ const scroller = document.getElementById("dayScroller");
 const viewDay = document.getElementById("view-day");
 const viewOverview = document.getElementById("view-overview");
 const viewTips = document.getElementById("view-tips");
+const viewChecklist = document.getElementById("view-checklist");
 const overviewList = document.getElementById("overviewList");
+
+// ── Checklist ──
+const STORAGE_KEY = 'packlist_v1';
+
+function getChecked() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) { return {}; }
+}
+function saveChecked(obj) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(obj)); } catch(e) {}
+}
+
+function toggleCheck(el) {
+  const id = el.dataset.id;
+  const checked = getChecked();
+  if (checked[id]) { delete checked[id]; } else { checked[id] = true; }
+  saveChecked(checked);
+  el.classList.toggle('checked', !!checked[id]);
+  el.querySelector('.checklist-checkbox').textContent = checked[id] ? '✓' : '';
+  updateChecklistProgress();
+}
+
+function updateChecklistProgress() {
+  const activeGroup = document.querySelector('.checklist-group.active');
+  if (!activeGroup) return;
+  const items = activeGroup.querySelectorAll('.checklist-item');
+  const checked = getChecked();
+  let done = 0;
+  items.forEach(item => { if (checked[item.dataset.id]) done++; });
+  const total = items.length;
+  const pct = total ? Math.round(done/total*100) : 0;
+  const bar = document.getElementById('checklistProgressBar');
+  const label = document.getElementById('checklistProgressLabel');
+  if (bar) bar.style.width = pct + '%';
+  if (label) label.textContent = done + ' / ' + total + ' 完成';
+}
+
+function initChecklist() {
+  const checked = getChecked();
+  document.querySelectorAll('.checklist-item').forEach(el => {
+    const id = el.dataset.id;
+    if (checked[id]) {
+      el.classList.add('checked');
+      el.querySelector('.checklist-checkbox').textContent = '✓';
+    }
+  });
+  updateChecklistProgress();
+}
+
+function switchChecklistTab(tab) {
+  const groups = { core:'cl-core', luggage:'cl-luggage', water:'cl-water', kids:'cl-kids' };
+  document.querySelectorAll('.checklist-group').forEach(g => g.classList.remove('active'));
+  document.querySelectorAll('.checklist-tab-btn').forEach(b => b.classList.remove('active'));
+  const el = document.getElementById(groups[tab]);
+  if (el) el.classList.add('active');
+  event.currentTarget.classList.add('active');
+  updateChecklistProgress();
+}
+
+function resetChecklist() {
+  if (!confirm('確定要重置所有勾選嗎？')) return;
+  try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+  document.querySelectorAll('.checklist-item').forEach(el => {
+    el.classList.remove('checked');
+    el.querySelector('.checklist-checkbox').textContent = '';
+  });
+  updateChecklistProgress();
+}
 
 function switchTicketTab(tab) {
   const tabs = { '711': ['ticketContent711','tab711'], 'lawson': ['ticketContentLawson','tabLawson'], 'tips': ['ticketContentTips','tabTips'] };
@@ -716,6 +1209,146 @@ function switchTicketTab(tab) {
     if (el) el.style.display = k===tab ? 'block' : 'none';
     if (btn) { btn.style.background = k===tab ? '#1a1a1a' : 'transparent'; btn.style.color = k===tab ? '#fff' : '#6b6a64'; }
   });
+}
+
+
+// ── Checklist ──
+const CHECKLIST_KEY = 'travel_checklist_v1';
+
+const checklistData = [
+  {
+    id: 'core', icon: '🎒', title: '隨身核心包', sub: '絕對不能遺漏・上飛機前確認',
+    items: [
+      { id:'passport', title:'護照正本', must:true, note:'全家人共 5 本，有效期限需超過 6 個月' },
+      { id:'license', title:'台灣駕照正本', must:true, note:'【自駕必備】租車登記的大人務必攜帶' },
+      { id:'license_jp', title:'日文駕照譯本', must:true, note:'【自駕必備】提前至監理所辦好，規費約 NT$100' },
+      { id:'credit_card', title:'海外高回饋信用卡', note:'準備 2–3 張（富邦J卡、吉鶴卡、玉山熊本熊卡等）' },
+      { id:'cash_yen', title:'日圓現金', note:'建議備部分現鈔，長島部分幼兒設施需硬幣（300–500 日圓）' },
+      { id:'esim', title:'手機與 eSIM QR Code', note:'出發前截圖保存或印出，確保可離線查看' },
+      { id:'vjw', title:'Visit Japan Web 截圖', note:'填妥全家入境與海關申報，QR Code 截圖存手機' },
+    ]
+  },
+  {
+    id: 'car', icon: '🚗', title: '汽車自駕與推車', sub: 'Day 3 自駕必備',
+    items: [
+      { id:'stroller', title:'輕便摺疊推車', note:'可登機、一秒收折的傘車・放後車廂不佔空間' },
+      { id:'phone_holder', title:'車用手機支架', note:'夾式或磁吸式，搭配 Google Maps 導航超方便' },
+      { id:'car_charger', title:'車用多孔充電器／車充', note:'自駕時全家手機與網卡同時充電' },
+      { id:'stroller_cover', title:'推車雨罩／遮陽罩', note:'6 月底梅雨季或大太陽，防雨防曬必備' },
+    ]
+  },
+  {
+    id: 'water', icon: '🏊', title: '水上樂園專用', sub: 'Day 3 長島溫泉必備',
+    items: [
+      { id:'swimwear', title:'全家人泳衣／泳褲', note:'建議「長袖水母衣」防曬效果最好' },
+      { id:'swim_goggle', title:'泳鏡／防水泳帽', note:'部分設施有強制規定' },
+      { id:'waterproof_bag_phone', title:'防水手機袋', note:'顧小孩同時拍照查資訊，一機多用' },
+      { id:'water_shoes', title:'輕便海灘鞋／防滑水鞋', note:'樂園地面曝曬高溫，小孩尤其需要' },
+      { id:'swim_ring', title:'充氣游泳圈／手臂圈', note:'5 歲小孩玩造浪池必備，空的上飛機不佔行李' },
+      { id:'waterproof_bag', title:'多用途大防水袋', note:'玩完水裝全家濕泳衣用' },
+    ]
+  },
+  {
+    id: 'kids', icon: '💊', title: '小孩與日常護理', sub: '帶小孩出門的安心保障',
+    items: [
+      { id:'medicine', title:'兒童常備藥', must:true, note:'去小兒科請醫生開：退燒藥水、感冒藥、止瀉藥、止吐藥、抗組織胺' },
+      { id:'mosquito', title:'防蚊液、水性防蚊貼片', note:'戶外樂園必備' },
+      { id:'sunscreen', title:'防曬乳（海洋友善／兒童專用）', note:'水上樂園與陸地樂園曝曬時間長' },
+      { id:'wet_wipes', title:'濕紙巾／酒精棉片', note:'超商吃東西、車上擦手必備' },
+      { id:'butt_cream', title:'兒童屁屁膏／萬用膏', note:'防止大熱天摩擦起紅疹（如理膚寶水B5）' },
+    ]
+  },
+  {
+    id: 'tech', icon: '🔌', title: '3C 數位設備', sub: '電力保障',
+    items: [
+      { id:'powerbank', title:'行動電源 × 2', must:true, note:'必須隨身帶上飛機不能托運，一整天查地圖拍照超耗電' },
+      { id:'charger', title:'充電線與多孔充電頭', note:'一顆多孔充電頭同時搞定全家設備' },
+      { id:'sim_pin', title:'取卡針', note:'以防 eSIM 需要重啟或更換實體卡時備用' },
+    ]
+  },
+  {
+    id: 'clothes', icon: '👕', title: '衣物與生活用品', sub: '舒適出行',
+    items: [
+      { id:'uv_jacket', title:'輕薄抗UV外套', note:'白天熱、早晚車上冷氣強，大人小孩各一件' },
+      { id:'raincoat', title:'輕便雨衣／折疊傘', note:'樂園遇雷陣雨，雨衣比撐傘更方便照顧小孩' },
+      { id:'shoes', title:'舒適好走的運動鞋', note:'每天一萬步起跳，穿習慣的最重要' },
+      { id:'extra_bag', title:'空摺疊旅行袋', note:'塞行李箱底部，最後一天買藥妝玩具時備用' },
+    ]
+  }
+];
+
+function loadChecked() {
+  try { return JSON.parse(localStorage.getItem(CHECKLIST_KEY) || '{}'); } catch(e) { return {}; }
+}
+function saveChecked(checked) {
+  try { localStorage.setItem(CHECKLIST_KEY, JSON.stringify(checked)); } catch(e) {}
+}
+
+function renderChecklist() {
+  const checked = loadChecked();
+  const root = document.getElementById('checklistRoot');
+  if (!root) return;
+
+  const totalItems = checklistData.reduce((a,s)=>a+s.items.length,0);
+  const totalChecked = Object.values(checked).filter(Boolean).length;
+  const pct = totalItems ? Math.round(totalChecked/totalItems*100) : 0;
+  const fillEl = document.getElementById('clTotalFill');
+  const numEl = document.getElementById('clTotalNum');
+  if (fillEl) fillEl.style.width = pct + '%';
+  if (numEl) numEl.textContent = totalChecked + ' / ' + totalItems;
+
+  root.innerHTML = checklistData.map(section => {
+    const doneCount = section.items.filter(i => checked[i.id]).length;
+    const total = section.items.length;
+    const allDone = doneCount === total;
+
+    return `
+      <div class="cl-section${allDone ? ' open' : ' open'}" id="cls-${section.id}">
+        <div class="cl-section-header" onclick="toggleClSection('${section.id}')">
+          <div class="cl-section-header-left">
+            <span class="cl-section-icon">${section.icon}</span>
+            <div>
+              <div class="cl-section-title">${section.title}${allDone ? ' <span style="color:#16a34a;font-size:13px">✓</span>' : ''}</div>
+              <div class="cl-section-sub">${section.sub}</div>
+            </div>
+          </div>
+          <div class="cl-section-badge">
+            <span class="cl-progress-text">${doneCount}/${total}</span>
+            <span class="cl-chevron">▼</span>
+          </div>
+        </div>
+        <div class="cl-items">
+          ${section.items.map(item => `
+            <div class="cl-item${checked[item.id] ? ' checked' : ''}" onclick="toggleCheck('${item.id}')">
+              <div class="cl-checkbox"><span class="cl-checkbox-tick">✓</span></div>
+              <div class="cl-item-body">
+                <div class="cl-item-title">${item.title}${item.must ? '<span class="cl-badge-must">必備</span>' : ''}</div>
+                ${item.note ? `<div class="cl-item-note">${item.note}</div>` : ''}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function toggleCheck(id) {
+  const checked = loadChecked();
+  checked[id] = !checked[id];
+  saveChecked(checked);
+  renderChecklist();
+}
+
+function toggleClSection(sectionId) {
+  const el = document.getElementById('cls-' + sectionId);
+  if (el) el.classList.toggle('open');
+}
+
+function resetChecklist() {
+  if (confirm('確定要重置所有勾選？')) {
+    saveChecked({});
+    renderChecklist();
+  }
 }
 
 function renderScroller() {
@@ -728,7 +1361,8 @@ function renderScroller() {
   scroller.querySelectorAll(".day-pill").forEach(el => {
     el.addEventListener("click", () => {
       activeDay = parseInt(el.dataset.day);
-      renderScroller(); renderDay();
+      renderChecklist();
+renderScroller(); renderDay();
       const active = scroller.querySelector(".day-pill.active");
       if (active) active.scrollIntoView({behavior:"smooth", inline:"center", block:"nearest"});
       window.scrollTo({top:0, behavior:"smooth"});
@@ -799,6 +1433,103 @@ function guideData(key) {
             <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Hotel+Intergate+Osaka+Umeda" target="_blank" style="margin-top:8px"><span>🗺</span><span>在 Google Maps 開啟導航</span></a>
           </div>
         </div>`
+    },
+    "ikoma-guide": {
+      icon: "🚠",
+      title: "生駒山上遊樂園 完整攻略",
+      sub: "交通路線・票券・必玩設施一次看",
+      color: "#0891b2",
+      body: `
+        <!-- 路線圖 -->
+        <div style="background:linear-gradient(135deg,#0891b2,#0e7490);border-radius:12px;padding:14px 16px;margin-bottom:16px;color:#fff">
+          <div style="font-size:11px;opacity:0.8;letter-spacing:1px;margin-bottom:10px">近鐵一日券 全程通用 · ¥1,800／人</div>
+          <div style="display:flex;flex-direction:column;gap:6px;font-size:12px">
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="background:rgba(255,255,255,0.2);border-radius:8px;padding:3px 8px;font-size:11px;font-weight:600;white-space:nowrap">近鐵難波</span>
+              <span style="opacity:0.7">──快速急行 約 22 分──</span>
+              <span style="background:rgba(255,255,255,0.2);border-radius:8px;padding:3px 8px;font-size:11px;font-weight:600;white-space:nowrap">生駒站</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="background:rgba(255,255,255,0.2);border-radius:8px;padding:3px 8px;font-size:11px;font-weight:600;white-space:nowrap">鳥居前站</span>
+              <span style="opacity:0.7">──生駒纜車 約 16 分──</span>
+              <span style="background:rgba(255,255,255,0.2);border-radius:8px;padding:3px 8px;font-size:11px;font-weight:600;white-space:nowrap">生駒山上站 🎢</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 纜車提醒 -->
+        <div class="tc-tip" style="margin-bottom:14px">
+          <span class="tip-icon">⚠️</span>
+          <span>纜車分兩段：<strong>寶山寺線</strong>（鳥居前→寶山寺）+ <strong>山上線</strong>（寶山寺→生駒山上），在寶山寺站下車直接往上走換乘，很簡單！</span>
+        </div>
+
+        <!-- 基本資訊 -->
+        <div style="border:0.5px solid #e8e5da;border-radius:12px;overflow:hidden;margin-bottom:14px">
+          <div style="padding:11px 14px;border-bottom:0.5px solid #f0ede2">
+            <div style="font-size:11px;color:#888;margin-bottom:4px">📍 地址</div>
+            <div style="font-size:13px;font-weight:600">奈良縣生駒市菜畑 2312-1</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:0.5px solid #f0ede2">
+            <div style="padding:11px 14px;border-right:0.5px solid #f0ede2">
+              <div style="font-size:11px;color:#888;margin-bottom:4px">🎟 入園費</div>
+              <div style="font-size:14px;font-weight:700;color:#0891b2">免費</div>
+            </div>
+            <div style="padding:11px 14px">
+              <div style="font-size:11px;color:#888;margin-bottom:4px">🚠 纜車（一日券涵蓋）</div>
+              <div style="font-size:13px;font-weight:600">¥0（含於一日券）</div>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr">
+            <div style="padding:11px 14px;border-right:0.5px solid #f0ede2">
+              <div style="font-size:11px;color:#888;margin-bottom:4px">🎠 暢玩護照</div>
+              <div style="font-size:12px;font-weight:600">大人 ¥4,000<br>小學生 ¥3,800<br>幼兒 ¥2,800</div>
+            </div>
+            <div style="padding:11px 14px">
+              <div style="font-size:11px;color:#888;margin-bottom:4px">🎫 超值共用券</div>
+              <div style="font-size:12px;font-weight:600">12 次共用<br>¥3,500<br>家人可共用</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 必玩設施 -->
+        <div style="font-size:12px;font-weight:700;color:#444;margin-bottom:8px">🎢 必玩設施</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px">
+          <div style="display:flex;gap:10px;align-items:flex-start;background:#f5f5f0;border-radius:10px;padding:10px 12px">
+            <span style="font-size:20px;flex-shrink:0">🗼</span>
+            <div>
+              <div style="font-size:13px;font-weight:600">飛行塔</div>
+              <div style="font-size:11.5px;color:#555;margin-top:2px">日本現存最古老大型遊樂設施（近百年），30m 高空俯瞰大阪灣</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:flex-start;background:#f5f5f0;border-radius:10px;padding:10px 12px">
+            <span style="font-size:20px;flex-shrink:0">🚲</span>
+            <div>
+              <div style="font-size:13px;font-weight:600">空中單軌單車</div>
+              <div style="font-size:11.5px;color:#555;margin-top:2px">IG 爆紅！在半空中踩單車，黃昏時可賞絕美夕陽</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:flex-start;background:#f5f5f0;border-radius:10px;padding:10px 12px">
+            <span style="font-size:20px;flex-shrink:0">🌲</span>
+            <div>
+              <div style="font-size:13px;font-weight:600">PLAY PEAK ITADAKI</div>
+              <div style="font-size:11.5px;color:#555;margin-top:2px">日本最大規模戶外遊樂場，大人小孩都能盡情放電</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 營業時間提醒 -->
+        <div style="background:#FEF3C7;border-radius:10px;padding:11px 14px;border:0.5px solid #FCD34D">
+          <div style="font-size:12px;font-weight:700;color:#92400e;margin-bottom:4px">⏰ 營業時間（夏季）</div>
+          <div style="font-size:12px;color:#78350f;line-height:1.8">
+            平日：10:00–17:00（週四公休）<br>
+            週六日：10:00–20:00<br>
+            7/3（五）➜ <strong>開放至 17:00</strong>，建議 13:00 前下山前往奈良
+          </div>
+        </div>
+
+        <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=%E7%94%9F%E9%A7%92%E5%B1%B1%E4%B8%8A%E9%81%8A%E5%9C%92%E5%9C%B0" target="_blank" style="margin-top:12px;display:inline-flex">
+          <span>🗺</span><span>在 Google Maps 開啟導航</span>
+        </a>`
     },
     "ticket-convenience": {
       icon: "🏪",
@@ -1421,6 +2152,7 @@ function renderGuide(key) {
     "#0e7490": { bg: "#ECFEFF", border: "#A5F3FC", text: "#155e75" },
     "#b45309": { bg: "#FEF3C7", border: "#FCD34D", text: "#78350f" },
     "#16a34a": { bg: "#F0FDF4", border: "#86EFAC", text: "#15803d" },
+    "#0891b2": { bg: "#ECFEFF", border: "#A5F3FC", text: "#0e7490" },
     "#27ae60": { bg: "#E8F8EF", border: "#A8E6C0", text: "#1a5c38" }
   };
   const c = colorMap[g.color] || { bg: "#EBF4FF", border: "#C3DEFF", text: "#0C4E8C" };
@@ -1548,6 +2280,7 @@ function setTab(t) {
   document.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b.dataset.tab === t));
   viewDay.classList.toggle("hidden", t !== "day");
   viewOverview.classList.toggle("hidden", t !== "overview");
+  viewChecklist.classList.toggle("hidden", t !== "checklist");
   viewTips.classList.toggle("hidden", t !== "tips");
 }
 
@@ -1560,6 +2293,7 @@ fab.addEventListener("click", () => window.scrollTo({top:0, behavior:"smooth"}))
 renderScroller();
 renderDay();
 renderOverviewList();
+initChecklist();
 </script>
 </body>
 </html>
