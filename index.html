@@ -1028,13 +1028,15 @@ const days = [
     hotelTel:null, hotelTelLink:null,
     hotelMapUrl: gmap("Eslead Hotel Namba East Osaka"),
     schedule:[
-      { time:"早上", title:"🚄 名古屋 → 新大阪（新幹線）", note:"約 50 分鐘，再轉難波",
+      { time:"早上", title:"🚄 名古屋 → 新大阪（新幹線 NOZOMI）", note:"近鐵名古屋站步行至 JR 名古屋站，新幹線約 50 分鐘",
         mapUrl: gmap("名古屋駅"), addr:"名古屋市中村區名駅 1-1-4" },
+      { time:"11:00", title:"🚃 新大阪 → 難波（御堂筋線）", note:"地鐵御堂筋線 なんば站，約 13 分鐘，¥280",
+        mapUrl: gmap("新大阪駅"), addr:"大阪市淀川區西中島 5-16-1" },
       { time:"中午", title:"🏨 飯店 Check-in", note:"Eslead Hotel Namba East 放行李",
         mapUrl: gmap("Eslead Hotel Namba East Osaka"), addr:"大阪市浪速區難波中 3-5-10" },
-      { time:"下午", title:"👟 STEP SPORTS 梅田店", note:"運動鞋、茶屋町扭蛋天堂大撈",
+      { time:"下午", title:"👟 STEP SPORTS 梅田店", note:"🚃 難波 → 梅田（御堂筋線）約 7 分，¥230",
         mapUrl: gmap("STEP SPORTS 梅田"), addr:"大阪市北區茶屋町 1-27" },
-      { time:"晚上", title:"🐙 道頓堀・心齋橋", note:"固力果合照、吉伊卡哇專賣店、章魚燒大阪燒",
+      { time:"晚上", title:"🐙 道頓堀・心齋橋", note:"🚃 梅田 → 難波（御堂筋線）約 7 分，步行至道頓堀 5 分鐘",
         mapUrl: gmap("道頓堀 大阪"), addr:"大阪市中央區道頓堀 1-7" }
     ]
   },
@@ -1047,12 +1049,15 @@ const days = [
     hotelTel:null, hotelTelLink:null,
     hotelMapUrl: gmap("Eslead Hotel Namba East Osaka"),
     schedule:[
-      { time:"09:30", title:"🦈 海遊館（大阪港）", note:"世界最大級水族館，鯨鯊、水母",
+      { time:"09:00", title:"🚃 難波 → 大阪港（地鐵）", note:"千日前線 難波→阿波座（5 分）換乘中央線→大阪港（10 分），共約 20 分・¥290",
+        mapUrl: gmap("なんば駅 大阪メトロ"), addr:"大阪市中央區難波 5-1-60" },
+      { time:"09:30", title:"🦈 海遊館（大阪港）", note:"大阪港站步行約 9 分・世界最大級水族館，鯨鯊、水母",
         mapUrl: gmap("海遊館 大阪港"), addr:"大阪市港區海岸通 1-1-10" },
-      { time:"12:00", title:"🎡 天保山摩天輪", note:"天保山購物中心午餐，俯瞰大阪港",
+      { time:"12:00", title:"🎡 天保山摩天輪", note:"步行約 3 分・天保山購物中心午餐，俯瞰大阪港",
         mapUrl: gmap("天保山大観覧車 大阪"), addr:"大阪市港區海岸通 2-1-10" },
-      { time:"下午", title:"🛍 三井 Outlet Park 大阪鶴見 / LaLaport 門真", note:"Nike、Adidas 齊全 + 美食街",
-        mapUrl: gmap("三井アウトレットパーク 大阪鶴見"), addr:"大阪市鶴見區茨田大宮 2-7-70" }
+      { time:"下午", title:"🛍 三井 Outlet Park 大阪鶴見", note:"🚃 大阪港→本町（中央線）→今里筋線→ 鶴見緑地站，約 30 分・步行 5 分",
+        mapUrl: gmap("三井アウトレットパーク 大阪鶴見"), addr:"大阪市鶴見區茨田大宮 2-7-70" },
+      { time:"晚上", title:"🚃 返回難波", note:"鶴見緑地→今里→千日前線→難波，約 25 分・¥290" }
     ]
   },
   {
@@ -1095,14 +1100,15 @@ const days = [
     hotelTel:null, hotelTelLink:null,
     hotelMapUrl: gmap("Eslead Hotel Namba East Osaka"),
     schedule:[
-      { time:"09:30", title:"🦁 難波八阪神社", note:"巨大獅子殿張口吸厄運招好運",
+      { time:"09:30", title:"🦁 難波八阪神社", note:"飯店步行約 8 分鐘即達",
         mapUrl: gmap("難波八阪神社"), addr:"大阪市浪速區萬頭通 2-9-19" },
-      { time:"11:00", title:"🥩 黑門市場", note:"現烤黑毛和牛、巨型生蠔、海膽、日本水果",
+      { time:"11:00", title:"🥩 黑門市場", note:"步行約 10 分・現烤黑毛和牛、巨型生蠔、海膽、日本水果",
         mapUrl: gmap("黒門市場 大阪"), addr:"大阪市中央區日本橋 2-4-1" },
-      { time:"13:30", title:"🛍 Namba Walk 地下街", note:"3COINS、無印良品、大創狂掃",
+      { time:"13:30", title:"🛍 Namba Walk 地下街", note:"步行約 5 分・3COINS、無印良品、大創狂掃",
         mapUrl: gmap("なんばウォーク 大阪"), addr:"大阪市中央區難波 5-1-60（地下）" },
-      { time:"傍晚", title:"🗼 通天閣・新世界", note:"TOWER SLIDER 巨型溜滑梯、元祖串炸、昭和霓虹夜景",
-        mapUrl: gmap("通天閣 大阪"), addr:"大阪市浪速區惠美須東 1-18-6" }
+      { time:"傍晚", title:"🗼 通天閣・新世界", note:"🚃 難波→恵美須町（堺筋線）約 8 分・¥190，出口 3 番徒步 3 分",
+        mapUrl: gmap("通天閣 大阪"), addr:"大阪市浪速區惠美須東 1-18-6" },
+      { time:"夜晚", title:"🚃 返回難波", note:"恵美須町→日本橋（堺筋線 1 站）→千日前線→難波，約 10 分" }
     ]
   },
   {
@@ -1113,9 +1119,9 @@ const days = [
     hotelAddress:null, hotelTel:null, hotelTelLink:null, hotelMapUrl:null,
     schedule:[
       { time:"09:00", title:"🧳 飯店 Check-out & 打包", note:"行李最後秤重・確認不遺漏" },
-      { time:"10:00", title:"🔔 接送提醒", note:"司機預計 11:00 抵達飯店・提前在大廳等候",
+      { time:"10:00", title:"🔔 接送提醒", note:"司機預計 11:00 飯店門口等候・提前在大廳集合整理行李",
         guide: "airport-transfer-d9" },
-      { time:"11:00", title:"🚐 機場接送專車 出發", note:"Eslead Hotel Namba East → 關西機場 KIX" },
+      { time:"11:00", title:"🚐 機場接送專車 出發", note:"Eslead Hotel Namba East → 關西機場 KIX・約 60 分鐘" },
       { time:"12:00", title:"✈️ 抵達機場・辦理登機", note:"免稅購物：白色戀人、東京香蕉、Royce",
         mapUrl: gmap("Kansai International Airport"), addr:"大阪府泉佐野市泉州空港北 1" },
       { time:"14:00", title:"🛫 飛機起飛", note:"" },
