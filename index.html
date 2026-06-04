@@ -949,7 +949,7 @@ const days = [
         guide: "jr-haruka" },
       { time:"20:00", title:"🚐 機場接送專車 出發", note:"Toyota Hiace 14 人座・司機於出口接機",
         guide: "airport-transfer" },
-      { time:"21:00", title:"🏨 抵達・飯店 Check-in", note:"Intergate Osaka Umeda・專車直送門口",
+      { time:"21:00", title:"🏨 抵達・飯店 Check-in + 停車", note:"Intergate Osaka Umeda・建議停附近 Times 停車場",
         mapUrl: gmap("Hotel Intergate Osaka Umeda"), addr:"大阪市北區梅田 2-5-2" },
       { time:"深夜", title:"🍜 梅田簡單晚餐", note:"拉麵或松屋、便利商店補貨",
         mapUrl: gmap("梅田 ラーメン"), addr:"梅田周邊" }
@@ -963,6 +963,7 @@ const days = [
     hotelAddress:"愛知縣名古屋市中村區名駅 4-27-1",
     hotelTel:null, hotelTelLink:null,
     hotelMapUrl: gmap("Minn STATION Ai Nagoya"),
+    hotelParking: { name:"タイムズ名古屋ユニモール（TOYOTA租車同棟）", addr:"名古屋市中村區名駅 4-5-26", fee:"平日最大 ¥1,500・假日 ¥2,000／24h", walk:"與取車店同棟，最方便", mapUrl:"https://www.google.com/maps/search/?api=1&query=%E3%83%88%E3%83%A8%E3%82%BF%E3%83%AC%E3%83%B3%E3%82%BF%E3%82%AB%E3%83%BC+%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85%E5%89%8D%E5%BA%97" },
     schedule:[
       { time:"12:24", title:"🚄 NOZOMI 386 號｜新大阪 → 名古屋", note:"13:13 抵達名古屋・約 49 分鐘",
         mapUrl: gmap("新大阪駅"), addr:"大阪市淀川區西中島 5-16-1",
@@ -972,7 +973,10 @@ const days = [
         mapUrl: gmap("トヨタレンタカー 名古屋駅前店"), addr:"名古屋市中村區名駅 4-5-26 ユニモール桜ビル",
         guide: "car-rental" },
       { time:"14:30", title:"🏨 開車前往飯店 Check-in", note:"STATION Ai Hotel・停好車正式入住",
-        mapUrl: gmap("Minn STATION Ai Nagoya"), addr:"名古屋市中村區名駅 4-27-1" },
+        mapUrl: gmap("Minn STATION Ai Nagoya"), addr:"名古屋市中村區名駅 4-27-1",
+        parking: { name:"タイムズ名古屋駅ユニモール", addr:"名古屋市中村區名駅 4-5-26", fee:"平日最大 ¥1,500・假日 ¥2,000／24h", walk:"TOYOTA 租車店同棟", mapUrl: gmap("タイムズ名古屋ユニモール駐車場") } },
+      { time:"停車", title:"🅿️ 建議停車場：名古屋市營大須停車場", note:"全程大須商店街步行即達・平日最大 ¥1,000・202 台・名古屋市營管理",
+        mapUrl: gmap("名古屋市営大須駐車場 中区大須3丁目14"), addr:"名古屋市中區大須 3-14-12" },
       { time:"下午", title:"🛍 大須商店街", note:"炸雞、鯛魚燒、扭蛋、動漫周邊、藥妝採購",
         mapUrl: gmap("大須商店街 名古屋"), addr:"名古屋市中區大須 2–18–42" },
       { time:"傍晚", title:"🌆 中部電力 MIRAI TOWER", note:"電視塔 + Oasis 21 水之宇宙船夜景",
@@ -989,10 +993,13 @@ const days = [
     hotelAddress:"愛知縣名古屋市中村區名駅 4-27-1",
     hotelTel:null, hotelTelLink:null,
     hotelMapUrl: gmap("Minn STATION Ai Nagoya"),
+    hotelParking: { name:"タイムズ名古屋ユニモール（TOYOTA租車同棟）", addr:"名古屋市中村區名駅 4-5-26", fee:"平日最大 ¥1,500・假日 ¥2,000／24h", walk:"與取車店同棟，最方便", mapUrl:"https://www.google.com/maps/search/?api=1&query=%E3%83%88%E3%83%A8%E3%82%BF%E3%83%AC%E3%83%B3%E3%82%BF%E3%82%AB%E3%83%BC+%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85%E5%89%8D%E5%BA%97" },
     schedule:[
       { time:"前一晚", title:"🏪 超商購票（出發前完成）", note:"7-11 / 全家 / Lawson 機台現場列印門票",
         guide: "ticket-convenience" },
       { time:"08:30", title:"🚗 名古屋市區取車出發", note:"自駕前往三重縣長島，約 40–50 分鐘" },
+      { time:"停車", title:"🅿️ 長島溫泉樂園停車場（免費）", note:"園區附設大型免費停車場，直接開進去即可",
+        mapUrl: gmap("ナガシマスパーランド 駐車場"), addr:"三重縣桑名市長島町浦安 333" },
       { time:"白天", title:"🎢 長島溫泉樂園 Nagashima Spa Land", note:"Steel Dragon 2000、水樂園消暑",
         mapUrl: gmap("Nagashima Spa Land 三重"), addr:"三重縣桑名市長島町浦安 333",
         guide: "nagashima" },
@@ -1009,9 +1016,11 @@ const days = [
     hotelAddress:"愛知縣名古屋市中村區名駅 4-27-1",
     hotelTel:null, hotelTelLink:null,
     hotelMapUrl: gmap("Minn STATION Ai Nagoya"),
+    hotelParking: { name:"タイムズ名古屋ユニモール（TOYOTA租車同棟）", addr:"名古屋市中村區名駅 4-5-26", fee:"平日最大 ¥1,500・假日 ¥2,000／24h", walk:"與取車店同棟，最方便", mapUrl:"https://www.google.com/maps/search/?api=1&query=%E3%83%88%E3%83%A8%E3%82%BF%E3%83%AC%E3%83%B3%E3%82%BF%E3%82%AB%E3%83%BC+%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85%E5%89%8D%E5%BA%97" },
     schedule:[
-      { time:"09:00", title:"🚆 青波線至金城埠頭站", note:"從名古屋站直達，約 24 分鐘",
-        mapUrl: gmap("金城ふ頭駅 名古屋"), addr:"名古屋市港區金城ふ頭 2" },
+      { time:"09:00", title:"🚗 自駕前往金城埠頭", note:"從名古屋市區出發，約 20 分鐘" },
+      { time:"停車", title:"🅿️ レゴランド公式駐車場（付費）", note:"園區官方停車場・平日 ¥1,000 / 休日 ¥1,500 一天・直接開入",
+        mapUrl: gmap("レゴランド ジャパン 駐車場 金城ふ頭"), addr:"名古屋市港區金城ふ頭 2-2-1" },
       { time:"全天", title:"🧱 LEGOLAND Japan", note:"The Dragon、Submarine Adventure、Driving School、Miniland 名勝",
         mapUrl: gmap("LEGOLAND Japan 名古屋"), addr:"名古屋市港區金城ふ頭 2-2-1",
         guide: "legoland" },
@@ -1027,12 +1036,18 @@ const days = [
     hotelAddress:"大阪府大阪市浪速區難波中 3-5-10",
     hotelTel:null, hotelTelLink:null,
     hotelMapUrl: gmap("Eslead Hotel Namba East Osaka"),
+    hotelParking: { name:"タイムズ大阪難波（難波シティ東）", addr:"大阪市中央區難波 2-1-2", fee:"平日最大 ¥1,000・假日最大 ¥2,400／24h", walk:"飯店步行約 5 分", mapUrl:"https://www.google.com/maps/search/?api=1&query=%E3%82%BF%E3%82%A4%E3%83%A0%E3%82%BA%E5%A4%A7%E9%98%AA%E9%9B%A3%E6%B3%A2+%E9%9B%A3%E6%B3%A2%E3%82%B7%E3%83%86%E3%82%A3%E6%9D%B1" },
     schedule:[
-      { time:"早上", title:"🚄 名古屋 → 新大阪（新幹線 NOZOMI）", note:"近鐵名古屋站步行至 JR 名古屋站，新幹線約 50 分鐘",
-        mapUrl: gmap("名古屋駅"), addr:"名古屋市中村區名駅 1-1-4" },
-      { time:"11:00", title:"🚃 新大阪 → 難波（御堂筋線）", note:"地鐵御堂筋線 なんば站，約 13 分鐘，¥280",
+      { time:"早上", title:"🧳 行李打包・退房準備", note:"名古屋飯店退房，行李整理好帶上，步行至 TOYOTA 還車" },
+      { time:"11:00", title:"🚗 前往 TOYOTA 名古屋站前還車", note:"確保 13:00 前抵達還車，名古屋站前店・愛知縣名古屋市中村區名駅 4-5-26",
+        mapUrl: gmap("トヨタレンタカー 名古屋駅前店"), addr:"名古屋市中村區名駅 4-5-26 ユニモール桜ビル" },
+      { time:"13:00", title:"🔑 TOYOTA 還車完成", note:"還車後步行至名古屋站・約 5 分鐘" },
+      { time:"14:26", title:"🚄 NOZOMI 71 號｜名古屋 → 新大阪", note:"15:15 抵達新大阪・約 49 分鐘",
+        mapUrl: gmap("名古屋駅"), addr:"名古屋市中村區名駅 1-1-4",
+        guide: "shinkansen-d5" },
+      { time:"15:30", title:"🚃 新大阪 → 難波（御堂筋線）", note:"地鐵御堂筋線 なんば站，約 13 分鐘，¥280",
         mapUrl: gmap("新大阪駅"), addr:"大阪市淀川區西中島 5-16-1" },
-      { time:"中午", title:"🏨 飯店 Check-in", note:"Eslead Hotel Namba East 放行李",
+      { time:"16:00", title:"🏨 飯店 Check-in + 停車", note:"Eslead Hotel Namba East 放行李・停車場見住宿卡片",
         mapUrl: gmap("Eslead Hotel Namba East Osaka"), addr:"大阪市浪速區難波中 3-5-10" },
       { time:"下午", title:"👟 STEP SPORTS 梅田店", note:"🚃 難波 → 梅田（御堂筋線）約 7 分，¥230",
         mapUrl: gmap("STEP SPORTS 梅田"), addr:"大阪市北區茶屋町 1-27" },
@@ -1674,6 +1689,90 @@ function guideData(key) {
         </div>
 `
     },
+    "shinkansen-d5": {
+      icon: "🚄",
+      title: "NOZOMI 71 號 車票資訊",
+      sub: "名古屋 14:26 → 新大阪 15:15・2026/7/1",
+      color: "#16a34a",
+      body: `
+        <div style="background:linear-gradient(135deg,#16a34a,#15803d);border-radius:12px;padding:14px 16px;margin-bottom:16px;color:#fff">
+          <div style="font-size:11px;opacity:0.8;letter-spacing:1px;margin-bottom:10px">Smart EX · 預約確認 #2002</div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="font-size:32px">🚄</div>
+            <div style="flex:1">
+              <div style="font-size:16px;font-weight:700">NOZOMI 71 號</div>
+              <div style="font-size:12px;opacity:0.85;margin-top:2px">N700 系・16 節車廂・普通車</div>
+            </div>
+          </div>
+        </div>
+        <div style="border:0.5px solid #e8e5da;border-radius:12px;overflow:hidden;margin-bottom:14px">
+          <div style="padding:14px;border-bottom:0.5px solid #f0ede2">
+            <div style="display:flex;align-items:flex-start;gap:12px">
+              <div style="display:flex;flex-direction:column;align-items:center;padding-top:4px">
+                <div style="width:10px;height:10px;border-radius:50%;background:#16a34a;flex-shrink:0"></div>
+                <div style="width:2px;height:36px;background:#d4f0d4"></div>
+                <div style="width:10px;height:10px;border-radius:50%;background:#d85a30;flex-shrink:0"></div>
+              </div>
+              <div style="flex:1">
+                <div style="margin-bottom:12px">
+                  <div style="font-size:13px;font-weight:600">名古屋</div>
+                  <div style="font-size:22px;font-weight:800;color:#16a34a;line-height:1.2">14:26</div>
+                  <div style="font-size:11px;color:#888">2026年7月1日（三）</div>
+                </div>
+                <div>
+                  <div style="font-size:13px;font-weight:600">新大阪</div>
+                  <div style="font-size:22px;font-weight:800;color:#d85a30;line-height:1.2">15:15</div>
+                  <div style="font-size:11px;color:#888">約 49 分鐘</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:0.5px solid #f0ede2">
+            <div style="padding:11px 14px;border-right:0.5px solid #f0ede2">
+              <div style="font-size:11px;color:#888;margin-bottom:3px">車型</div>
+              <div style="font-size:12.5px;font-weight:600">N700 系・16 節</div>
+            </div>
+            <div style="padding:11px 14px">
+              <div style="font-size:11px;color:#888;margin-bottom:3px">座位等級</div>
+              <div style="font-size:12.5px;font-weight:600">普通車 Ordinary</div>
+            </div>
+          </div>
+          <div style="padding:11px 14px;border-bottom:0.5px solid #f0ede2">
+            <div style="font-size:11px;color:#888;margin-bottom:6px">🪑 座位資訊（5 號車）</div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <span style="background:#F0FDF4;color:#15803d;padding:5px 12px;border-radius:10px;font-size:13px;font-weight:700;border:1.5px solid #86EFAC">5 車 18-B</span>
+              <span style="background:#F0FDF4;color:#15803d;padding:5px 12px;border-radius:10px;font-size:13px;font-weight:700;border:1.5px solid #86EFAC">5 車 18-C</span>
+              <span style="background:#F0FDF4;color:#15803d;padding:5px 12px;border-radius:10px;font-size:13px;font-weight:700;border:1.5px solid #86EFAC">5 車 18-D</span>
+              <span style="background:#F0FDF4;color:#15803d;padding:5px 12px;border-radius:10px;font-size:13px;font-weight:700;border:1.5px solid #86EFAC">5 車 18-E</span>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr">
+            <div style="padding:11px 14px;border-right:0.5px solid #f0ede2">
+              <div style="font-size:11px;color:#888;margin-bottom:3px">👥 乘客</div>
+              <div style="font-size:12.5px;font-weight:600">大人 2・兒童 2</div>
+            </div>
+            <div style="padding:11px 14px">
+              <div style="font-size:11px;color:#888;margin-bottom:3px">🎫 訂票平台</div>
+              <div style="font-size:12.5px;font-weight:600">Smart EX #2002</div>
+            </div>
+          </div>
+        </div>
+        <div style="background:#f5f5f0;border-radius:10px;padding:12px 14px;margin-bottom:10px">
+          <div style="font-size:12px;font-weight:700;color:#444;margin-bottom:8px">🚃 新大阪抵達後</div>
+          <div style="font-size:12px;color:#555;line-height:1.7">
+            新大阪站換乘地鐵御堂筋線 → <strong>なんば方向</strong><br>
+            <span style="display:inline-flex;gap:6px;margin-top:6px;flex-wrap:wrap">
+              <span style="background:#EBF4FF;color:#0C6EBD;padding:3px 8px;border-radius:8px;font-size:11px;border:0.5px solid #C3DEFF">約 13 分鐘</span>
+              <span style="background:#EBF4FF;color:#0C6EBD;padding:3px 8px;border-radius:8px;font-size:11px;border:0.5px solid #C3DEFF">¥280</span>
+              <span style="background:#EBF4FF;color:#0C6EBD;padding:3px 8px;border-radius:8px;font-size:11px;border:0.5px solid #C3DEFF">預計 15:30 抵難波</span>
+            </span>
+          </div>
+        </div>
+        <div class="tc-tip">
+          <span class="tip-icon">⭐</span>
+          <span>NOZOMI 只停大站，速度最快。到新大阪後直接往地下換御堂筋線，13 分鐘到難波。</span>
+        </div>`
+    },
     "nagashima": {
       icon: "🎢",
       title: "長島樂園必勝攻略 🔥",
@@ -2245,6 +2344,17 @@ function renderDay() {
         ${d.hotelTel ? `<div class="hotel-detail-row"><span class="icon">📞</span><a href="${d.hotelTelLink}">${d.hotelTel}</a></div>` : ''}
         ${d.hotelMapUrl ? `<a class="hotel-map-btn" href="${d.hotelMapUrl}" target="_blank">🗺 開啟 Google Maps 導航</a>` : ''}
       </div>
+      ${d.hotelParking ? `
+      <div style="margin-top:10px;padding-top:10px;border-top:0.5px solid #e0ddd2">
+        <div style="font-size:11px;color:#888;margin-bottom:6px;font-weight:600;letter-spacing:0.5px">🅿️ 推薦停車場</div>
+        <div style="font-size:12.5px;font-weight:600;color:#1a1a1a;margin-bottom:2px">${d.hotelParking.name}</div>
+        <div style="font-size:11.5px;color:#555;margin-bottom:4px">📍 ${d.hotelParking.addr}</div>
+        <div style="font-size:11.5px;color:#555;margin-bottom:6px">💴 ${d.hotelParking.fee}</div>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <span style="font-size:11px;background:#FEF3C7;color:#92400e;padding:3px 8px;border-radius:8px;border:0.5px solid #FCD34D">🚶 ${d.hotelParking.walk}</span>
+          <a href="${d.hotelParking.mapUrl}" target="_blank" class="map-link" style="margin-top:0;font-size:11px;padding:4px 10px"><span>🗺</span><span>停車場導航</span></a>
+        </div>
+      </div>` : ''}
     </div>
   ` : '';
 
