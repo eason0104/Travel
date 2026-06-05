@@ -979,9 +979,9 @@ const days = [
         mapUrl: gmap("名古屋市営大須駐車場 中区大須3丁目14"), addr:"名古屋市中區大須 3-14-12" },
       { time:"下午", title:"🛍 大須商店街", note:"炸雞、鯛魚燒、扭蛋、動漫周邊、藥妝採購",
         mapUrl: gmap("大須商店街 名古屋"), addr:"名古屋市中區大須 2–18–42" },
-      { time:"傍晚", title:"🌆 中部電力 MIRAI TOWER", note:"電視塔 + Oasis 21 水之宇宙船夜景",
+      { time:"傍晚", title:"🚗 停車 → 🌆 中部電力 MIRAI TOWER", note:"先將車停在唐吉訶德榮本店停車場（30分¥200・消費¥5,000以上享60分免費），再步行約 5–7 分鐘至 MIRAI TOWER，欣賞電視塔 + Oasis 21 水之宇宙船夜景",
         mapUrl: gmap("中部電力 MIRAI TOWER 名古屋"), addr:"名古屋市東區東桜 1-11-1" },
-      { time:"晚上", title:"🐧 唐吉訶德 名古屋榮店", note:"深夜大補貨",
+      { time:"晚上", title:"🐧 唐吉訶德 名古屋榮本店", note:"步行 5–7 分鐘回到唐吉訶德・深夜大補貨・消費 ¥5,000 以上享 60 分鐘停車免費，最大料金 ¥1,000（7:00–18:00）",
         mapUrl: gmap("ドン・キホーテ 名古屋栄店"), addr:"名古屋市中區栄 3-14-13" }
     ]
   },
@@ -2326,6 +2326,7 @@ function renderDay() {
             <span>${s.addr || '開啟地圖'}</span>
           </a>` : ''}
         ${s.guide ? renderGuide(s.guide) : ''}
+
       </div>
     </div>
   `).join("");
