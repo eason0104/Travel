@@ -1036,7 +1036,6 @@ const days = [
     hotelAddress:"大阪府大阪市浪速區難波中 3-5-10",
     hotelTel:null, hotelTelLink:null,
     hotelMapUrl: gmap("Eslead Hotel Namba East Osaka"),
-    hotelParking: { name:"タイムズ大阪難波（難波シティ東）", addr:"大阪市中央區難波 2-1-2", fee:"平日最大 ¥1,000・假日最大 ¥2,400／24h", walk:"飯店步行約 5 分", mapUrl:"https://www.google.com/maps/search/?api=1&query=%E3%82%BF%E3%82%A4%E3%83%A0%E3%82%BA%E5%A4%A7%E9%98%AA%E9%9B%A3%E6%B3%A2+%E9%9B%A3%E6%B3%A2%E3%82%B7%E3%83%86%E3%82%A3%E6%9D%B1" },
     schedule:[
       { time:"早上", title:"🧳 行李打包・退房準備", note:"名古屋飯店退房，行李整理好帶上，步行至 TOYOTA 還車" },
       { time:"11:00", title:"🚗 前往 TOYOTA 名古屋站前還車", note:"確保 13:00 前抵達還車，名古屋站前店・愛知縣名古屋市中村區名駅 4-5-26",
@@ -1047,12 +1046,13 @@ const days = [
         guide: "shinkansen-d5" },
       { time:"15:30", title:"🚃 新大阪 → 難波（御堂筋線）", note:"地鐵御堂筋線 なんば站，約 13 分鐘，¥280",
         mapUrl: gmap("新大阪駅"), addr:"大阪市淀川區西中島 5-16-1" },
-      { time:"16:00", title:"🏨 飯店 Check-in + 停車", note:"Eslead Hotel Namba East 放行李・停車場見住宿卡片",
+      { time:"16:00", title:"🏨 飯店 Check-in", note:"Eslead Hotel Namba East 放行李・先換裝休息",
         mapUrl: gmap("Eslead Hotel Namba East Osaka"), addr:"大阪市浪速區難波中 3-5-10" },
       { time:"下午", title:"👟 STEP SPORTS 梅田店", note:"🚃 難波 → 梅田（御堂筋線）約 7 分，¥230",
         mapUrl: gmap("STEP SPORTS 梅田"), addr:"大阪市北區茶屋町 1-27" },
-      { time:"晚上", title:"🐙 道頓堀・心齋橋", note:"🚃 梅田 → 難波（御堂筋線）約 7 分，步行至道頓堀 5 分鐘",
-        mapUrl: gmap("道頓堀 大阪"), addr:"大阪市中央區道頓堀 1-7" }
+      { time:"晚上", title:"🐙 道頓堀・心齋橋 深度探索", note:"🚃 梅田 → 難波（御堂筋線）約 7 分，步行至道頓堀 5 分鐘",
+        mapUrl: gmap("道頓堀 大阪"), addr:"大阪市中央區道頓堀 1-7",
+        guide: "dotonbori-guide" }
     ]
   },
   {
@@ -1452,6 +1452,104 @@ function guideData(key) {
             <div class="tc-step-desc">下車後跟著「Central Gate 中央口」出站</div>
             <div class="tc-time-row"><span class="t-icon">🚶</span><div><div class="t-label">大阪站 → Intergate 飯店</div><div class="t-val">步行約 8–10 分鐘</div></div></div>
             <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Hotel+Intergate+Osaka+Umeda" target="_blank" style="margin-top:8px"><span>🗺</span><span>在 Google Maps 開啟導航</span></a>
+          </div>
+        </div>`
+    },
+    "dotonbori-guide": {
+      icon: "🐙",
+      title: "道頓堀・心齋橋 攻略",
+      sub: "必吃・必逛・必買・吉伊卡哇全攻略",
+      color: "#d85a30",
+      body: `
+        <!-- 區域說明 -->
+        <div style="background:linear-gradient(135deg,#d85a30,#b94524);border-radius:12px;padding:14px 16px;margin-bottom:16px;color:#fff">
+          <div style="font-size:11px;opacity:0.8;letter-spacing:1px;margin-bottom:6px">道頓堀 · 心齋橋 · 難波</div>
+          <div style="font-size:13px;line-height:1.7;opacity:0.95">固力果跑跑人 → 道頓堀川 → 心齋橋筋商店街 → ちいかわらんど，全程步行可串聯，不需搭車。</div>
+        </div>
+
+        <!-- 必吃區 -->
+        <div style="font-size:12px;font-weight:700;color:#444;margin-bottom:10px;display:flex;align-items:center;gap:6px"><span>🍽</span> 必吃美食</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px">
+
+          <div style="background:#f5f5f0;border-radius:10px;padding:11px 13px;display:flex;gap:10px;align-items:flex-start">
+            <span style="font-size:20px;flex-shrink:0">🐙</span>
+            <div>
+              <div style="font-size:13px;font-weight:700">くくる 章魚燒（道頓堀本店）</div>
+              <div style="font-size:11.5px;color:#555;margin-top:3px;line-height:1.6">道頓堀人氣 No.1 章魚燒，外酥內滑、章魚超大塊，必點「元祖明石焼」，現點現做・排隊但值得</div>
+              <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=くくる道頓堀本店" target="_blank" style="margin-top:6px"><span>🗺</span><span>道頓堀 1-10-5</span></a>
+            </div>
+          </div>
+
+          <div style="background:#f5f5f0;border-radius:10px;padding:11px 13px;display:flex;gap:10px;align-items:flex-start">
+            <span style="font-size:20px;flex-shrink:0">🍜</span>
+            <div>
+              <div style="font-size:13px;font-weight:700">金久右衛門 醬油拉麵（道頓堀店）</div>
+              <div style="font-size:11.5px;color:#555;margin-top:3px;line-height:1.6">Tabelog 大阪拉麵 3 年連續 No.1，濃郁醬油湯底，粗麵有嚼勁，推薦「浪花黑 5 號」，適合晚上宵夜</div>
+              <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=金久右衛門道頓堀店" target="_blank" style="margin-top:6px"><span>🗺</span><span>道頓堀 1-7-26</span></a>
+            </div>
+          </div>
+
+          <div style="background:#f5f5f0;border-radius:10px;padding:11px 13px;display:flex;gap:10px;align-items:flex-start">
+            <span style="font-size:20px;flex-shrink:0">🥩</span>
+            <div>
+              <div style="font-size:13px;font-weight:700">Dotonbori 肉劇場（燒肉丼）</div>
+              <div style="font-size:11.5px;color:#555;margin-top:3px;line-height:1.6">近期超夯燒肉丼專門店，現烤一流肉質、平板點餐超方便，CP 值高，附近還有神戸牛「牛魔」可選</div>
+              <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=肉劇場道頓堀" target="_blank" style="margin-top:6px"><span>🗺</span><span>道頓堀 1-7-16</span></a>
+            </div>
+          </div>
+
+          <div style="background:#f5f5f0;border-radius:10px;padding:11px 13px;display:flex;gap:10px;align-items:flex-start">
+            <span style="font-size:20px;flex-shrink:0">🪙</span>
+            <div>
+              <div style="font-size:13px;font-weight:700">大王チーズ 10 円パン（韓國話題甜點）</div>
+              <div style="font-size:11.5px;color:#555;margin-top:3px;line-height:1.6">10 元硬幣造型、內餡融化起司爆漿 IG 超夯，唐吉訶德旁邊就有，小孩一定愛，¥500／個</div>
+              <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=大王チーズ10円パン道頓堀" target="_blank" style="margin-top:6px"><span>🗺</span><span>道頓堀 唐吉訶德旁</span></a>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 必逛必買 -->
+        <div style="font-size:12px;font-weight:700;color:#444;margin-bottom:10px;display:flex;align-items:center;gap:6px"><span>🛍</span> 必逛・必買</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px">
+
+          <div style="background:#E6F1FB;border-radius:10px;padding:11px 13px;display:flex;gap:10px;align-items:flex-start;border:0.5px solid #C3DEFF">
+            <span style="font-size:20px;flex-shrink:0">🐾</span>
+            <div>
+              <div style="font-size:13px;font-weight:700;color:#0C447C">ちいかわらんど 心斎橋PARCO店（常設）</div>
+              <div style="font-size:11.5px;color:#1e3a5f;margin-top:3px;line-height:1.6">吉伊卡哇大阪唯一常設專賣店！2024 年 3 月開幕，從道頓堀步行約 8 分鐘，週末常有排隊，建議平日傍晚前往</div>
+              <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=ちいかわらんど心斎橋パルコ" target="_blank" style="margin-top:6px;background:#EBF4FF;border-color:#C3DEFF;color:#0C6EBD"><span>🗺</span><span>心斎橋筋 1-8-3 心斎橋PARCO</span></a>
+            </div>
+          </div>
+
+          <div style="background:#f5f5f0;border-radius:10px;padding:11px 13px;display:flex;gap:10px;align-items:flex-start">
+            <span style="font-size:20px;flex-shrink:0">🎡</span>
+            <div>
+              <div style="font-size:13px;font-weight:700">唐吉訶德 御堂筋店（摩天輪）</div>
+              <div style="font-size:11.5px;color:#555;margin-top:3px;line-height:1.6">24H 採購聖地，頂樓還有橢圓形摩天輪（¥600），藥妝、零食、日本限定商品應有盡有</div>
+              <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=ドンキホーテ御堂筋店道頓堀" target="_blank" style="margin-top:6px"><span>🗺</span><span>道頓堀 1-7-1</span></a>
+            </div>
+          </div>
+
+          <div style="background:#f5f5f0;border-radius:10px;padding:11px 13px;display:flex;gap:10px;align-items:flex-start">
+            <span style="font-size:20px;flex-shrink:0">🛒</span>
+            <div>
+              <div style="font-size:13px;font-weight:700">心齋橋筋商店街 → Namba Parks</div>
+              <div style="font-size:11.5px;color:#555;margin-top:3px;line-height:1.6">日本最長商店街之一，從道頓堀步行可達，覆蓋藥妝（松本清）、球鞋、百貨，深夜仍熱鬧</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 打卡攻略 -->
+        <div style="background:#FEF3C7;border-radius:10px;padding:11px 14px;border:0.5px solid #FCD34D">
+          <div style="font-size:12px;font-weight:700;color:#92400e;margin-bottom:6px">📸 打卡動線建議</div>
+          <div style="font-size:12px;color:#78350f;line-height:1.9">
+            ① 固力果跑跑人招牌合照（戎橋上）<br>
+            ② 道頓堀川夜景散步（とんぼりリバーウォーク）<br>
+            ③ 唐吉訶德摩天輪（可選・¥600）<br>
+            ④ 心齋橋商店街＋ちいかわらんど<br>
+            ⑤ 宵夜：くくる章魚燒或金久右衛門拉麵收尾
           </div>
         </div>`
     },
@@ -2258,6 +2356,7 @@ function renderGuide(key) {
     "#b45309": { bg: "#FEF3C7", border: "#FCD34D", text: "#78350f" },
     "#16a34a": { bg: "#F0FDF4", border: "#86EFAC", text: "#15803d" },
     "#0891b2": { bg: "#ECFEFF", border: "#A5F3FC", text: "#0e7490" },
+    "#d85a30": { bg: "#FFF4ED", border: "#FDBA74", text: "#9a3412" },
     "#27ae60": { bg: "#E8F8EF", border: "#A8E6C0", text: "#1a5c38" }
   };
   const c = colorMap[g.color] || { bg: "#EBF4FF", border: "#C3DEFF", text: "#0C4E8C" };
