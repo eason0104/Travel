@@ -1,0 +1,2620 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#1a1a1a">
+<title>大阪・名古屋 9 天 8 夜</title>
+<style>
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    margin: 0; padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+    background: #f5f5f0;
+    color: #1a1a1a;
+    -webkit-font-smoothing: antialiased;
+    overscroll-behavior-y: contain;
+  }
+  body {
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    min-height: 100vh;
+  }
+
+  .header {
+    background: linear-gradient(135deg, #d85a30 0%, #b94524 100%);
+    color: #fff;
+    padding: 20px 18px 24px;
+    position: sticky; top: 0; z-index: 50;
+    padding-top: calc(20px + env(safe-area-inset-top));
+  }
+  .header .label { font-size: 11px; opacity: 0.85; letter-spacing: 2px; margin-bottom: 4px; }
+  .header h1 { margin: 0 0 4px; font-size: 20px; font-weight: 600; letter-spacing: 0.5px; }
+  .header .dates { font-size: 13px; opacity: 0.9; }
+  .header .meta { display: flex; gap: 12px; margin-top: 12px; font-size: 11px; flex-wrap: wrap; }
+  .header .meta span { background: rgba(255,255,255,0.18); padding: 4px 10px; border-radius: 12px; }
+
+  .day-scroller {
+    background: #fff;
+    border-bottom: 0.5px solid #e0ddd2;
+    padding: 10px 0;
+    position: sticky;
+    top: calc(96px + env(safe-area-inset-top));
+    z-index: 40;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .day-scroller::-webkit-scrollbar { display: none; }
+  .day-scroller-inner { display: inline-flex; gap: 8px; padding: 0 14px; }
+  .day-pill {
+    flex-shrink: 0; min-width: 64px;
+    padding: 8px 10px;
+    border: 1.5px solid #e0ddd2;
+    border-radius: 10px;
+    background: #fff;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .day-pill .n { font-size: 10px; color: #888; letter-spacing: 1px; }
+  .day-pill .d { font-size: 12px; color: #444; margin-top: 2px; font-weight: 500; }
+  .day-pill.active { background: #1a1a1a; border-color: #1a1a1a; }
+  .day-pill.active .n, .day-pill.active .d { color: #fff; }
+
+  main { padding: 16px 16px 80px; max-width: 600px; margin: 0 auto; }
+
+  .day-hero {
+    background: #fff; border-radius: 14px;
+    padding: 18px; margin-bottom: 14px;
+    border: 0.5px solid #e8e5da;
+  }
+  .day-hero .tags { display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
+  .tag {
+    font-size: 11px; padding: 3px 9px; border-radius: 10px;
+    background: #f1efe8; color: #5f5e5a; font-weight: 500;
+  }
+  .tag.city-osaka { background: #E6F1FB; color: #0C447C; }
+  .tag.city-nagoya { background: #FAEEDA; color: #854F0B; }
+  .tag.city-return { background: #F1EFE8; color: #444441; }
+  .day-hero h2 { margin: 0 0 6px; font-size: 17px; font-weight: 600; line-height: 1.4; }
+  .day-hero .focus { font-size: 13px; color: #6b6a64; line-height: 1.5; }
+
+  /* Schedule */
+  .schedule { margin-top: 14px; }
+  .sch-item { display: flex; gap: 12px; position: relative; }
+  .sch-time-col { flex-shrink: 0; width: 56px; text-align: right; padding-top: 2px; }
+  .sch-time { font-size: 11px; font-weight: 600; color: #d85a30; letter-spacing: 0.5px; }
+  .sch-dot-col { flex-shrink: 0; width: 14px; display: flex; flex-direction: column; align-items: center; }
+  .sch-dot { width: 10px; height: 10px; border-radius: 50%; background: #fff; border: 2px solid #d85a30; margin-top: 6px; flex-shrink: 0; }
+  .sch-line { width: 1.5px; flex: 1; background: #e8e5da; margin-top: 2px; }
+  .sch-content { flex: 1; padding-bottom: 16px; }
+  .sch-title { font-size: 14.5px; font-weight: 600; line-height: 1.4; margin-bottom: 3px; }
+  .sch-note { font-size: 12.5px; color: #6b6a64; line-height: 1.5; margin-bottom: 5px; }
+  .sch-item:last-child .sch-line { display: none; }
+  .sch-item:last-child .sch-content { padding-bottom: 0; }
+
+  /* Map link pill inside schedule */
+  .map-link {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 4px 10px;
+    background: #EBF4FF;
+    color: #0C6EBD;
+    border-radius: 14px;
+    font-size: 11.5px;
+    font-weight: 500;
+    text-decoration: none;
+    margin-top: 3px;
+    border: 0.5px solid #C3DEFF;
+    transition: background 0.15s;
+  }
+  .map-link:active { background: #C3DEFF; }
+  .map-link .map-icon { font-size: 12px; }
+
+  /* Hotel strip */
+  .hotel-strip {
+    margin-top: 10px; padding: 14px 16px;
+    background: #f5f5f0; border-radius: 12px;
+    border: 0.5px solid #e8e5da;
+  }
+  .hotel-strip-top { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .hotel-strip .hlabel { color: #888; font-size: 11px; }
+  .hotel-strip .hname { font-weight: 600; color: #1a1a1a; font-size: 13.5px; }
+  .hotel-strip-details { display: flex; flex-direction: column; gap: 6px; }
+  .hotel-detail-row { display: flex; align-items: flex-start; gap: 8px; font-size: 12px; color: #444; }
+  .hotel-detail-row .icon { flex-shrink: 0; }
+  .hotel-detail-row a { color: #0C6EBD; text-decoration: none; line-height: 1.5; }
+  .hotel-detail-row a:active { opacity: 0.7; }
+  .hotel-map-btn {
+    display: inline-flex; align-items: center; gap: 5px;
+    margin-top: 10px; padding: 8px 14px;
+    background: #1a1a1a; color: #fff;
+    border-radius: 20px; font-size: 12px; font-weight: 500;
+    text-decoration: none; transition: opacity 0.15s;
+  }
+  .hotel-map-btn:active { opacity: 0.75; }
+
+  /* Info sections */
+  .info-section {
+    background: #fff; border-radius: 14px;
+    padding: 16px 18px; margin-bottom: 14px;
+    border: 0.5px solid #e8e5da;
+  }
+  .info-section h3 {
+    margin: 0 0 12px; font-size: 14px; font-weight: 600;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .info-section h3::before { content: ""; width: 3px; height: 14px; background: #d85a30; border-radius: 2px; }
+  .info-section p { margin: 0 0 8px; font-size: 13px; line-height: 1.6; color: #444; }
+  .info-section p:last-child { margin-bottom: 0; }
+  .info-section .item { padding: 10px 0; border-bottom: 0.5px solid #f0ede2; }
+  .info-section .item:last-child { border-bottom: none; padding-bottom: 0; }
+  .info-section .item:first-child { padding-top: 0; }
+  .info-section .item .k { font-size: 12px; color: #888; margin-bottom: 4px; font-weight: 500; }
+  .info-section .item .v { font-size: 13px; color: #1a1a1a; line-height: 1.6; }
+
+  /* Tab nav */
+  .tab-nav {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 4px; background: #fff; padding: 8px;
+    border-radius: 12px; margin-bottom: 16px; border: 0.5px solid #e8e5da;
+  }
+  .tab-btn {
+    padding: 9px 4px; border: none; background: transparent;
+    border-radius: 8px; font-size: 12.5px; font-weight: 500;
+    color: #6b6a64; cursor: pointer; transition: all 0.15s; font-family: inherit;
+  }
+  .tab-btn.active { background: #1a1a1a; color: #fff; }
+
+  /* ── Checklist ── */
+  .cl-section { margin-bottom: 14px; }
+  .cl-section-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 13px 16px;
+    background: #fff; border-radius: 14px;
+    border: 0.5px solid #e8e5da;
+    cursor: pointer; user-select: none; -webkit-user-select: none;
+    margin-bottom: 2px;
+  }
+  .cl-section-header-left { display: flex; align-items: center; gap: 10px; }
+  .cl-section-icon { font-size: 20px; }
+  .cl-section-title { font-size: 14px; font-weight: 700; color: #1a1a1a; }
+  .cl-section-sub { font-size: 11px; color: #888; margin-top: 1px; }
+  .cl-section-badge {
+    display: flex; align-items: center; gap: 6px; flex-shrink: 0;
+  }
+  .cl-progress-text { font-size: 11px; color: #888; }
+  .cl-chevron { font-size: 12px; color: #aaa; transition: transform 0.2s; }
+  .cl-section.open .cl-chevron { transform: rotate(180deg); }
+  .cl-items {
+    display: none; flex-direction: column; gap: 2px;
+    padding: 0 4px;
+  }
+  .cl-section.open .cl-items { display: flex; }
+  .cl-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 11px 14px;
+    background: #fff; border-radius: 10px;
+    border: 0.5px solid #e8e5da;
+    cursor: pointer;
+    transition: background 0.12s;
+    -webkit-user-select: none; user-select: none;
+  }
+  .cl-item:active { background: #f5f5f0; }
+  .cl-item.checked { background: #f0fdf4; border-color: #86efac; }
+  .cl-checkbox {
+    width: 22px; height: 22px; border-radius: 6px;
+    border: 2px solid #d0d0d0;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 1px;
+    transition: all 0.15s;
+    background: #fff;
+  }
+  .cl-item.checked .cl-checkbox {
+    background: #16a34a; border-color: #16a34a;
+  }
+  .cl-checkbox-tick { display: none; color: #fff; font-size: 13px; font-weight: 700; }
+  .cl-item.checked .cl-checkbox-tick { display: block; }
+  .cl-item-body { flex: 1; }
+  .cl-item-title {
+    font-size: 13.5px; font-weight: 600; line-height: 1.4; color: #1a1a1a;
+    transition: color 0.15s;
+  }
+  .cl-item.checked .cl-item-title { color: #888; text-decoration: line-through; }
+  .cl-item-note { font-size: 12px; color: #6b6a64; line-height: 1.55; margin-top: 3px; }
+  .cl-item.checked .cl-item-note { color: #aaa; }
+  .cl-badge-must {
+    display: inline-flex; align-items: center;
+    font-size: 10px; font-weight: 700;
+    padding: 2px 7px; border-radius: 8px;
+    background: #FFF0F0; color: #c0392b; border: 0.5px solid #ffb3b3;
+    margin-left: 6px; vertical-align: middle; flex-shrink: 0;
+  }
+  .cl-header-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 14px; padding: 0 2px;
+  }
+  .cl-header-title { font-size: 16px; font-weight: 700; }
+  .cl-reset-btn {
+    font-size: 11px; color: #888; background: none; border: none;
+    cursor: pointer; padding: 4px 8px; border-radius: 8px;
+    font-family: inherit;
+  }
+  .cl-reset-btn:active { background: #f0ede2; }
+  .cl-total-bar {
+    background: #fff; border-radius: 12px; border: 0.5px solid #e8e5da;
+    padding: 12px 16px; margin-bottom: 14px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .cl-total-bar .ct-label { font-size: 12px; color: #888; flex-shrink: 0; }
+  .cl-total-bar .ct-track {
+    flex: 1; height: 8px; background: #f0ede2; border-radius: 4px; overflow: hidden;
+  }
+  .cl-total-bar .ct-fill {
+    height: 100%; background: #16a34a; border-radius: 4px;
+    transition: width 0.3s ease;
+  }
+  .cl-total-bar .ct-num { font-size: 12px; font-weight: 700; color: #16a34a; flex-shrink: 0; }
+
+  /* Overview */
+  .city-bar { display: flex; gap: 4px; height: 36px; margin: 16px 0 20px; border-radius: 8px; overflow: hidden; }
+  .city-bar > div { display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: #fff; }
+  .city-bar .osaka { background: #378ADD; }
+  .city-bar .nagoya { background: #EF9F27; }
+  .city-bar .ret { background: #888780; }
+
+  .summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+  .summary-card { background: #fff; padding: 14px; border-radius: 12px; border: 0.5px solid #e8e5da; }
+  .summary-card .k { font-size: 11px; color: #888; margin-bottom: 6px; letter-spacing: 0.5px; }
+  .summary-card .v { font-size: 15px; font-weight: 600; line-height: 1.3; }
+
+  .hotel-overview-card { padding: 12px 0; border-bottom: 0.5px solid #f0ede2; }
+  .hotel-overview-card:last-child { border-bottom: none; padding-bottom: 0; }
+  .hotel-overview-card:first-child { padding-top: 0; }
+  .hotel-overview-card .hk { font-size: 12px; color: #888; margin-bottom: 4px; font-weight: 500; }
+  .hotel-overview-card .hname { font-size: 13.5px; font-weight: 600; color: #1a1a1a; margin-bottom: 6px; }
+  .hotel-overview-card .hrow { display: flex; align-items: flex-start; gap: 6px; font-size: 12px; color: #555; margin-bottom: 4px; }
+  .hotel-overview-card .hrow a { color: #0C6EBD; text-decoration: none; }
+  .hotel-overview-card .hrow a:active { opacity: 0.7; }
+  .hotel-map-inline {
+    display: inline-flex; align-items: center; gap: 4px;
+    margin-top: 8px; padding: 6px 12px;
+    background: #1a1a1a; color: #fff;
+    border-radius: 16px; font-size: 11.5px; font-weight: 500; text-decoration: none;
+  }
+  .hotel-map-inline:active { opacity: 0.75; }
+
+  /* ── Packing Checklist ── */
+  .checklist-tabs {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 4px; background: #f5f5f0; border-radius: 10px;
+    padding: 4px; margin-bottom: 14px;
+  }
+  .checklist-tab-btn {
+    padding: 8px 4px; border: none; border-radius: 8px;
+    font-size: 12px; font-weight: 600; cursor: pointer;
+    background: transparent; color: #6b6a64; font-family: inherit;
+    transition: all 0.15s;
+  }
+  .checklist-tab-btn.active { background: #1a1a1a; color: #fff; }
+
+  .checklist-group { display: none; }
+  .checklist-group.active { display: block; }
+
+  .checklist-progress {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 12px;
+  }
+  .checklist-progress-bar-wrap {
+    flex: 1; height: 6px; background: #e8e5da;
+    border-radius: 3px; overflow: hidden;
+  }
+  .checklist-progress-bar {
+    height: 100%; background: #16a34a;
+    border-radius: 3px; transition: width 0.3s;
+  }
+  .checklist-progress-label {
+    font-size: 11px; color: #888; white-space: nowrap; flex-shrink: 0;
+  }
+
+  .checklist-section-title {
+    font-size: 12px; font-weight: 700; color: #888;
+    letter-spacing: 0.5px; margin: 14px 0 8px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .checklist-section-title:first-child { margin-top: 0; }
+
+  .checklist-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 0; border-bottom: 0.5px solid #f0ede2;
+    cursor: pointer; transition: opacity 0.2s;
+    -webkit-user-select: none; user-select: none;
+  }
+  .checklist-item:last-child { border-bottom: none; }
+  .checklist-item.checked { opacity: 0.45; }
+
+  .checklist-checkbox {
+    flex-shrink: 0; width: 22px; height: 22px;
+    border: 2px solid #d0cdc4; border-radius: 6px;
+    background: #fff; margin-top: 1px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; transition: all 0.15s;
+  }
+  .checklist-item.checked .checklist-checkbox {
+    background: #16a34a; border-color: #16a34a; color: #fff;
+  }
+  .checklist-item-text { flex: 1; }
+  .checklist-item-title {
+    font-size: 13px; font-weight: 600; line-height: 1.4; margin-bottom: 2px;
+  }
+  .checklist-item-note {
+    font-size: 11.5px; color: #6b6a64; line-height: 1.5;
+  }
+  .checklist-badge {
+    display: inline-block; font-size: 10px; font-weight: 700;
+    padding: 2px 7px; border-radius: 8px; margin-right: 4px;
+    vertical-align: middle;
+  }
+  .checklist-badge.red { background: #FFF0F0; color: #c0392b; border: 0.5px solid #ffb3b3; }
+  .checklist-badge.blue { background: #EBF4FF; color: #0C6EBD; border: 0.5px solid #C3DEFF; }
+
+  .checklist-reset-btn {
+    width: 100%; margin-top: 14px; padding: 10px;
+    background: transparent; border: 1px solid #e0ddd2;
+    border-radius: 10px; color: #888; font-size: 12px;
+    cursor: pointer; font-family: inherit; transition: all 0.15s;
+  }
+  .checklist-reset-btn:active { background: #f5f5f0; }
+
+  .hidden { display: none !important; }
+
+  /* ── Guide Trigger Button ── */
+  .guide-trigger {
+    display: flex; align-items: center; gap: 8px;
+    margin-top: 8px; padding: 10px 14px;
+    border-radius: 12px; border: none;
+    cursor: pointer; width: 100%;
+    font-family: inherit;
+    user-select: none; -webkit-user-select: none;
+    transition: opacity 0.15s;
+    text-align: left;
+  }
+  .guide-trigger:active { opacity: 0.8; }
+  .guide-trigger .gt-icon { font-size: 18px; flex-shrink: 0; }
+  .guide-trigger .gt-text { flex: 1; }
+  .guide-trigger .gt-title { font-size: 13px; font-weight: 600; line-height: 1.3; }
+  .guide-trigger .gt-sub { font-size: 11px; opacity: 0.85; margin-top: 1px; }
+  .guide-trigger .gt-arrow { font-size: 12px; flex-shrink: 0; opacity: 0.9; }
+
+  /* ── Full-screen Modal ── */
+  .guide-modal-overlay {
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(0,0,0,0.5);
+    display: flex; flex-direction: column; justify-content: flex-end;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.25s;
+  }
+  .guide-modal-overlay.active {
+    opacity: 1; pointer-events: auto;
+  }
+  .guide-modal {
+    background: #fff;
+    border-radius: 20px 20px 0 0;
+    max-height: 88vh;
+    display: flex; flex-direction: column;
+    transform: translateY(100%);
+    transition: transform 0.3s cubic-bezier(0.32,0.72,0,1);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .guide-modal-overlay.active .guide-modal {
+    transform: translateY(0);
+  }
+  .guide-modal-handle {
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    padding: 12px 0 4px;
+  }
+  .guide-modal-handle::before {
+    content: ""; width: 36px; height: 4px;
+    background: #ddd; border-radius: 2px;
+  }
+  .guide-modal-header {
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 8px 18px 14px;
+    border-bottom: 0.5px solid #eee;
+  }
+  .guide-modal-header-left { display: flex; align-items: center; gap: 10px; }
+  .guide-modal-header .gm-icon { font-size: 22px; }
+  .guide-modal-header .gm-title { font-size: 15px; font-weight: 700; line-height: 1.3; }
+  .guide-modal-header .gm-sub { font-size: 11.5px; color: #888; margin-top: 2px; }
+  .guide-modal-close {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: #f0ede2; border: none; cursor: pointer;
+    font-size: 15px; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-family: inherit;
+    transition: background 0.15s;
+  }
+  .guide-modal-close:active { background: #e0ddd2; }
+  .guide-modal-body {
+    flex: 1; overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 16px 18px 24px;
+  }
+
+  /* Route summary bar */
+  .route-bar {
+    display: flex; align-items: center; gap: 6px;
+    padding: 12px 0 14px;
+    border-bottom: 0.5px solid #eee;
+    margin-bottom: 14px;
+    font-size: 13px; font-weight: 600;
+    overflow-x: auto; white-space: nowrap;
+  }
+  .route-bar .r-stop {
+    display: inline-flex; flex-direction: column; align-items: center;
+    font-size: 11px; font-weight: 600; color: #1a1a1a;
+    text-align: center; gap: 3px;
+  }
+  .route-bar .r-stop .r-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: #1a6fb5; flex-shrink: 0;
+  }
+  .route-bar .r-arrow {
+    color: #aaa; font-size: 12px; flex-shrink: 0;
+    display: flex; align-items: center; gap: 2px;
+  }
+  .route-bar .r-arrow span { font-size: 10px; color: #888; white-space: nowrap; }
+
+  /* Steps */
+  .tc-step {
+    display: flex; gap: 12px; margin-bottom: 14px;
+  }
+  .tc-step:last-child { margin-bottom: 0; }
+  .tc-step-num {
+    flex-shrink: 0;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    font-size: 12px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff;
+    margin-top: 1px;
+  }
+  .tc-step-num.s1 { background: #f0a500; }
+  .tc-step-num.s2 { background: #27ae60; }
+  .tc-step-num.s3 { background: #2980e4; }
+  .tc-step-num.s4 { background: #8b5cf6; }
+  .tc-step-num.s5 { background: #e84040; }
+
+  .tc-step-body { flex: 1; }
+  .tc-step-title { font-size: 13.5px; font-weight: 600; line-height: 1.4; margin-bottom: 4px; }
+  .tc-step-desc { font-size: 12.5px; color: #555; line-height: 1.6; }
+
+  .tc-tip {
+    display: flex; gap: 8px; align-items: flex-start;
+    background: #FFF8E7; border-radius: 10px;
+    padding: 10px 12px; margin-top: 10px;
+    font-size: 12px; color: #7a5800; line-height: 1.6;
+    border: 0.5px solid #F5D87A;
+  }
+  .tc-tip .tip-icon { flex-shrink: 0; font-size: 14px; }
+
+  .tc-info-row {
+    display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px;
+  }
+  .tc-badge {
+    padding: 5px 11px; border-radius: 16px;
+    font-size: 11.5px; font-weight: 500;
+    background: #EBF4FF; color: #0C6EBD;
+    border: 0.5px solid #C3DEFF;
+  }
+  .tc-badge.green { background: #E8F8EF; color: #1a7a45; border-color: #A8E6C0; }
+  .tc-badge.purple { background: #F3EEFF; color: #6b21a8; border-color: #D4BCFF; }
+
+  .tc-divider {
+    height: 0.5px; background: #f0ede2;
+    margin: 14px 0;
+  }
+
+  .tc-time-row {
+    display: flex; align-items: center; gap: 8px;
+    background: #f5f5f0; border-radius: 10px;
+    padding: 10px 12px; margin-top: 10px;
+    font-size: 12.5px;
+  }
+  .tc-time-row .t-icon { font-size: 16px; flex-shrink: 0; }
+  .tc-time-row .t-label { color: #888; font-size: 11px; }
+  .tc-time-row .t-val { font-weight: 600; color: #1a1a1a; }
+
+  .fab {
+    position: fixed; bottom: calc(20px + env(safe-area-inset-bottom)); right: 16px;
+    width: 44px; height: 44px; border-radius: 50%;
+    background: #1a1a1a; color: #fff; border: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    font-size: 18px; cursor: pointer; opacity: 0; pointer-events: none;
+    transition: opacity 0.2s; z-index: 60;
+  }
+  .fab.show { opacity: 1; pointer-events: auto; }
+
+  footer {
+    text-align: center;
+    padding: 24px 16px calc(24px + env(safe-area-inset-bottom));
+    font-size: 11px; color: #999;
+  }
+
+  @media (max-width: 360px) {
+    .header h1 { font-size: 18px; }
+    .day-hero h2 { font-size: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="label">9 DAYS · KANSAI &amp; TOKAI</div>
+  <h1>🇯🇵 大阪・名古屋雙城</h1>
+  <div class="dates">6/27 (六) — 7/5 (日)</div>
+  <div class="meta">
+    <span>✈️ 桃園 ⇄ 關西</span>
+    <span>🚄 含新幹線</span>
+    <span>🚗 含自駕日</span>
+  </div>
+</header>
+
+<div class="day-scroller">
+  <div class="day-scroller-inner" id="dayScroller"></div>
+</div>
+
+<main>
+  <div class="tab-nav" style="grid-template-columns:repeat(4,1fr)">
+    <button class="tab-btn active" data-tab="day">📅 行程</button>
+    <button class="tab-btn" data-tab="overview">🗺 總覽</button>
+    <button class="tab-btn" data-tab="checklist">✅ 清單</button>
+    <button class="tab-btn" data-tab="tips">💡 備忘</button>
+  </div>
+
+  <section id="view-day"></section>
+
+  <section id="view-overview" class="hidden">
+    <div class="summary-grid">
+      <div class="summary-card"><div class="k">總天數</div><div class="v">9 天 8 夜</div></div>
+      <div class="summary-card"><div class="k">城市</div><div class="v">大阪 · 名古屋</div></div>
+      <div class="summary-card"><div class="k">住宿點</div><div class="v">3 間飯店</div></div>
+      <div class="summary-card"><div class="k">季節</div><div class="v">梅雨末 · 初夏</div></div>
+    </div>
+
+    <div class="info-section">
+      <h3>城市分配</h3>
+      <div class="city-bar">
+        <div class="osaka" style="flex:1">D1</div>
+        <div class="nagoya" style="flex:3">D2-4</div>
+        <div class="osaka" style="flex:4">D5-8</div>
+        <div class="ret" style="flex:1">D9</div>
+      </div>
+      <p style="font-size:12px;color:#888;margin-top:-8px">藍 = 大阪 · 橘 = 名古屋 · 灰 = 返程</p>
+    </div>
+
+    <div class="info-section">
+      <h3>住宿安排</h3>
+      <div class="hotel-overview-card">
+        <div class="hk">Day 1 · 大阪梅田</div>
+        <div class="hname">🏨 大阪梅田 Intergate 飯店</div>
+        <div class="hrow">📍 <a href="https://www.google.com/maps/search/?api=1&query=Hotel+Intergate+Osaka+Umeda" target="_blank">大阪府大阪市北區梅田 2-5-2</a></div>
+        <div class="hrow">📞 <a href="tel:+81663448800">+81-6-6344-8800</a></div>
+        <a class="hotel-map-inline" href="https://www.google.com/maps/search/?api=1&query=Hotel+Intergate+Osaka+Umeda" target="_blank">🗺 開啟導航</a>
+      </div>
+      <div class="hotel-overview-card">
+        <div class="hk">Day 2–4 · 名古屋</div>
+        <div class="hname">🏨 名古屋 Minn STATION Ai Nagoya</div>
+        <div class="hrow">📍 <a href="https://www.google.com/maps/search/?api=1&query=Minn+STATION+Ai+Nagoya" target="_blank">愛知縣名古屋市中村區名駅 4-27-1</a></div>
+        <a class="hotel-map-inline" href="https://www.google.com/maps/search/?api=1&query=Minn+STATION+Ai+Nagoya" target="_blank">🗺 開啟導航</a>
+      </div>
+      <div class="hotel-overview-card">
+        <div class="hk">Day 5–8 · 大阪難波</div>
+        <div class="hname">🏨 Eslead Hotel Namba East</div>
+        <div class="hrow">📍 <a href="https://www.google.com/maps/search/?api=1&query=Eslead+Hotel+Namba+East+Osaka" target="_blank">大阪府大阪市浪速區難波中 3-5-10</a></div>
+        <a class="hotel-map-inline" href="https://www.google.com/maps/search/?api=1&query=Eslead+Hotel+Namba+East+Osaka" target="_blank">🗺 開啟導航</a>
+      </div>
+    </div>
+
+    <div class="info-section">
+      <h3>每日主題一覽</h3>
+      <div id="overviewList"></div>
+    </div>
+  </section>
+
+  <section id="view-checklist" class="hidden">
+    <div class="cl-header-bar">
+      <div class="cl-header-title">🎒 出發前準備清單</div>
+      <button class="cl-reset-btn" onclick="resetChecklist()">重置全部</button>
+    </div>
+    <div class="cl-total-bar">
+      <span class="ct-label">整體進度</span>
+      <div class="ct-track"><div class="ct-fill" id="clTotalFill" style="width:0%"></div></div>
+      <span class="ct-num" id="clTotalNum">0 / 0</span>
+    </div>
+    <div id="checklistRoot"></div>
+  </section>
+
+  <section id="view-tips" class="hidden">
+
+    <!-- 準備清單 -->
+    <div class="info-section">
+      <h3>🎒 出發前準備清單</h3>
+      <div class="checklist-tabs">
+        <button class="checklist-tab-btn active" onclick="switchChecklistTab('core')">🔑 隨身核心包</button>
+        <button class="checklist-tab-btn" onclick="switchChecklistTab('luggage')">🧳 大行李箱</button>
+        <button class="checklist-tab-btn" onclick="switchChecklistTab('water')">🏊 水樂園裝備</button>
+        <button class="checklist-tab-btn" onclick="switchChecklistTab('kids')">💊 小孩護理</button>
+      </div>
+
+      <!-- 進度條 -->
+      <div class="checklist-progress">
+        <div class="checklist-progress-bar-wrap">
+          <div class="checklist-progress-bar" id="checklistProgressBar" style="width:0%"></div>
+        </div>
+        <div class="checklist-progress-label" id="checklistProgressLabel">0 / 0 完成</div>
+      </div>
+
+      <!-- 隨身核心包 -->
+      <div class="checklist-group active" id="cl-core">
+        <div class="checklist-section-title">✈️ 絕對不能遺漏・全程隨身攜帶</div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="c1">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">🛂 護照正本 × 5 本</div>
+            <div class="checklist-item-note">全家 2大3小，確認有效期限 6 個月以上</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="c2">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title"><span class="checklist-badge red">自駕必備</span>台灣駕照正本</div>
+            <div class="checklist-item-note">租車登記大人必備，缺少譯本無法取車</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="c3">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title"><span class="checklist-badge red">自駕必備</span>日文駕照譯本</div>
+            <div class="checklist-item-note">提前去監理所辦理，規費約 NT$100</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="c4">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">💳 海外高回饋信用卡 × 2–3 張</div>
+            <div class="checklist-item-note">富邦J卡、吉鶴卡、玉山熊本熊卡等</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="c5">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">💴 日圓現金</div>
+            <div class="checklist-item-note">長島幼兒設施單次投幣 300–500 日圓，建議備硬幣</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="c6">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title"><span class="checklist-badge blue">出發前完成</span>eSIM QR Code</div>
+            <div class="checklist-item-note">確認收到 Klook eSIM 信件，截圖備用</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="c7">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title"><span class="checklist-badge blue">出發前完成</span>Visit Japan Web</div>
+            <div class="checklist-item-note">填妥全家入境申報，QR Code 截圖存手機</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 大行李箱 -->
+      <div class="checklist-group" id="cl-luggage">
+        <div class="checklist-section-title">🚗 汽車自駕相關</div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="l1">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">🛺 輕便摺疊推車（可登機款）</div>
+            <div class="checklist-item-note">5歲小孩長距離行走救星，放後車廂不佔空間</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="l2">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">📱 車用手機支架（夾式/磁吸）</div>
+            <div class="checklist-item-note">自駕用 Google Maps 導航必備神物</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="l3">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">🔌 車用多孔充電器 / 車充</div>
+            <div class="checklist-item-note">自駕途中全家手機同步充電</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="l4">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">☂️ 推車雨罩 / 遮陽罩</div>
+            <div class="checklist-item-note">梅雨季防雨、大太陽遮陽必備</div>
+          </div>
+        </div>
+        <div class="checklist-section-title">🔌 3C 數位設備</div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="l5">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">🔋 大容量行動電源 × 2</div>
+            <div class="checklist-item-note">⚠️ 必須隨身攜帶上飛機，不能托運</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="l6">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">🔌 充電線 + 多孔充電頭</div>
+            <div class="checklist-item-note">一顆多孔充電頭搞定全家設備</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="l7">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">📌 取卡針</div>
+            <div class="checklist-item-note">以備 eSIM 需要重啟或更換實體卡</div>
+          </div>
+        </div>
+        <div class="checklist-section-title">👕 衣物與生活用品</div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="l8">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">🧥 輕薄抗UV外套（大人小孩各一件）</div>
+            <div class="checklist-item-note">白天熱、室內冷氣強，早晚溫差大</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="l9">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">🌧 輕便雨衣 / 折疊傘</div>
+            <div class="checklist-item-note">樂園遇雷陣雨，雨衣比撐傘更好照顧小孩</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="l10">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">👟 舒適運動鞋（全家）</div>
+            <div class="checklist-item-note">每天基本一萬步起跳，穿習慣的鞋最重要</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="l11">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">👜 空摺疊旅行袋</div>
+            <div class="checklist-item-note">最後一天藥妝、樂高玩具爆買後緊急托運用</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 水樂園裝備 -->
+      <div class="checklist-group" id="cl-water">
+        <div class="checklist-section-title">🏊 長島溫泉水上樂園專用</div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="w1">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">👙 全家泳衣 / 泳褲</div>
+            <div class="checklist-item-note">建議長袖水母衣，防曬防磨效果最佳</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="w2">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">🥽 泳鏡 / 防水泳帽</div>
+            <div class="checklist-item-note">部分設施有規定需配戴</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="w3">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">📱 防水手機袋</div>
+            <div class="checklist-item-note">水上一邊顧小孩一邊拍照必備</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="w4">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">👡 輕便海灘鞋 / 防滑水鞋</div>
+            <div class="checklist-item-note">曝曬地面超燙，防滑水鞋保護小孩最安全</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="w5">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">🏊 充氣游泳圈 / 手臂圈（空的）</div>
+            <div class="checklist-item-note">5歲小孩造浪池必備，空的帶上飛機即可</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="w6">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">🛍 大防水袋</div>
+            <div class="checklist-item-note">玩完水後裝全家濕泳衣</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 小孩護理 -->
+      <div class="checklist-group" id="cl-kids">
+        <div class="checklist-section-title">💊 小孩安心保障</div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="k1">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title"><span class="checklist-badge red">重要</span>兒童常備藥</div>
+            <div class="checklist-item-note">退燒藥水、感冒藥、止瀉藥、止吐藥、抗組織胺。出發前請小兒科醫生開立「出國常備藥」</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="k2">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">🦟 防蚊液 + 水性防蚊貼片</div>
+            <div class="checklist-item-note">戶外樂園長時間玩耍必備</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="k3">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">🧴 防曬乳（海洋友善/兒童專用）</div>
+            <div class="checklist-item-note">水上樂園 + 陸地樂園長時間曝曬</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="k4">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">🧻 濕紙巾 / 酒精棉片</div>
+            <div class="checklist-item-note">超商吃東西、車上隨時擦手</div>
+          </div>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)" data-id="k5">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-item-text">
+            <div class="checklist-item-title">🧴 兒童屁屁膏 / 萬用膏</div>
+            <div class="checklist-item-note">防止大熱天行走摩擦、流汗起紅疹（如理膚寶水 B5）</div>
+          </div>
+        </div>
+      </div>
+
+      <button class="checklist-reset-btn" onclick="resetChecklist()">↺ 重置所有勾選</button>
+    </div>
+
+    <!-- 其他備忘 -->
+    <div class="info-section">
+      <h3>🚄 交通票券</h3>
+      <div class="item">
+        <div class="k">新幹線（大阪 ⇄ 名古屋）</div>
+        <div class="v">Smart EX APP 預購「NOZOMI 希望號」，單程約 5,900–6,500 日圓。</div>
+      </div>
+      <div class="item">
+        <div class="k">市區交通</div>
+        <div class="v">iPhone 綁定 Suica / Pasmo，或實體 ICOCA / Manaca，地鐵公車一卡通用。</div>
+      </div>
+    </div>
+    <div class="info-section">
+      <h3>🌤 天氣與穿著</h3>
+      <p>6/27 – 7/5 梅雨季末期至初夏，氣溫約 22°C – 30°C。短袖為主，室內冷氣強建議帶薄外套。</p>
+    </div>
+    <div class="info-section">
+      <h3>🛍 伴手禮清單</h3>
+      <p>白色戀人 · 東京香蕉 · Royce 巧克力 · 抹茶系列<br>建議最後一天在 KIX 機場免稅店一次補齊。</p>
+    </div>
+  </section>
+</main>
+
+<button class="fab" id="fab" aria-label="回到頂端">↑</button>
+
+<!-- Guide Modal -->
+<div class="guide-modal-overlay" id="guideOverlay">
+  <div class="guide-modal" id="guideModal">
+    <div class="guide-modal-handle"></div>
+    <div class="guide-modal-header">
+      <div class="guide-modal-header-left">
+        <span class="gm-icon" id="guideModalIcon"></span>
+        <div>
+          <div class="gm-title" id="guideModalTitle"></div>
+          <div class="gm-sub" id="guideModalSub"></div>
+        </div>
+      </div>
+      <button class="guide-modal-close" id="guideModalClose">✕</button>
+    </div>
+    <div class="guide-modal-body" id="guideModalBody"></div>
+  </div>
+</div>
+<footer>祝旅途圓滿順利 · 玩得開心 · 買得痛快 🎒</footer>
+
+<script>
+// map(url) helper — Google Maps Search URL
+const gmap = q => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
+
+const days = [
+  {
+    n:1, date:"6/27", dow:"六", city:"osaka", cityLabel:"大阪",
+    title:"抵達日：機場接送直達梅田",
+    focus:"順利入境、專車直送 Intergate 飯店、儲備體力",
+    hotel:"大阪梅田 Intergate 飯店",
+    hotelAddress:"大阪府大阪市北區梅田 2-5-2",
+    hotelTel:"+81-6-6344-8800", hotelTelLink:"tel:+81663448800",
+    hotelMapUrl: gmap("Hotel Intergate Osaka Umeda"),
+    schedule:[
+      { time:"15:40", title:"✈️ 台灣起飛", note:"D7378 TPE → KIX" },
+      { time:"19:30", title:"🛬 關西國際機場 KIX 入境", note:"入境 → 領行李 → 出海關，約 40–60 分鐘",
+        mapUrl: gmap("Kansai International Airport"), addr:"大阪府泉佐野市泉州空港北 1",
+        guide: "jr-haruka" },
+      { time:"20:00", title:"🚐 機場接送專車 出發", note:"Toyota Hiace 14 人座・司機於出口接機",
+        guide: "airport-transfer" },
+      { time:"21:00", title:"🏨 抵達・飯店 Check-in + 停車", note:"Intergate Osaka Umeda・建議停附近 Times 停車場",
+        mapUrl: gmap("Hotel Intergate Osaka Umeda"), addr:"大阪市北區梅田 2-5-2" },
+      { time:"深夜", title:"🍜 梅田簡單晚餐", note:"拉麵或松屋、便利商店補貨",
+        mapUrl: gmap("梅田 ラーメン"), addr:"梅田周邊" }
+    ]
+  },
+  {
+    n:2, date:"6/28", dow:"日", city:"nagoya", cityLabel:"名古屋",
+    title:"跨區移動：抵達名古屋・取車・大須探索",
+    focus:"新幹線移動、TOYOTA 取車、大須商店街、榮商圈夜景",
+    hotel:"名古屋 Minn STATION Ai Nagoya",
+    hotelAddress:"愛知縣名古屋市中村區名駅 4-27-1",
+    hotelTel:null, hotelTelLink:null,
+    hotelMapUrl: gmap("Minn STATION Ai Nagoya"),
+    hotelParking: { name:"タイムズ名古屋ユニモール（TOYOTA租車同棟）", addr:"名古屋市中村區名駅 4-5-26", fee:"平日最大 ¥1,500・假日 ¥2,000／24h", walk:"與取車店同棟，最方便", mapUrl:"https://www.google.com/maps/search/?api=1&query=%E3%83%88%E3%83%A8%E3%82%BF%E3%83%AC%E3%83%B3%E3%82%BF%E3%82%AB%E3%83%BC+%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85%E5%89%8D%E5%BA%97" },
+    schedule:[
+      { time:"12:24", title:"🚄 NOZOMI 386 號｜新大阪 → 名古屋", note:"13:13 抵達名古屋・約 49 分鐘",
+        mapUrl: gmap("新大阪駅"), addr:"大阪市淀川區西中島 5-16-1",
+        guide: "shinkansen-d2" },
+      { time:"13:30", title:"🚶 名古屋站周邊閒逛", note:"下車後輕鬆散步・順路探索名駅地下街" },
+      { time:"14:00", title:"🚗 TOYOTA 租車・取車", note:"名古屋站前店・步行即達",
+        mapUrl: gmap("トヨタレンタカー 名古屋駅前店"), addr:"名古屋市中村區名駅 4-5-26 ユニモール桜ビル",
+        guide: "car-rental" },
+      { time:"14:30", title:"🏨 開車前往飯店 Check-in", note:"STATION Ai Hotel・停好車正式入住",
+        mapUrl: gmap("Minn STATION Ai Nagoya"), addr:"名古屋市中村區名駅 4-27-1",
+        parking: { name:"タイムズ名古屋駅ユニモール", addr:"名古屋市中村區名駅 4-5-26", fee:"平日最大 ¥1,500・假日 ¥2,000／24h", walk:"TOYOTA 租車店同棟", mapUrl: gmap("タイムズ名古屋ユニモール駐車場") } },
+      { time:"停車", title:"🅿️ 建議停車場：名古屋市營大須停車場", note:"全程大須商店街步行即達・平日最大 ¥1,000・202 台・名古屋市營管理",
+        mapUrl: gmap("名古屋市営大須駐車場 中区大須3丁目14"), addr:"名古屋市中區大須 3-14-12" },
+      { time:"下午", title:"🛍 大須商店街", note:"炸雞、鯛魚燒、扭蛋、動漫周邊、藥妝採購",
+        mapUrl: gmap("大須商店街 名古屋"), addr:"名古屋市中區大須 2–18–42" },
+      { time:"傍晚", title:"🚗 停車 → 🌆 中部電力 MIRAI TOWER", note:"先將車停在唐吉訶德榮本店停車場（30分¥200・消費¥5,000以上享60分免費），再步行約 5–7 分鐘至 MIRAI TOWER，欣賞電視塔 + Oasis 21 水之宇宙船夜景",
+        mapUrl: gmap("中部電力 MIRAI TOWER 名古屋"), addr:"名古屋市東區東桜 1-11-1" },
+      { time:"晚上", title:"🐧 唐吉訶德 名古屋榮本店", note:"步行 5–7 分鐘回到唐吉訶德・深夜大補貨・消費 ¥5,000 以上享 60 分鐘停車免費，最大料金 ¥1,000（7:00–18:00）",
+        mapUrl: gmap("ドン・キホーテ 名古屋栄店"), addr:"名古屋市中區栄 3-14-13" }
+    ]
+  },
+  {
+    n:3, date:"6/29", dow:"一", city:"nagoya", cityLabel:"三重",
+    title:"自駕日：長島溫泉樂園與超狂 Outlet",
+    focus:"驚險雲霄飛車、水樂園消暑、名牌 Outlet 血拼",
+    hotel:"名古屋 Minn STATION Ai Nagoya",
+    hotelAddress:"愛知縣名古屋市中村區名駅 4-27-1",
+    hotelTel:null, hotelTelLink:null,
+    hotelMapUrl: gmap("Minn STATION Ai Nagoya"),
+    hotelParking: { name:"タイムズ名古屋ユニモール（TOYOTA租車同棟）", addr:"名古屋市中村區名駅 4-5-26", fee:"平日最大 ¥1,500・假日 ¥2,000／24h", walk:"與取車店同棟，最方便", mapUrl:"https://www.google.com/maps/search/?api=1&query=%E3%83%88%E3%83%A8%E3%82%BF%E3%83%AC%E3%83%B3%E3%82%BF%E3%82%AB%E3%83%BC+%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85%E5%89%8D%E5%BA%97" },
+    schedule:[
+      { time:"前一晚", title:"🏪 超商購票（出發前完成）", note:"7-11 / 全家 / Lawson 機台現場列印門票",
+        guide: "ticket-convenience" },
+      { time:"08:30", title:"🚗 名古屋市區取車出發", note:"自駕前往三重縣長島，約 40–50 分鐘" },
+      { time:"停車", title:"🅿️ 長島溫泉樂園停車場（免費）", note:"園區附設大型免費停車場，直接開進去即可",
+        mapUrl: gmap("ナガシマスパーランド 駐車場"), addr:"三重縣桑名市長島町浦安 333" },
+      { time:"白天", title:"🎢 長島溫泉樂園 Nagashima Spa Land", note:"Steel Dragon 2000、水樂園消暑",
+        mapUrl: gmap("Nagashima Spa Land 三重"), addr:"三重縣桑名市長島町浦安 333",
+        guide: "nagashima" },
+      { time:"傍晚", title:"🛍 爵士之夢長島 Outlet", note:"日本最大規模 Outlet，購物 + 晚餐",
+        mapUrl: gmap("ジャズドリーム長島 アウトレット"), addr:"三重縣桑名市長島町浦安 368" },
+      { time:"晚上", title:"🚗 駕車返回名古屋", note:"還車回飯店休息" }
+    ]
+  },
+  {
+    n:4, date:"6/30", dow:"二", city:"nagoya", cityLabel:"名古屋",
+    title:"樂高日：沉浸童趣 LEGOLAND",
+    focus:"全日樂高樂園、迷你日本打卡",
+    hotel:"名古屋 Minn STATION Ai Nagoya",
+    hotelAddress:"愛知縣名古屋市中村區名駅 4-27-1",
+    hotelTel:null, hotelTelLink:null,
+    hotelMapUrl: gmap("Minn STATION Ai Nagoya"),
+    hotelParking: { name:"タイムズ名古屋ユニモール（TOYOTA租車同棟）", addr:"名古屋市中村區名駅 4-5-26", fee:"平日最大 ¥1,500・假日 ¥2,000／24h", walk:"與取車店同棟，最方便", mapUrl:"https://www.google.com/maps/search/?api=1&query=%E3%83%88%E3%83%A8%E3%82%BF%E3%83%AC%E3%83%B3%E3%82%BF%E3%82%AB%E3%83%BC+%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85%E5%89%8D%E5%BA%97" },
+    schedule:[
+      { time:"09:00", title:"🚗 自駕前往金城埠頭", note:"從名古屋市區出發，約 20 分鐘" },
+      { time:"停車", title:"🅿️ レゴランド公式駐車場（付費）", note:"園區官方停車場・平日 ¥1,000 / 休日 ¥1,500 一天・直接開入",
+        mapUrl: gmap("レゴランド ジャパン 駐車場 金城ふ頭"), addr:"名古屋市港區金城ふ頭 2-2-1" },
+      { time:"全天", title:"🧱 LEGOLAND Japan", note:"The Dragon、Submarine Adventure、Driving School、Miniland 名勝",
+        mapUrl: gmap("LEGOLAND Japan 名古屋"), addr:"名古屋市港區金城ふ頭 2-2-1",
+        guide: "legoland" },
+      { time:"傍晚", title:"🍴 Maker's Pier 商場晚餐", note:"園外商場美食街",
+        mapUrl: gmap("Maker's Pier 名古屋"), addr:"名古屋市港區金城ふ頭 2-1-1" }
+    ]
+  },
+  {
+    n:5, date:"7/1", dow:"三", city:"osaka", cityLabel:"大阪",
+    title:"重返大阪：梅田朝聖與心齋橋不夜城",
+    focus:"返關西、梅田運動扭蛋、道頓堀吉伊卡哇",
+    hotel:"Eslead Hotel Namba East",
+    hotelAddress:"大阪府大阪市浪速區難波中 3-5-10",
+    hotelTel:null, hotelTelLink:null,
+    hotelMapUrl: gmap("Eslead Hotel Namba East Osaka"),
+    schedule:[
+      { time:"早上", title:"🧳 行李打包・退房準備", note:"名古屋飯店退房，行李整理好帶上，步行至 TOYOTA 還車" },
+      { time:"11:00", title:"🚗 前往 TOYOTA 名古屋站前還車", note:"確保 13:00 前抵達還車，名古屋站前店・愛知縣名古屋市中村區名駅 4-5-26",
+        mapUrl: gmap("トヨタレンタカー 名古屋駅前店"), addr:"名古屋市中村區名駅 4-5-26 ユニモール桜ビル" },
+      { time:"13:00", title:"🔑 TOYOTA 還車完成", note:"還車後步行至名古屋站・約 5 分鐘" },
+      { time:"14:26", title:"🚄 NOZOMI 71 號｜名古屋 → 新大阪", note:"15:15 抵達新大阪・約 49 分鐘",
+        mapUrl: gmap("名古屋駅"), addr:"名古屋市中村區名駅 1-1-4",
+        guide: "shinkansen-d5" },
+      { time:"15:30", title:"🚃 新大阪 → 難波（御堂筋線）", note:"地鐵御堂筋線 なんば站，約 13 分鐘，¥280",
+        mapUrl: gmap("新大阪駅"), addr:"大阪市淀川區西中島 5-16-1" },
+      { time:"16:00", title:"🏨 飯店 Check-in", note:"Eslead Hotel Namba East 放行李・先換裝休息",
+        mapUrl: gmap("Eslead Hotel Namba East Osaka"), addr:"大阪市浪速區難波中 3-5-10" },
+      { time:"下午", title:"👟 STEP SPORTS 梅田店", note:"🚃 難波 → 梅田（御堂筋線）約 7 分，¥230",
+        mapUrl: gmap("STEP SPORTS 梅田"), addr:"大阪市北區茶屋町 1-27" },
+      { time:"晚上", title:"🐙 道頓堀・心齋橋 深度探索", note:"🚃 梅田 → 難波（御堂筋線）約 7 分，步行至道頓堀 5 分鐘",
+        mapUrl: gmap("道頓堀 大阪"), addr:"大阪市中央區道頓堀 1-7",
+        guide: "dotonbori-guide" }
+    ]
+  },
+  {
+    n:6, date:"7/2", dow:"四", city:"osaka", cityLabel:"大阪",
+    title:"港灣與購物：海遊館 × 門真超級商場",
+    focus:"巨大鯨鯊療癒、天保山摩天輪、LaLaport + 三井Outlet + COSTCO 購物馬拉松",
+    hotel:"Eslead Hotel Namba East",
+    hotelAddress:"大阪府大阪市浪速區難波中 3-5-10",
+    hotelTel:null, hotelTelLink:null,
+    hotelMapUrl: gmap("Eslead Hotel Namba East Osaka"),
+    schedule:[
+      { time:"09:00", title:"🚃 難波 → 大阪港（地鐵）", note:"千日前線 難波→阿波座（5 分）換乘中央線→大阪港（10 分），共約 20 分・¥290",
+        mapUrl: gmap("なんば駅 大阪メトロ"), addr:"大阪市中央區難波 5-1-60" },
+      { time:"09:30", title:"🦈 海遊館（大阪港）", note:"大阪港站步行約 9 分・世界最大級水族館，鯨鯊、水母",
+        mapUrl: gmap("海遊館 大阪港"), addr:"大阪市港區海岸通 1-1-10" },
+      { time:"12:00", title:"🎡 天保山摩天輪", note:"步行約 3 分・天保山購物中心午餐，俯瞰大阪港",
+        mapUrl: gmap("天保山大観覧車 大阪"), addr:"大阪市港區海岸通 2-1-10" },
+      { time:"13:00", title:"🚃 大阪港 → 門真市（轉乘京阪）", note:"大阪港→本町（中央線 約14分）→京橋（中央線 約10分）→ 門真市（京阪本線 約15分），共約 40 分・¥370",
+        mapUrl: gmap("大阪港駅 大阪メトロ"), addr:"大阪市港區築港 3-1" },
+      { time:"13:45", title:"🛍 LaLaport門真 × 三井Outlet × COSTCO 購物馬拉松", note:"門真市站步行約 8 分・先到外國旅客服務台用護照領 ¥500 折價券",
+        mapUrl: gmap("ららぽーと門真 三井アウトレットパーク"), addr:"大阪府門真市松生町 1-11",
+        guide: "kadoma-guide" },
+      { time:"18:30", title:"🚃 返回難波", note:"門真市→京橋（京阪本線 約15分）→難波（大阪Metro 約12分），共約 30 分" }
+    ]
+  },
+  {
+    n:7, date:"7/3", dow:"五", city:"osaka", cityLabel:"奈良",
+    title:"山頂樂園 × 奈良鹿：生駒山上遊樂園 + 奈良公園",
+    focus:"近鐵一日券、百年山頂樂園纜車、奈良餵鹿",
+    hotel:"Eslead Hotel Namba East",
+    hotelAddress:"大阪府大阪市浪速區難波中 3-5-10",
+    hotelTel:null, hotelTelLink:null,
+    hotelMapUrl: gmap("Eslead Hotel Namba East Osaka"),
+    schedule:[
+      { time:"09:00", title:"🎟 出發前：購買近鐵一日券", note:"難波站購買，¥1,800／人，含纜車＋奈良巴士，全程通用",
+        mapUrl: gmap("近鉄大阪難波駅"), addr:"大阪市中央區難波 5-1-60" },
+      { time:"09:20", title:"🚃 近鐵難波 → 生駒站", note:"近鐵快速急行，約 20–24 分鐘",
+        mapUrl: gmap("近鉄大阪難波駅"), addr:"大阪市中央區難波 5-1-60" },
+      { time:"09:50", title:"🚠 生駒纜車 → 生駒山上站", note:"鳥居前站搭纜車，寶山寺站換乘山上線，約 16 分鐘",
+        mapUrl: gmap("生駒ケーブル 鳥居前駅"), addr:"奈良縣生駒市門前町 1-1" },
+      { time:"10:10", title:"🎢 生駒山上遊樂園", note:"海拔 642m 百年山頂樂園・入園免費・飛行塔、空中單軌單車、空中鞦韆，俯瞰大阪平原 + 奈良盆地",
+        mapUrl: gmap("生駒山上遊園地"), addr:"奈良縣生駒市菜畑 2312-1",
+        guide: "ikoma-guide" },
+      { time:"13:00", title:"🍱 園內或山下午餐", note:"下山後生駒站周邊用餐，補充體力準備奈良" },
+      { time:"14:00", title:"🚃 生駒站 → 近鐵奈良站", note:"近鐵奈良線，約 25 分鐘直達",
+        mapUrl: gmap("近鉄奈良駅"), addr:"奈良市東向中町 29" },
+      { time:"14:30", title:"🦌 奈良公園・餵鹿去！", note:"鹿仙貝 ¥200／束，東大寺大佛殿步行可達・1,200 頭神鹿自由漫步",
+        mapUrl: gmap("奈良公園"), addr:"奈良市雜司町 469" },
+      { time:"16:00", title:"⛩ 東大寺大佛殿（可選）", note:"世界最大木造建築，日本必看景點",
+        mapUrl: gmap("東大寺大仏殿 奈良"), addr:"奈良市雑司町 406-1" },
+      { time:"17:30", title:"🚃 近鐵奈良 → 大阪難波", note:"近鐵直達，約 35 分鐘返回難波",
+        mapUrl: gmap("近鉄奈良駅"), addr:"奈良市東向中町 29" },
+      { time:"晚上", title:"🍜 難波晚餐收尾", note:"道頓堀或心齋橋周邊用餐",
+        mapUrl: gmap("道頓堀 大阪"), addr:"大阪市中央區道頓堀 1-7" }
+    ]
+  },
+  {
+    n:8, date:"7/4", dow:"六", city:"osaka", cityLabel:"大阪",
+    title:"難波在地風情：獅子神殿與通天閣",
+    focus:"獅子頭吸金、黑門和牛、新世界昭和情懷",
+    hotel:"Eslead Hotel Namba East",
+    hotelAddress:"大阪府大阪市浪速區難波中 3-5-10",
+    hotelTel:null, hotelTelLink:null,
+    hotelMapUrl: gmap("Eslead Hotel Namba East Osaka"),
+    schedule:[
+      { time:"09:30", title:"🦁 難波八阪神社", note:"飯店步行約 8 分鐘即達",
+        mapUrl: gmap("難波八阪神社"), addr:"大阪市浪速區萬頭通 2-9-19" },
+      { time:"11:00", title:"🥩 黑門市場", note:"步行約 10 分・現烤黑毛和牛、巨型生蠔、海膽、日本水果",
+        mapUrl: gmap("黒門市場 大阪"), addr:"大阪市中央區日本橋 2-4-1" },
+      { time:"13:30", title:"🛍 Namba Walk 地下街", note:"步行約 5 分・3COINS、無印良品、大創狂掃",
+        mapUrl: gmap("なんばウォーク 大阪"), addr:"大阪市中央區難波 5-1-60（地下）" },
+      { time:"傍晚", title:"🗼 通天閣・新世界", note:"🚃 難波→恵美須町（堺筋線）約 8 分・¥190，出口 3 番徒步 3 分",
+        mapUrl: gmap("通天閣 大阪"), addr:"大阪市浪速區惠美須東 1-18-6" },
+      { time:"夜晚", title:"🚃 返回難波", note:"恵美須町→日本橋（堺筋線 1 站）→千日前線→難波，約 10 分" }
+    ]
+  },
+  {
+    n:9, date:"7/5", dow:"日", city:"return", cityLabel:"返程",
+    title:"回程：專車送機・平安返台",
+    focus:"行李大打包、機場接送直達 KIX、免稅血拼",
+    hotel:"—",
+    hotelAddress:null, hotelTel:null, hotelTelLink:null, hotelMapUrl:null,
+    schedule:[
+      { time:"09:00", title:"🧳 飯店 Check-out & 打包", note:"行李最後秤重・確認不遺漏" },
+      { time:"10:00", title:"🔔 接送提醒", note:"司機預計 11:00 飯店門口等候・提前在大廳集合整理行李",
+        guide: "airport-transfer-d9" },
+      { time:"11:00", title:"🚐 機場接送專車 出發", note:"Eslead Hotel Namba East → 關西機場 KIX・約 60 分鐘" },
+      { time:"12:00", title:"✈️ 抵達機場・辦理登機", note:"免稅購物：白色戀人、東京香蕉、Royce",
+        mapUrl: gmap("Kansai International Airport"), addr:"大阪府泉佐野市泉州空港北 1" },
+      { time:"14:00", title:"🛫 飛機起飛", note:"" },
+      { time:"16:00", title:"🏠 抵達台灣", note:"平安結束 9 天豐富旅程 🎉" }
+    ]
+  }
+];
+
+let activeDay = 1;
+let activeTab = "day";
+
+const scroller = document.getElementById("dayScroller");
+const viewDay = document.getElementById("view-day");
+const viewOverview = document.getElementById("view-overview");
+const viewTips = document.getElementById("view-tips");
+const viewChecklist = document.getElementById("view-checklist");
+const overviewList = document.getElementById("overviewList");
+
+// ── Checklist ──
+const STORAGE_KEY = 'packlist_v1';
+
+function getChecked() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) { return {}; }
+}
+function saveChecked(obj) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(obj)); } catch(e) {}
+}
+
+function toggleCheck(el) {
+  const id = el.dataset.id;
+  const checked = getChecked();
+  if (checked[id]) { delete checked[id]; } else { checked[id] = true; }
+  saveChecked(checked);
+  el.classList.toggle('checked', !!checked[id]);
+  el.querySelector('.checklist-checkbox').textContent = checked[id] ? '✓' : '';
+  updateChecklistProgress();
+}
+
+function updateChecklistProgress() {
+  const activeGroup = document.querySelector('.checklist-group.active');
+  if (!activeGroup) return;
+  const items = activeGroup.querySelectorAll('.checklist-item');
+  const checked = getChecked();
+  let done = 0;
+  items.forEach(item => { if (checked[item.dataset.id]) done++; });
+  const total = items.length;
+  const pct = total ? Math.round(done/total*100) : 0;
+  const bar = document.getElementById('checklistProgressBar');
+  const label = document.getElementById('checklistProgressLabel');
+  if (bar) bar.style.width = pct + '%';
+  if (label) label.textContent = done + ' / ' + total + ' 完成';
+}
+
+function initChecklist() {
+  const checked = getChecked();
+  document.querySelectorAll('.checklist-item').forEach(el => {
+    const id = el.dataset.id;
+    if (checked[id]) {
+      el.classList.add('checked');
+      el.querySelector('.checklist-checkbox').textContent = '✓';
+    }
+  });
+  updateChecklistProgress();
+}
+
+function switchChecklistTab(tab) {
+  const groups = { core:'cl-core', luggage:'cl-luggage', water:'cl-water', kids:'cl-kids' };
+  document.querySelectorAll('.checklist-group').forEach(g => g.classList.remove('active'));
+  document.querySelectorAll('.checklist-tab-btn').forEach(b => b.classList.remove('active'));
+  const el = document.getElementById(groups[tab]);
+  if (el) el.classList.add('active');
+  event.currentTarget.classList.add('active');
+  updateChecklistProgress();
+}
+
+function resetChecklist() {
+  if (!confirm('確定要重置所有勾選嗎？')) return;
+  try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+  document.querySelectorAll('.checklist-item').forEach(el => {
+    el.classList.remove('checked');
+    el.querySelector('.checklist-checkbox').textContent = '';
+  });
+  updateChecklistProgress();
+}
+
+function switchTicketTab(tab) {
+  const tabs = { '711': ['ticketContent711','tab711'], 'lawson': ['ticketContentLawson','tabLawson'], 'tips': ['ticketContentTips','tabTips'] };
+  Object.entries(tabs).forEach(([k,[contentId,btnId]]) => {
+    const el = document.getElementById(contentId);
+    const btn = document.getElementById(btnId);
+    if (el) el.style.display = k===tab ? 'block' : 'none';
+    if (btn) { btn.style.background = k===tab ? '#1a1a1a' : 'transparent'; btn.style.color = k===tab ? '#fff' : '#6b6a64'; }
+  });
+}
+
+
+// ── Checklist ──
+const CHECKLIST_KEY = 'travel_checklist_v1';
+
+const checklistData = [
+  {
+    id: 'core', icon: '🎒', title: '隨身核心包', sub: '絕對不能遺漏・上飛機前確認',
+    items: [
+      { id:'passport', title:'護照正本', must:true, note:'全家人共 5 本，有效期限需超過 6 個月' },
+      { id:'license', title:'台灣駕照正本', must:true, note:'【自駕必備】租車登記的大人務必攜帶' },
+      { id:'license_jp', title:'日文駕照譯本', must:true, note:'【自駕必備】提前至監理所辦好，規費約 NT$100' },
+      { id:'credit_card', title:'海外高回饋信用卡', note:'準備 2–3 張（富邦J卡、吉鶴卡、玉山熊本熊卡等）' },
+      { id:'cash_yen', title:'日圓現金', note:'建議備部分現鈔，長島部分幼兒設施需硬幣（300–500 日圓）' },
+      { id:'esim', title:'手機與 eSIM QR Code', note:'出發前截圖保存或印出，確保可離線查看' },
+      { id:'vjw', title:'Visit Japan Web 截圖', note:'填妥全家入境與海關申報，QR Code 截圖存手機' },
+    ]
+  },
+  {
+    id: 'car', icon: '🚗', title: '汽車自駕與推車', sub: 'Day 3 自駕必備',
+    items: [
+      { id:'stroller', title:'輕便摺疊推車', note:'可登機、一秒收折的傘車・放後車廂不佔空間' },
+      { id:'phone_holder', title:'車用手機支架', note:'夾式或磁吸式，搭配 Google Maps 導航超方便' },
+      { id:'car_charger', title:'車用多孔充電器／車充', note:'自駕時全家手機與網卡同時充電' },
+      { id:'stroller_cover', title:'推車雨罩／遮陽罩', note:'6 月底梅雨季或大太陽，防雨防曬必備' },
+    ]
+  },
+  {
+    id: 'water', icon: '🏊', title: '水上樂園專用', sub: 'Day 3 長島溫泉必備',
+    items: [
+      { id:'swimwear', title:'全家人泳衣／泳褲', note:'建議「長袖水母衣」防曬效果最好' },
+      { id:'swim_goggle', title:'泳鏡／防水泳帽', note:'部分設施有強制規定' },
+      { id:'waterproof_bag_phone', title:'防水手機袋', note:'顧小孩同時拍照查資訊，一機多用' },
+      { id:'water_shoes', title:'輕便海灘鞋／防滑水鞋', note:'樂園地面曝曬高溫，小孩尤其需要' },
+      { id:'swim_ring', title:'充氣游泳圈／手臂圈', note:'5 歲小孩玩造浪池必備，空的上飛機不佔行李' },
+      { id:'waterproof_bag', title:'多用途大防水袋', note:'玩完水裝全家濕泳衣用' },
+    ]
+  },
+  {
+    id: 'kids', icon: '💊', title: '小孩與日常護理', sub: '帶小孩出門的安心保障',
+    items: [
+      { id:'medicine', title:'兒童常備藥', must:true, note:'去小兒科請醫生開：退燒藥水、感冒藥、止瀉藥、止吐藥、抗組織胺' },
+      { id:'mosquito', title:'防蚊液、水性防蚊貼片', note:'戶外樂園必備' },
+      { id:'sunscreen', title:'防曬乳（海洋友善／兒童專用）', note:'水上樂園與陸地樂園曝曬時間長' },
+      { id:'wet_wipes', title:'濕紙巾／酒精棉片', note:'超商吃東西、車上擦手必備' },
+      { id:'butt_cream', title:'兒童屁屁膏／萬用膏', note:'防止大熱天摩擦起紅疹（如理膚寶水B5）' },
+    ]
+  },
+  {
+    id: 'tech', icon: '🔌', title: '3C 數位設備', sub: '電力保障',
+    items: [
+      { id:'powerbank', title:'行動電源 × 2', must:true, note:'必須隨身帶上飛機不能托運，一整天查地圖拍照超耗電' },
+      { id:'charger', title:'充電線與多孔充電頭', note:'一顆多孔充電頭同時搞定全家設備' },
+      { id:'sim_pin', title:'取卡針', note:'以防 eSIM 需要重啟或更換實體卡時備用' },
+    ]
+  },
+  {
+    id: 'clothes', icon: '👕', title: '衣物與生活用品', sub: '舒適出行',
+    items: [
+      { id:'uv_jacket', title:'輕薄抗UV外套', note:'白天熱、早晚車上冷氣強，大人小孩各一件' },
+      { id:'raincoat', title:'輕便雨衣／折疊傘', note:'樂園遇雷陣雨，雨衣比撐傘更方便照顧小孩' },
+      { id:'shoes', title:'舒適好走的運動鞋', note:'每天一萬步起跳，穿習慣的最重要' },
+      { id:'extra_bag', title:'空摺疊旅行袋', note:'塞行李箱底部，最後一天買藥妝玩具時備用' },
+    ]
+  }
+];
+
+function loadChecked() {
+  try { return JSON.parse(localStorage.getItem(CHECKLIST_KEY) || '{}'); } catch(e) { return {}; }
+}
+function saveChecked(checked) {
+  try { localStorage.setItem(CHECKLIST_KEY, JSON.stringify(checked)); } catch(e) {}
+}
+
+function renderChecklist() {
+  const checked = loadChecked();
+  const root = document.getElementById('checklistRoot');
+  if (!root) return;
+
+  const totalItems = checklistData.reduce((a,s)=>a+s.items.length,0);
+  const totalChecked = Object.values(checked).filter(Boolean).length;
+  const pct = totalItems ? Math.round(totalChecked/totalItems*100) : 0;
+  const fillEl = document.getElementById('clTotalFill');
+  const numEl = document.getElementById('clTotalNum');
+  if (fillEl) fillEl.style.width = pct + '%';
+  if (numEl) numEl.textContent = totalChecked + ' / ' + totalItems;
+
+  root.innerHTML = checklistData.map(section => {
+    const doneCount = section.items.filter(i => checked[i.id]).length;
+    const total = section.items.length;
+    const allDone = doneCount === total;
+
+    return `
+      <div class="cl-section${allDone ? ' open' : ' open'}" id="cls-${section.id}">
+        <div class="cl-section-header" onclick="toggleClSection('${section.id}')">
+          <div class="cl-section-header-left">
+            <span class="cl-section-icon">${section.icon}</span>
+            <div>
+              <div class="cl-section-title">${section.title}${allDone ? ' <span style="color:#16a34a;font-size:13px">✓</span>' : ''}</div>
+              <div class="cl-section-sub">${section.sub}</div>
+            </div>
+          </div>
+          <div class="cl-section-badge">
+            <span class="cl-progress-text">${doneCount}/${total}</span>
+            <span class="cl-chevron">▼</span>
+          </div>
+        </div>
+        <div class="cl-items">
+          ${section.items.map(item => `
+            <div class="cl-item${checked[item.id] ? ' checked' : ''}" onclick="toggleCheck('${item.id}')">
+              <div class="cl-checkbox"><span class="cl-checkbox-tick">✓</span></div>
+              <div class="cl-item-body">
+                <div class="cl-item-title">${item.title}${item.must ? '<span class="cl-badge-must">必備</span>' : ''}</div>
+                ${item.note ? `<div class="cl-item-note">${item.note}</div>` : ''}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function toggleCheck(id) {
+  const checked = loadChecked();
+  checked[id] = !checked[id];
+  saveChecked(checked);
+  renderChecklist();
+}
+
+function toggleClSection(sectionId) {
+  const el = document.getElementById('cls-' + sectionId);
+  if (el) el.classList.toggle('open');
+}
+
+function resetChecklist() {
+  if (confirm('確定要重置所有勾選？')) {
+    saveChecked({});
+    renderChecklist();
+  }
+}
+
+function renderScroller() {
+  scroller.innerHTML = days.map(d => `
+    <div class="day-pill ${d.n===activeDay?'active':''}" data-day="${d.n}">
+      <div class="n">DAY ${d.n}</div>
+      <div class="d">${d.date} ${d.dow}</div>
+    </div>
+  `).join("");
+  scroller.querySelectorAll(".day-pill").forEach(el => {
+    el.addEventListener("click", () => {
+      activeDay = parseInt(el.dataset.day);
+      renderChecklist();
+renderScroller(); renderDay();
+      const active = scroller.querySelector(".day-pill.active");
+      if (active) active.scrollIntoView({behavior:"smooth", inline:"center", block:"nearest"});
+      window.scrollTo({top:0, behavior:"smooth"});
+    });
+  });
+}
+
+function guideData(key) {
+  const guides = {
+    "jr-haruka": {
+      icon: "🚄",
+      title: "JR Haruka 入境攻略",
+      sub: "關西機場 → 大阪站（梅田）· 超簡單版",
+      color: "#1a6fb5",
+      body: `
+        <div class="route-bar">
+          <div class="r-stop"><div class="r-dot"></div>關西機場</div>
+          <div class="r-arrow">──── <span>JR Haruka 約 50–55 分</span> ────</div>
+          <div class="r-stop"><div class="r-dot"></div>大阪站</div>
+          <div class="r-arrow">────</div>
+          <div class="r-stop"><div class="r-dot" style="background:#d85a30"></div>飯店 🏨</div>
+        </div>
+        <div class="tc-step">
+          <div class="tc-step-num s1">1</div>
+          <div class="tc-step-body">
+            <div class="tc-step-title">🟡 出關 ＋ 拿行李</div>
+            <div class="tc-step-desc">入境 → 領行李 → 出海關</div>
+            <div class="tc-time-row"><span class="t-icon">⏱</span><div><div class="t-label">預估時間</div><div class="t-val">40–60 分鐘</div></div></div>
+          </div>
+        </div>
+        <div class="tc-divider"></div>
+        <div class="tc-step">
+          <div class="tc-step-num s2">2</div>
+          <div class="tc-step-body">
+            <div class="tc-step-title">🟢 找 JR 線入口</div>
+            <div class="tc-step-desc">出關後跟著藍色指標走即可</div>
+            <div class="tc-info-row"><span class="tc-badge">🔵 JR Line</span><span class="tc-badge">🚄 JR HARUKA</span></div>
+            <div class="tc-tip"><span class="tip-icon">⭐</span><span>關西機場不複雜！JR 跟南海在同一層附近，指標超多，跟著走就到。</span></div>
+          </div>
+        </div>
+        <div class="tc-divider"></div>
+        <div class="tc-step">
+          <div class="tc-step-num s3">3</div>
+          <div class="tc-step-body">
+            <div class="tc-step-title">🔵 買票 ／ 直接感應</div>
+            <div class="tc-step-desc">推薦直接感應，免排隊買票</div>
+            <div class="tc-info-row"><span class="tc-badge green">✔ Apple Pay Suica</span><span class="tc-badge green">✔ ICOCA</span><span class="tc-badge green">✔ 西瓜卡</span></div>
+            <div class="tc-tip"><span class="tip-icon">💡</span><span>也可現場自動售票機購買 Haruka 車票，選「大阪」即可。</span></div>
+          </div>
+        </div>
+        <div class="tc-divider"></div>
+        <div class="tc-step">
+          <div class="tc-step-num s4">4</div>
+          <div class="tc-step-body">
+            <div class="tc-step-title">🟣 搭 JR Haruka 特急</div>
+            <div class="tc-step-desc">認準車頭文字，上車就對了！</div>
+            <div class="tc-info-row"><span class="tc-badge purple">HARUKA</span><span class="tc-badge purple">京都 / 新大阪 / 大阪</span></div>
+            <div class="tc-time-row"><span class="t-icon">⏱</span><div><div class="t-label">關西機場 → 大阪站</div><div class="t-val">約 50–55 分鐘・免換車</div></div></div>
+          </div>
+        </div>
+        <div class="tc-divider"></div>
+        <div class="tc-step">
+          <div class="tc-step-num s5">5</div>
+          <div class="tc-step-body">
+            <div class="tc-step-title">🔴 大阪站下車 → 飯店</div>
+            <div class="tc-step-desc">下車後跟著「Central Gate 中央口」出站</div>
+            <div class="tc-time-row"><span class="t-icon">🚶</span><div><div class="t-label">大阪站 → Intergate 飯店</div><div class="t-val">步行約 8–10 分鐘</div></div></div>
+            <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Hotel+Intergate+Osaka+Umeda" target="_blank" style="margin-top:8px"><span>🗺</span><span>在 Google Maps 開啟導航</span></a>
+          </div>
+        </div>`
+    },
+    "kadoma-guide": {
+      icon: "🛍",
+      title: "LaLaport門真 × 三井Outlet × COSTCO 攻略",
+      sub: "全日本首座LaLaport+Outlet複合商場・251間店鋪",
+      color: "#7c3aed",
+      body: `
+        <!-- 標題卡 -->
+        <div style="background:linear-gradient(135deg,#7c3aed,#5b21b6);border-radius:12px;padding:14px 16px;margin-bottom:16px;color:#fff">
+          <div style="font-size:11px;opacity:0.8;letter-spacing:1px;margin-bottom:8px">大阪府門真市 · 2023年開幕 · 251間店舖</div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <span style="background:rgba(255,255,255,0.2);padding:4px 10px;border-radius:12px;font-size:12px;font-weight:600">1F LaLaport</span>
+            <span style="background:rgba(255,255,255,0.2);padding:4px 10px;border-radius:12px;font-size:12px;font-weight:600">2F 三井Outlet</span>
+            <span style="background:rgba(255,255,255,0.2);padding:4px 10px;border-radius:12px;font-size:12px;font-weight:600">3F LaLaport親子</span>
+            <span style="background:rgba(255,255,255,0.2);padding:4px 10px;border-radius:12px;font-size:12px;font-weight:600">RF 屋頂廣場</span>
+          </div>
+        </div>
+
+        <!-- 第一件事 -->
+        <div style="background:#FEF3C7;border-radius:10px;padding:11px 14px;border:0.5px solid #FCD34D;margin-bottom:14px;display:flex;gap:10px;align-items:flex-start">
+          <span style="font-size:20px;flex-shrink:0">🎫</span>
+          <div>
+            <div style="font-size:13px;font-weight:700;color:#92400e">進場第一件事！領取免費折價券</div>
+            <div style="font-size:12px;color:#78350f;line-height:1.7;margin-top:3px">入口附近的<strong>外國旅客綜合服務台</strong>出示護照，可領取<strong>¥500 折價券</strong>（消費¥5,000 以上可使用）＋ Coupon Book（各店額外優惠）</div>
+          </div>
+        </div>
+
+        <!-- 樓層攻略 -->
+        <div style="font-size:12px;font-weight:700;color:#444;margin-bottom:10px">📐 樓層攻略</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px">
+
+          <div style="background:#f5f5f0;border-radius:10px;padding:11px 13px">
+            <div style="font-size:12px;font-weight:700;color:#7c3aed;margin-bottom:6px">1F LaLaport 生活館</div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px">
+              <span style="background:#F3EEFF;color:#6b21a8;padding:3px 8px;border-radius:8px;font-size:11px;border:0.5px solid #D4BCFF">UNIQLO</span>
+              <span style="background:#F3EEFF;color:#6b21a8;padding:3px 8px;border-radius:8px;font-size:11px;border:0.5px solid #D4BCFF">GU</span>
+              <span style="background:#F3EEFF;color:#6b21a8;padding:3px 8px;border-radius:8px;font-size:11px;border:0.5px solid #D4BCFF">無印良品</span>
+              <span style="background:#F3EEFF;color:#6b21a8;padding:3px 8px;border-radius:8px;font-size:11px;border:0.5px solid #D4BCFF">LOFT</span>
+              <span style="background:#F3EEFF;color:#6b21a8;padding:3px 8px;border-radius:8px;font-size:11px;border:0.5px solid #D4BCFF">3COINS</span>
+              <span style="background:#F3EEFF;color:#6b21a8;padding:3px 8px;border-radius:8px;font-size:11px;border:0.5px solid #D4BCFF">星巴克</span>
+            </div>
+            <div style="font-size:11.5px;color:#555">📍 <strong>黑門市場美食街</strong>也在 1F，黑門三平、牛兆等 11 家名店進駐，午餐首選</div>
+          </div>
+
+          <div style="background:#f5f5f0;border-radius:10px;padding:11px 13px">
+            <div style="font-size:12px;font-weight:700;color:#c0392b;margin-bottom:6px">2F 三井Outlet 精品折扣區</div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px">
+              <span style="background:#FFF0F0;color:#c0392b;padding:3px 8px;border-radius:8px;font-size:11px;border:0.5px solid #ffb3b3">Nike</span>
+              <span style="background:#FFF0F0;color:#c0392b;padding:3px 8px;border-radius:8px;font-size:11px;border:0.5px solid #ffb3b3">Adidas</span>
+              <span style="background:#FFF0F0;color:#c0392b;padding:3px 8px;border-radius:8px;font-size:11px;border:0.5px solid #ffb3b3">COACH</span>
+              <span style="background:#FFF0F0;color:#c0392b;padding:3px 8px;border-radius:8px;font-size:11px;border:0.5px solid #ffb3b3">MICHAEL KORS</span>
+              <span style="background:#FFF0F0;color:#c0392b;padding:3px 8px;border-radius:8px;font-size:11px;border:0.5px solid #ffb3b3">mont-bell</span>
+              <span style="background:#FFF0F0;color:#c0392b;padding:3px 8px;border-radius:8px;font-size:11px;border:0.5px solid #ffb3b3">New Balance</span>
+              <span style="background:#FFF0F0;color:#c0392b;padding:3px 8px;border-radius:8px;font-size:11px;border:0.5px solid #ffb3b3">PUMA</span>
+              <span style="background:#FFF0F0;color:#c0392b;padding:3px 8px;border-radius:8px;font-size:11px;border:0.5px solid #ffb3b3">TOMMY</span>
+              <span style="background:#FFF0F0;color:#c0392b;padding:3px 8px;border-radius:8px;font-size:11px;border:0.5px solid #ffb3b3">FURLA</span>
+              <span style="background:#FFF0F0;color:#c0392b;padding:3px 8px;border-radius:8px;font-size:11px;border:0.5px solid #ffb3b3">UGG</span>
+            </div>
+            <div style="font-size:11.5px;color:#555">原大阪鶴見 Outlet 64 個品牌全部遷移至此，折扣約 3–5 折</div>
+          </div>
+
+          <div style="background:#f5f5f0;border-radius:10px;padding:11px 13px">
+            <div style="font-size:12px;font-weight:700;color:#16a34a;margin-bottom:6px">3F 親子天堂</div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px">
+              <span style="background:#F0FDF4;color:#15803d;padding:3px 8px;border-radius:8px;font-size:11px;border:0.5px solid #86EFAC">阿卡將（嬰幼兒用品）</span>
+              <span style="background:#F0FDF4;color:#15803d;padding:3px 8px;border-radius:8px;font-size:11px;border:0.5px solid #86EFAC">namco 遊樂場</span>
+              <span style="background:#F0FDF4;color:#15803d;padding:3px 8px;border-radius:8px;font-size:11px;border:0.5px solid #86EFAC">YAMADA 電器</span>
+              <span style="background:#F0FDF4;color:#15803d;padding:3px 8px;border-radius:8px;font-size:11px;border:0.5px solid #86EFAC">FOREVER 21</span>
+            </div>
+            <div style="font-size:11.5px;color:#555">小孩在 namco 放電，大人同時逛電器 / 精品，完美分工 😄</div>
+          </div>
+
+          <div style="background:#f5f5f0;border-radius:10px;padding:11px 13px">
+            <div style="font-size:12px;font-weight:700;color:#0891b2;margin-bottom:6px">RF 屋頂廣場</div>
+            <div style="font-size:11.5px;color:#555;line-height:1.7">LOGOS CAFE & HIROBA 主題咖啡廳 + 大型戶外兒童遊樂區，天氣好時帶小孩上來放電，俯瞰門真市風景</div>
+          </div>
+        </div>
+
+        <!-- COSTCO -->
+        <div style="background:#EBF4FF;border-radius:10px;padding:11px 14px;border:0.5px solid #C3DEFF;margin-bottom:14px">
+          <div style="font-size:12px;font-weight:700;color:#0C4E8C;margin-bottom:6px">🏪 旁邊就是 COSTCO 門真倉庫店</div>
+          <div style="font-size:12px;color:#1e3a5f;line-height:1.7">
+            步行約 3–5 分鐘可達，<strong>台灣會員卡可直接使用</strong>！<br>
+            掃平日本 COSTCO 限定商品、零食、熟食、日本限定口味推薦：<br>
+            🍰 起司蛋糕・🐓 烤雞・🥐 可頌・限定零食・美妝大包裝
+          </div>
+          <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=コストコ門真倉庫店" target="_blank" style="margin-top:8px;background:#EBF4FF;border-color:#C3DEFF;color:#0C6EBD"><span>🗺</span><span>COSTCO 門真倉庫店</span></a>
+        </div>
+
+        <!-- 退稅 -->
+        <div style="background:#E8F8EF;border-radius:10px;padding:11px 14px;border:0.5px solid #A8E6C0;margin-bottom:10px">
+          <div style="font-size:12px;font-weight:700;color:#1a7a45;margin-bottom:6px">🧾 退稅攻略（PIE VAT 集中退稅）</div>
+          <div style="font-size:12px;color:#2d6a4f;line-height:1.7">
+            商場有 PIE VAT 集中退稅服務，合作店鋪消費後統一到服務台辦理，免得跑各店退稅。<br>
+            mont-bell、Nike 等運動品牌單價高，退稅差很多，記得帶護照！
+          </div>
+        </div>
+
+        <div class="tc-tip">
+          <span class="tip-icon">💡</span>
+          <span>建議行程：1F 黑門市場吃午餐 → 2F Outlet 掃貨 → 3F 親子遊樂 → RF 休息咖啡 → COSTCO 收尾。整個商場 8 字形動線，不走回頭路。</span>
+        </div>`
+    },
+    "dotonbori-guide": {
+      icon: "🐙",
+      title: "道頓堀・心齋橋 攻略",
+      sub: "必吃・必逛・必買・吉伊卡哇全攻略",
+      color: "#d85a30",
+      body: `
+        <!-- 區域說明 -->
+        <div style="background:linear-gradient(135deg,#d85a30,#b94524);border-radius:12px;padding:14px 16px;margin-bottom:16px;color:#fff">
+          <div style="font-size:11px;opacity:0.8;letter-spacing:1px;margin-bottom:6px">道頓堀 · 心齋橋 · 難波</div>
+          <div style="font-size:13px;line-height:1.7;opacity:0.95">固力果跑跑人 → 道頓堀川 → 心齋橋筋商店街 → ちいかわらんど，全程步行可串聯，不需搭車。</div>
+        </div>
+
+        <!-- 必吃區 -->
+        <div style="font-size:12px;font-weight:700;color:#444;margin-bottom:10px;display:flex;align-items:center;gap:6px"><span>🍽</span> 必吃美食</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px">
+
+          <div style="background:#f5f5f0;border-radius:10px;padding:11px 13px;display:flex;gap:10px;align-items:flex-start">
+            <span style="font-size:20px;flex-shrink:0">🐙</span>
+            <div>
+              <div style="font-size:13px;font-weight:700">くくる 章魚燒（道頓堀本店）</div>
+              <div style="font-size:11.5px;color:#555;margin-top:3px;line-height:1.6">道頓堀人氣 No.1 章魚燒，外酥內滑、章魚超大塊，必點「元祖明石焼」，現點現做・排隊但值得</div>
+              <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=くくる道頓堀本店" target="_blank" style="margin-top:6px"><span>🗺</span><span>道頓堀 1-10-5</span></a>
+            </div>
+          </div>
+
+          <div style="background:#f5f5f0;border-radius:10px;padding:11px 13px;display:flex;gap:10px;align-items:flex-start">
+            <span style="font-size:20px;flex-shrink:0">🍜</span>
+            <div>
+              <div style="font-size:13px;font-weight:700">金久右衛門 醬油拉麵（道頓堀店）</div>
+              <div style="font-size:11.5px;color:#555;margin-top:3px;line-height:1.6">Tabelog 大阪拉麵 3 年連續 No.1，濃郁醬油湯底，粗麵有嚼勁，推薦「浪花黑 5 號」，適合晚上宵夜</div>
+              <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=金久右衛門道頓堀店" target="_blank" style="margin-top:6px"><span>🗺</span><span>道頓堀 1-7-26</span></a>
+            </div>
+          </div>
+
+          <div style="background:#f5f5f0;border-radius:10px;padding:11px 13px;display:flex;gap:10px;align-items:flex-start">
+            <span style="font-size:20px;flex-shrink:0">🥩</span>
+            <div>
+              <div style="font-size:13px;font-weight:700">Dotonbori 肉劇場（燒肉丼）</div>
+              <div style="font-size:11.5px;color:#555;margin-top:3px;line-height:1.6">近期超夯燒肉丼專門店，現烤一流肉質、平板點餐超方便，CP 值高，附近還有神戸牛「牛魔」可選</div>
+              <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=肉劇場道頓堀" target="_blank" style="margin-top:6px"><span>🗺</span><span>道頓堀 1-7-16</span></a>
+            </div>
+          </div>
+
+          <div style="background:#f5f5f0;border-radius:10px;padding:11px 13px;display:flex;gap:10px;align-items:flex-start">
+            <span style="font-size:20px;flex-shrink:0">🪙</span>
+            <div>
+              <div style="font-size:13px;font-weight:700">大王チーズ 10 円パン（韓國話題甜點）</div>
+              <div style="font-size:11.5px;color:#555;margin-top:3px;line-height:1.6">10 元硬幣造型、內餡融化起司爆漿 IG 超夯，唐吉訶德旁邊就有，小孩一定愛，¥500／個</div>
+              <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=大王チーズ10円パン道頓堀" target="_blank" style="margin-top:6px"><span>🗺</span><span>道頓堀 唐吉訶德旁</span></a>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 必逛必買 -->
+        <div style="font-size:12px;font-weight:700;color:#444;margin-bottom:10px;display:flex;align-items:center;gap:6px"><span>🛍</span> 必逛・必買</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px">
+
+          <div style="background:#E6F1FB;border-radius:10px;padding:11px 13px;display:flex;gap:10px;align-items:flex-start;border:0.5px solid #C3DEFF">
+            <span style="font-size:20px;flex-shrink:0">🐾</span>
+            <div>
+              <div style="font-size:13px;font-weight:700;color:#0C447C">ちいかわらんど 心斎橋PARCO店（常設）</div>
+              <div style="font-size:11.5px;color:#1e3a5f;margin-top:3px;line-height:1.6">吉伊卡哇大阪唯一常設專賣店！2024 年 3 月開幕，從道頓堀步行約 8 分鐘，週末常有排隊，建議平日傍晚前往</div>
+              <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=ちいかわらんど心斎橋パルコ" target="_blank" style="margin-top:6px;background:#EBF4FF;border-color:#C3DEFF;color:#0C6EBD"><span>🗺</span><span>心斎橋筋 1-8-3 心斎橋PARCO</span></a>
+            </div>
+          </div>
+
+          <div style="background:#f5f5f0;border-radius:10px;padding:11px 13px;display:flex;gap:10px;align-items:flex-start">
+            <span style="font-size:20px;flex-shrink:0">🎡</span>
+            <div>
+              <div style="font-size:13px;font-weight:700">唐吉訶德 御堂筋店（摩天輪）</div>
+              <div style="font-size:11.5px;color:#555;margin-top:3px;line-height:1.6">24H 採購聖地，頂樓還有橢圓形摩天輪（¥600），藥妝、零食、日本限定商品應有盡有</div>
+              <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=ドンキホーテ御堂筋店道頓堀" target="_blank" style="margin-top:6px"><span>🗺</span><span>道頓堀 1-7-1</span></a>
+            </div>
+          </div>
+
+          <div style="background:#f5f5f0;border-radius:10px;padding:11px 13px;display:flex;gap:10px;align-items:flex-start">
+            <span style="font-size:20px;flex-shrink:0">🛒</span>
+            <div>
+              <div style="font-size:13px;font-weight:700">心齋橋筋商店街 → Namba Parks</div>
+              <div style="font-size:11.5px;color:#555;margin-top:3px;line-height:1.6">日本最長商店街之一，從道頓堀步行可達，覆蓋藥妝（松本清）、球鞋、百貨，深夜仍熱鬧</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 打卡攻略 -->
+        <div style="background:#FEF3C7;border-radius:10px;padding:11px 14px;border:0.5px solid #FCD34D">
+          <div style="font-size:12px;font-weight:700;color:#92400e;margin-bottom:6px">📸 打卡動線建議</div>
+          <div style="font-size:12px;color:#78350f;line-height:1.9">
+            ① 固力果跑跑人招牌合照（戎橋上）<br>
+            ② 道頓堀川夜景散步（とんぼりリバーウォーク）<br>
+            ③ 唐吉訶德摩天輪（可選・¥600）<br>
+            ④ 心齋橋商店街＋ちいかわらんど<br>
+            ⑤ 宵夜：くくる章魚燒或金久右衛門拉麵收尾
+          </div>
+        </div>`
+    },
+    "ikoma-guide": {
+      icon: "🚠",
+      title: "生駒山上遊樂園 完整攻略",
+      sub: "交通路線・票券・必玩設施一次看",
+      color: "#0891b2",
+      body: `
+        <!-- 路線圖 -->
+        <div style="background:linear-gradient(135deg,#0891b2,#0e7490);border-radius:12px;padding:14px 16px;margin-bottom:16px;color:#fff">
+          <div style="font-size:11px;opacity:0.8;letter-spacing:1px;margin-bottom:10px">近鐵一日券 全程通用 · ¥1,800／人</div>
+          <div style="display:flex;flex-direction:column;gap:6px;font-size:12px">
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="background:rgba(255,255,255,0.2);border-radius:8px;padding:3px 8px;font-size:11px;font-weight:600;white-space:nowrap">近鐵難波</span>
+              <span style="opacity:0.7">──快速急行 約 22 分──</span>
+              <span style="background:rgba(255,255,255,0.2);border-radius:8px;padding:3px 8px;font-size:11px;font-weight:600;white-space:nowrap">生駒站</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="background:rgba(255,255,255,0.2);border-radius:8px;padding:3px 8px;font-size:11px;font-weight:600;white-space:nowrap">鳥居前站</span>
+              <span style="opacity:0.7">──生駒纜車 約 16 分──</span>
+              <span style="background:rgba(255,255,255,0.2);border-radius:8px;padding:3px 8px;font-size:11px;font-weight:600;white-space:nowrap">生駒山上站 🎢</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 纜車提醒 -->
+        <div class="tc-tip" style="margin-bottom:14px">
+          <span class="tip-icon">⚠️</span>
+          <span>纜車分兩段：<strong>寶山寺線</strong>（鳥居前→寶山寺）+ <strong>山上線</strong>（寶山寺→生駒山上），在寶山寺站下車直接往上走換乘，很簡單！</span>
+        </div>
+
+        <!-- 基本資訊 -->
+        <div style="border:0.5px solid #e8e5da;border-radius:12px;overflow:hidden;margin-bottom:14px">
+          <div style="padding:11px 14px;border-bottom:0.5px solid #f0ede2">
+            <div style="font-size:11px;color:#888;margin-bottom:4px">📍 地址</div>
+            <div style="font-size:13px;font-weight:600">奈良縣生駒市菜畑 2312-1</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:0.5px solid #f0ede2">
+            <div style="padding:11px 14px;border-right:0.5px solid #f0ede2">
+              <div style="font-size:11px;color:#888;margin-bottom:4px">🎟 入園費</div>
+              <div style="font-size:14px;font-weight:700;color:#0891b2">免費</div>
+            </div>
+            <div style="padding:11px 14px">
+              <div style="font-size:11px;color:#888;margin-bottom:4px">🚠 纜車（一日券涵蓋）</div>
+              <div style="font-size:13px;font-weight:600">¥0（含於一日券）</div>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr">
+            <div style="padding:11px 14px;border-right:0.5px solid #f0ede2">
+              <div style="font-size:11px;color:#888;margin-bottom:4px">🎠 暢玩護照</div>
+              <div style="font-size:12px;font-weight:600">大人 ¥4,000<br>小學生 ¥3,800<br>幼兒 ¥2,800</div>
+            </div>
+            <div style="padding:11px 14px">
+              <div style="font-size:11px;color:#888;margin-bottom:4px">🎫 超值共用券</div>
+              <div style="font-size:12px;font-weight:600">12 次共用<br>¥3,500<br>家人可共用</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 必玩設施 -->
+        <div style="font-size:12px;font-weight:700;color:#444;margin-bottom:8px">🎢 必玩設施</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px">
+          <div style="display:flex;gap:10px;align-items:flex-start;background:#f5f5f0;border-radius:10px;padding:10px 12px">
+            <span style="font-size:20px;flex-shrink:0">🗼</span>
+            <div>
+              <div style="font-size:13px;font-weight:600">飛行塔</div>
+              <div style="font-size:11.5px;color:#555;margin-top:2px">日本現存最古老大型遊樂設施（近百年），30m 高空俯瞰大阪灣</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:flex-start;background:#f5f5f0;border-radius:10px;padding:10px 12px">
+            <span style="font-size:20px;flex-shrink:0">🚲</span>
+            <div>
+              <div style="font-size:13px;font-weight:600">空中單軌單車</div>
+              <div style="font-size:11.5px;color:#555;margin-top:2px">IG 爆紅！在半空中踩單車，黃昏時可賞絕美夕陽</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:flex-start;background:#f5f5f0;border-radius:10px;padding:10px 12px">
+            <span style="font-size:20px;flex-shrink:0">🌲</span>
+            <div>
+              <div style="font-size:13px;font-weight:600">PLAY PEAK ITADAKI</div>
+              <div style="font-size:11.5px;color:#555;margin-top:2px">日本最大規模戶外遊樂場，大人小孩都能盡情放電</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 營業時間提醒 -->
+        <div style="background:#FEF3C7;border-radius:10px;padding:11px 14px;border:0.5px solid #FCD34D">
+          <div style="font-size:12px;font-weight:700;color:#92400e;margin-bottom:4px">⏰ 營業時間（夏季）</div>
+          <div style="font-size:12px;color:#78350f;line-height:1.8">
+            平日：10:00–17:00（週四公休）<br>
+            週六日：10:00–20:00<br>
+            7/3（五）➜ <strong>開放至 17:00</strong>，建議 13:00 前下山前往奈良
+          </div>
+        </div>
+
+        <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=%E7%94%9F%E9%A7%92%E5%B1%B1%E4%B8%8A%E9%81%8A%E5%9C%92%E5%9C%B0" target="_blank" style="margin-top:12px;display:inline-flex">
+          <span>🗺</span><span>在 Google Maps 開啟導航</span>
+        </a>`
+    },
+    "ticket-convenience": {
+      icon: "🏪",
+      title: "超商購票完整教學",
+      sub: "7-11 / 全家 / Lawson・長島溫泉樂園門票",
+      color: "#16a34a",
+      body: `
+        <!-- 價格總覽卡 -->
+        <div style="background:linear-gradient(135deg,#16a34a,#15803d);border-radius:12px;padding:14px 16px;margin-bottom:16px;color:#fff">
+          <div style="font-size:11px;opacity:0.8;letter-spacing:1px;margin-bottom:10px">長島溫泉樂園 · 推薦購票方案（2大3小）</div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px">
+              <span>🎟 暢玩護照 大人 × 2</span>
+              <span style="font-weight:700">¥6,000 × 2 = ¥12,000</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px">
+              <span>🎟 暢玩護照 小學生 × 2（11歲、8歲）</span>
+              <span style="font-weight:700">¥4,500 × 2 = ¥9,000</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px">
+              <span>🎫 純入園券 幼兒 × 1（5歲）</span>
+              <span style="font-weight:700">¥600 × 1 = ¥600</span>
+            </div>
+            <div style="height:0.5px;background:rgba(255,255,255,0.3);margin:4px 0"></div>
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <span style="font-size:13px;font-weight:600">5 張合計</span>
+              <span style="font-size:18px;font-weight:700">¥21,600</span>
+            </div>
+          </div>
+        </div>
+        <div class="tc-tip" style="margin-bottom:16px">
+          <span class="tip-icon">💡</span>
+          <span>超商票價與現場定價<strong>完全相同</strong>，沒有額外手續費。建議前一晚在名古屋超商購好，隔天直接入場！</span>
+        </div>
+
+        <!-- Tab 切換 -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;background:#f5f5f0;border-radius:10px;padding:4px;margin-bottom:16px" id="ticketTabBar">
+          <button onclick="switchTicketTab('711')" id="tab711"
+            style="padding:8px 4px;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;background:#1a1a1a;color:#fff;font-family:inherit;transition:all 0.15s">
+            7-11 / 全家
+          </button>
+          <button onclick="switchTicketTab('lawson')" id="tabLawson"
+            style="padding:8px 4px;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;background:transparent;color:#6b6a64;font-family:inherit;transition:all 0.15s">
+            Lawson
+          </button>
+          <button onclick="switchTicketTab('tips')" id="tabTips"
+            style="padding:8px 4px;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;background:transparent;color:#6b6a64;font-family:inherit;transition:all 0.15s">
+            注意事項
+          </button>
+        </div>
+
+        <!-- 7-11 / 全家 步驟 -->
+        <div id="ticketContent711">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+            <span style="font-size:20px">🏪</span>
+            <div>
+              <div style="font-size:13px;font-weight:700">7-ELEVEN / FamilyMart</div>
+              <div style="font-size:11px;color:#888">多功能事務機（大台印表機）</div>
+            </div>
+          </div>
+          ${[
+            ["1","切換語言","點螢幕右上角「Language」→ 選「繁體中文」"],
+            ["2","選票券分類","主畫面點「票券 (Ticket)」→「JTB 娛樂票券」"],
+            ["3","搜尋樂園","選「依地區搜尋」→「東海地區（愛知・岐阜・三重）」→ 找到「長島溫泉樂園」"],
+            ["4","選票種與數量","選方案（暢玩護照 / 純入園券），輸入大人、小學生、幼兒張數"],
+            ["5","列印繳費單","確認內容無誤 → 按確認 → 機器印出長條繳費單"],
+            ["6","櫃檯付款取票","30分鐘內到櫃台，現金或信用卡付款 → 店員當場印出正式門票 🎟"]
+          ].map(([n,t,d]) => `
+            <div style="display:flex;gap:10px;margin-bottom:12px">
+              <div style="width:24px;height:24px;border-radius:50%;background:#16a34a;color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">${n}</div>
+              <div>
+                <div style="font-size:13px;font-weight:600;margin-bottom:2px">${t}</div>
+                <div style="font-size:12px;color:#555;line-height:1.6">${d}</div>
+              </div>
+            </div>`).join('')}
+        </div>
+
+        <!-- Lawson 步驟 -->
+        <div id="ticketContentLawson" style="display:none">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+            <span style="font-size:20px">🔴</span>
+            <div>
+              <div style="font-size:13px;font-weight:700">Lawson（Loppi 機台）</div>
+              <div style="font-size:11px;color:#888">紅色專用機台・通常在 ATM 旁</div>
+            </div>
+          </div>
+          ${[
+            ["1","切換語言","螢幕右上角「Language」→ 選「繁體中文」"],
+            ["2","進入票券專區","主畫面選「各種チケット (Ticket)」"],
+            ["3","選交通娛樂票券","點「交通票券・主題樂園・活動」"],
+            ["4","搜尋樂園","選「主題樂園」→「東海地區（三重・愛知・岐阜）」→ 找到「長島溫泉樂園」"],
+            ["5","選票種與數量","選暢玩護照 × 2大2小學生 + 純入園 × 1幼兒"],
+            ["6","輸入姓名（若需要）","可用護照拼音，不影響入場"],
+            ["7","列印繳費單","確認明細 → 按確認 → 印出白色長條繳費單"],
+            ["8","櫃檯付款領票","30分鐘內到櫃台，支援現金、信用卡、Apple Pay → 當場印出正式門票 🎟"]
+          ].map(([n,t,d]) => `
+            <div style="display:flex;gap:10px;margin-bottom:12px">
+              <div style="width:24px;height:24px;border-radius:50%;background:#dc2626;color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">${n}</div>
+              <div>
+                <div style="font-size:13px;font-weight:600;margin-bottom:2px">${t}</div>
+                <div style="font-size:12px;color:#555;line-height:1.6">${d}</div>
+              </div>
+            </div>`).join('')}
+        </div>
+
+        <!-- 注意事項 -->
+        <div id="ticketContentTips" style="display:none">
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="background:#FFF5F5;border-radius:10px;padding:12px 14px;border:0.5px solid #FFCDD2">
+              <div style="font-size:12px;font-weight:700;color:#c0392b;margin-bottom:6px">⏰ 30分鐘內完成付款</div>
+              <div style="font-size:12px;color:#7a2929;line-height:1.7">列印繳費單後，<strong>務必在 30 分鐘內</strong>到櫃台付款，逾時需重新操作機台。</div>
+            </div>
+            <div style="background:#EBF4FF;border-radius:10px;padding:12px 14px;border:0.5px solid #C3DEFF">
+              <div style="font-size:12px;font-weight:700;color:#0C4E8C;margin-bottom:6px">🎟 票券說明</div>
+              <div style="font-size:12px;color:#1e3a5f;line-height:1.8">
+                <strong>暢玩護照（Passport）</strong>：門票 + 遊樂設施無限搭<br>
+                <strong>純入園券（Admission）</strong>：只含入園，設施需另付費<br>
+                5 歲幼兒選純入園券即可，不用買護照
+              </div>
+            </div>
+            <div style="background:#E8F8EF;border-radius:10px;padding:12px 14px;border:0.5px solid #A8E6C0">
+              <div style="font-size:12px;font-weight:700;color:#1a7a45;margin-bottom:6px">✅ 購票建議時機</div>
+              <div style="font-size:12px;color:#2d6a4f;line-height:1.8">
+                建議 <strong>Day 2（名古屋）晚上</strong>就近超商購票<br>
+                避免 Day 3 早上取車後還要找超商，節省時間
+              </div>
+            </div>
+            <div style="background:#FEF3C7;border-radius:10px;padding:12px 14px;border:0.5px solid #FCD34D">
+              <div style="font-size:12px;font-weight:700;color:#92400e;margin-bottom:6px">💳 付款方式</div>
+              <div style="font-size:12px;color:#78350f;line-height:1.8">
+                7-11 / 全家：現金、信用卡<br>
+                Lawson：現金、信用卡、Apple Pay（富邦J卡、吉鶴卡）
+              </div>
+            </div>
+          </div>
+        </div>
+`
+    },
+    "shinkansen-d5": {
+      icon: "🚄",
+      title: "NOZOMI 71 號 車票資訊",
+      sub: "名古屋 14:26 → 新大阪 15:15・2026/7/1",
+      color: "#16a34a",
+      body: `
+        <div style="background:linear-gradient(135deg,#16a34a,#15803d);border-radius:12px;padding:14px 16px;margin-bottom:16px;color:#fff">
+          <div style="font-size:11px;opacity:0.8;letter-spacing:1px;margin-bottom:10px">Smart EX · 預約確認 #2002</div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="font-size:32px">🚄</div>
+            <div style="flex:1">
+              <div style="font-size:16px;font-weight:700">NOZOMI 71 號</div>
+              <div style="font-size:12px;opacity:0.85;margin-top:2px">N700 系・16 節車廂・普通車</div>
+            </div>
+          </div>
+        </div>
+        <div style="border:0.5px solid #e8e5da;border-radius:12px;overflow:hidden;margin-bottom:14px">
+          <div style="padding:14px;border-bottom:0.5px solid #f0ede2">
+            <div style="display:flex;align-items:flex-start;gap:12px">
+              <div style="display:flex;flex-direction:column;align-items:center;padding-top:4px">
+                <div style="width:10px;height:10px;border-radius:50%;background:#16a34a;flex-shrink:0"></div>
+                <div style="width:2px;height:36px;background:#d4f0d4"></div>
+                <div style="width:10px;height:10px;border-radius:50%;background:#d85a30;flex-shrink:0"></div>
+              </div>
+              <div style="flex:1">
+                <div style="margin-bottom:12px">
+                  <div style="font-size:13px;font-weight:600">名古屋</div>
+                  <div style="font-size:22px;font-weight:800;color:#16a34a;line-height:1.2">14:26</div>
+                  <div style="font-size:11px;color:#888">2026年7月1日（三）</div>
+                </div>
+                <div>
+                  <div style="font-size:13px;font-weight:600">新大阪</div>
+                  <div style="font-size:22px;font-weight:800;color:#d85a30;line-height:1.2">15:15</div>
+                  <div style="font-size:11px;color:#888">約 49 分鐘</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:0.5px solid #f0ede2">
+            <div style="padding:11px 14px;border-right:0.5px solid #f0ede2">
+              <div style="font-size:11px;color:#888;margin-bottom:3px">車型</div>
+              <div style="font-size:12.5px;font-weight:600">N700 系・16 節</div>
+            </div>
+            <div style="padding:11px 14px">
+              <div style="font-size:11px;color:#888;margin-bottom:3px">座位等級</div>
+              <div style="font-size:12.5px;font-weight:600">普通車 Ordinary</div>
+            </div>
+          </div>
+          <div style="padding:11px 14px;border-bottom:0.5px solid #f0ede2">
+            <div style="font-size:11px;color:#888;margin-bottom:6px">🪑 座位資訊（5 號車）</div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <span style="background:#F0FDF4;color:#15803d;padding:5px 12px;border-radius:10px;font-size:13px;font-weight:700;border:1.5px solid #86EFAC">5 車 18-B</span>
+              <span style="background:#F0FDF4;color:#15803d;padding:5px 12px;border-radius:10px;font-size:13px;font-weight:700;border:1.5px solid #86EFAC">5 車 18-C</span>
+              <span style="background:#F0FDF4;color:#15803d;padding:5px 12px;border-radius:10px;font-size:13px;font-weight:700;border:1.5px solid #86EFAC">5 車 18-D</span>
+              <span style="background:#F0FDF4;color:#15803d;padding:5px 12px;border-radius:10px;font-size:13px;font-weight:700;border:1.5px solid #86EFAC">5 車 18-E</span>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr">
+            <div style="padding:11px 14px;border-right:0.5px solid #f0ede2">
+              <div style="font-size:11px;color:#888;margin-bottom:3px">👥 乘客</div>
+              <div style="font-size:12.5px;font-weight:600">大人 2・兒童 2</div>
+            </div>
+            <div style="padding:11px 14px">
+              <div style="font-size:11px;color:#888;margin-bottom:3px">🎫 訂票平台</div>
+              <div style="font-size:12.5px;font-weight:600">Smart EX #2002</div>
+            </div>
+          </div>
+        </div>
+        <div style="background:#f5f5f0;border-radius:10px;padding:12px 14px;margin-bottom:10px">
+          <div style="font-size:12px;font-weight:700;color:#444;margin-bottom:8px">🚃 新大阪抵達後</div>
+          <div style="font-size:12px;color:#555;line-height:1.7">
+            新大阪站換乘地鐵御堂筋線 → <strong>なんば方向</strong><br>
+            <span style="display:inline-flex;gap:6px;margin-top:6px;flex-wrap:wrap">
+              <span style="background:#EBF4FF;color:#0C6EBD;padding:3px 8px;border-radius:8px;font-size:11px;border:0.5px solid #C3DEFF">約 13 分鐘</span>
+              <span style="background:#EBF4FF;color:#0C6EBD;padding:3px 8px;border-radius:8px;font-size:11px;border:0.5px solid #C3DEFF">¥280</span>
+              <span style="background:#EBF4FF;color:#0C6EBD;padding:3px 8px;border-radius:8px;font-size:11px;border:0.5px solid #C3DEFF">預計 15:30 抵難波</span>
+            </span>
+          </div>
+        </div>
+        <div class="tc-tip">
+          <span class="tip-icon">⭐</span>
+          <span>NOZOMI 只停大站，速度最快。到新大阪後直接往地下換御堂筋線，13 分鐘到難波。</span>
+        </div>`
+    },
+    "nagashima": {
+      icon: "🎢",
+      title: "長島樂園必勝攻略 🔥",
+      sub: "正確玩法順序・先刺激 → 再放鬆 → 最後購物",
+      color: "#e84040",
+      body: `
+        <div style="display:flex;gap:6px;align-items:center;padding:12px 0 14px;border-bottom:0.5px solid #eee;margin-bottom:14px;overflow-x:auto;white-space:nowrap">
+          <span style="background:#f0a500;color:#fff;padding:4px 12px;border-radius:16px;font-size:12px;font-weight:700;flex-shrink:0">🎢 遊樂</span>
+          <span style="color:#bbb;font-size:14px">→</span>
+          <span style="background:#2980e4;color:#fff;padding:4px 12px;border-radius:16px;font-size:12px;font-weight:700;flex-shrink:0">💦 水樂園</span>
+          <span style="color:#bbb;font-size:14px">→</span>
+          <span style="background:#27ae60;color:#fff;padding:4px 12px;border-radius:16px;font-size:12px;font-weight:700;flex-shrink:0">🛍 Outlet</span>
+        </div>
+        <div class="tc-step">
+          <div class="tc-step-num s1">早</div>
+          <div class="tc-step-body">
+            <div class="tc-step-title">🟡 09:30–12:30｜先衝遊樂設施</div>
+            <div class="tc-step-desc">早上排隊最短，直接衝熱門</div>
+            <div class="tc-info-row" style="margin-top:8px">
+              <span class="tc-badge" style="background:#FFF0F0;color:#c0392b;border-color:#ffb3b3">🏆 Steel Dragon 2000</span>
+              <span class="tc-badge" style="background:#FFF0F0;color:#c0392b;border-color:#ffb3b3">✈️ Acrobat 飛行型</span>
+              <span class="tc-badge" style="background:#FFF0F0;color:#c0392b;border-color:#ffb3b3">👨‍👩‍👧 親子設施</span>
+            </div>
+            <div class="tc-tip"><span class="tip-icon">📌</span><span>早上人最少！熱門設施等待可能只要 10–20 分，下午可能爆到 60 分以上。</span></div>
+          </div>
+        </div>
+        <div class="tc-divider"></div>
+        <div class="tc-step">
+          <div class="tc-step-num s2">午</div>
+          <div class="tc-step-body">
+            <div class="tc-step-title">🔵 12:30–13:30｜園內吃飯 + 休息</div>
+            <div class="tc-step-desc">補充體力，準備衝水樂園</div>
+            <div class="tc-time-row"><span class="t-icon">💡</span><div><div class="t-label">重要提醒</div><div class="t-val">換好泳裝，準備下午水戰</div></div></div>
+          </div>
+        </div>
+        <div class="tc-divider"></div>
+        <div class="tc-step">
+          <div class="tc-step-num s3">午</div>
+          <div class="tc-step-body">
+            <div class="tc-step-title">🟢 13:30–16:30｜水上樂園（夏天重點 🔥）</div>
+            <div class="tc-step-desc">小孩瘋、大人放鬆，夏天必玩</div>
+            <div class="tc-info-row" style="margin-top:8px">
+              <span class="tc-badge green">👟 帶拖鞋</span>
+              <span class="tc-badge green">🏖 帶毛巾</span>
+              <span class="tc-badge green">🔒 租置物櫃</span>
+            </div>
+          </div>
+        </div>
+        <div class="tc-divider"></div>
+        <div class="tc-step">
+          <div class="tc-step-num s4">晚</div>
+          <div class="tc-step-body">
+            <div class="tc-step-title">🟣 17:00–19:00｜爵士之夢 Outlet</div>
+            <div class="tc-step-desc">就在樂園旁邊，走過去就到</div>
+            <div class="tc-info-row" style="margin-top:8px">
+              <span class="tc-badge purple">Nike</span>
+              <span class="tc-badge purple">Adidas</span>
+              <span class="tc-badge purple">各大運動品牌</span>
+            </div>
+            <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=%E3%82%B8%E3%83%A3%E3%82%BA%E3%83%89%E3%83%AA%E3%83%BC%E3%83%A0%E9%95%B7%E5%B3%B6+%E3%82%A2%E3%82%A6%E3%83%88%E3%83%AC%E3%83%83%E3%83%88" target="_blank" style="margin-top:8px"><span>🗺</span><span>三重縣桑名市長島町浦安 368</span></a>
+          </div>
+        </div>
+        <div class="tc-divider"></div>
+        <div style="background:#FFF5F5;border-radius:10px;padding:12px 14px;border:0.5px solid #FFCDD2">
+          <div style="font-size:12px;font-weight:700;color:#c0392b;margin-bottom:8px">⚠️ 最大錯誤玩法（千萬別這樣）</div>
+          <div style="font-size:12px;color:#7a2929;line-height:1.8">❌ 一開始就玩水 → 濕答答排隊很痛苦<br>❌ 下午才玩雲霄飛車 → 排隊排爆根本玩不到</div>
+        </div>`
+    },
+    "legoland": {
+      icon: "🧱",
+      title: "LEGOLAND 必勝攻略",
+      sub: "早到先熱門 → 中午休息 → 下午輕鬆玩",
+      color: "#f0a500",
+      body: `
+        <div style="display:flex;gap:6px;align-items:center;padding:12px 0 14px;border-bottom:0.5px solid #eee;margin-bottom:14px;overflow-x:auto;white-space:nowrap">
+          <span style="background:#e84040;color:#fff;padding:4px 12px;border-radius:16px;font-size:12px;font-weight:700;flex-shrink:0">⚡ 早衝熱門</span>
+          <span style="color:#bbb;font-size:14px">→</span>
+          <span style="background:#888;color:#fff;padding:4px 12px;border-radius:16px;font-size:12px;font-weight:700;flex-shrink:0">🍱 中午休息</span>
+          <span style="color:#bbb;font-size:14px">→</span>
+          <span style="background:#27ae60;color:#fff;padding:4px 12px;border-radius:16px;font-size:12px;font-weight:700;flex-shrink:0">📸 下午輕鬆</span>
+        </div>
+        <div class="tc-step">
+          <div class="tc-step-num s1">早</div>
+          <div class="tc-step-body">
+            <div class="tc-step-title">🟡 09:30–12:00｜先衝熱門設施</div>
+            <div class="tc-step-desc">一進去直接往熱門跑，別拍照別逛</div>
+            <div class="tc-info-row" style="margin-top:8px">
+              <span class="tc-badge" style="background:#FFF0F0;color:#c0392b;border-color:#ffb3b3">🐉 The Dragon 雲霄飛車</span>
+              <span class="tc-badge" style="background:#FFF0F0;color:#c0392b;border-color:#ffb3b3">🚢 Submarine Adventure</span>
+              <span class="tc-badge" style="background:#FFF0F0;color:#c0392b;border-color:#ffb3b3">🚗 Driving School</span>
+            </div>
+            <div class="tc-tip"><span class="tip-icon">💡</span><span>Driving School 小孩超愛，會有「真正的駕照」可以帶回家當紀念品！</span></div>
+          </div>
+        </div>
+        <div class="tc-divider"></div>
+        <div class="tc-step">
+          <div class="tc-step-num s2">午</div>
+          <div class="tc-step-body">
+            <div class="tc-step-title">🔵 中午｜園內吃飯 + 充電休息</div>
+            <div class="tc-step-desc">避開熱門設施的下午人潮高峰</div>
+            <div class="tc-time-row"><span class="t-icon">🍔</span><div><div class="t-label">小提示</div><div class="t-val">園內餐廳主題感十足，值得體驗</div></div></div>
+          </div>
+        </div>
+        <div class="tc-divider"></div>
+        <div class="tc-step">
+          <div class="tc-step-num s3">午</div>
+          <div class="tc-step-body">
+            <div class="tc-step-title">🟢 下午｜輕鬆拍照 + 慢慢逛</div>
+            <div class="tc-step-desc">熱門設施早上都玩完，下午悠閒欣賞</div>
+            <div class="tc-info-row" style="margin-top:8px">
+              <span class="tc-badge green">🏙 Miniland 迷你城市</span>
+              <span class="tc-badge green">👶 小孩專屬區</span>
+              <span class="tc-badge green">🛍 樂高紀念品店</span>
+            </div>
+            <div class="tc-tip"><span class="tip-icon">⭐</span><span>Miniland 用數百萬塊樂高重現日本名勝，超級壯觀！建議下午光線好時拍照。</span></div>
+          </div>
+        </div>
+        <div class="tc-divider"></div>
+        <div class="tc-step">
+          <div class="tc-step-num s4">晚</div>
+          <div class="tc-step-body">
+            <div class="tc-step-title">🟣 傍晚｜Maker's Pier 商場晚餐</div>
+            <div class="tc-step-desc">園外步行即達，美食 + 購物收尾</div>
+            <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Maker%27s+Pier+%E5%90%8D%E5%8F%A4%E5%B1%8B" target="_blank" style="margin-top:8px"><span>🗺</span><span>名古屋市港區金城ふ頭 2-1-1</span></a>
+          </div>
+        </div>
+        <div class="tc-divider"></div>
+        <div style="background:#FFF5F5;border-radius:10px;padding:12px 14px;border:0.5px solid #FFCDD2">
+          <div style="font-size:12px;font-weight:700;color:#c0392b;margin-bottom:8px">⚠️ 最大錯誤玩法</div>
+          <div style="font-size:12px;color:#7a2929;line-height:1.8">❌ 一進去亂走亂拍照 → 下午熱門全排爆<br>❌ 下午才衝 The Dragon → 等待時間翻倍</div>
+        </div>`
+    },
+    "car-rental": {
+      icon: "🚗",
+      title: "TOYOTA 租車 預約資訊",
+      sub: "名古屋站前店・6/28 14:00 取車・7/1 14:00 還車",
+      color: "#b45309",
+      body: `
+        <!-- 標題卡 -->
+        <div style="background:linear-gradient(135deg,#b45309,#92400e);border-radius:12px;padding:14px 16px;margin-bottom:16px;color:#fff">
+          <div style="font-size:11px;opacity:0.8;letter-spacing:1px;margin-bottom:10px">TOYOTA 租車 · 預約確認</div>
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="font-size:34px">🚗</div>
+            <div>
+              <div style="font-size:15px;font-weight:700;line-height:1.3">Toyota 禁煙車（W1）</div>
+              <div style="font-size:12px;opacity:0.85;margin-top:2px">名古屋站前店</div>
+            </div>
+            <div style="margin-left:auto;text-align:right">
+              <div style="font-size:11px;opacity:0.8">費用合計</div>
+              <div style="font-size:16px;font-weight:700">¥45,100</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 預約號碼 -->
+        <div style="background:#FEF3C7;border-radius:10px;padding:11px 14px;border:0.5px solid #FCD34D;margin-bottom:14px;display:flex;align-items:center;gap:10px">
+          <span style="font-size:18px">🔑</span>
+          <div>
+            <div style="font-size:11px;color:#92400e;margin-bottom:2px">預約號碼</div>
+            <div style="font-size:16px;font-weight:700;color:#78350f;letter-spacing:1px">123102082</div>
+          </div>
+          <div style="margin-left:auto">
+            <div style="font-size:11px;color:#92400e;margin-bottom:2px">密碼</div>
+            <div style="font-size:14px;font-weight:700;color:#78350f">76457964</div>
+          </div>
+        </div>
+
+        <!-- 取還車資訊 -->
+        <div style="border:0.5px solid #e8e5da;border-radius:12px;overflow:hidden;margin-bottom:14px">
+          <div style="padding:12px 14px;border-bottom:0.5px solid #f0ede2">
+            <div style="display:flex;gap:8px">
+              <div style="flex:1">
+                <div style="font-size:11px;color:#888;margin-bottom:4px">🟢 取車</div>
+                <div style="font-size:13px;font-weight:600">2026/6/28（日）</div>
+                <div style="font-size:15px;font-weight:700;color:#b45309">14:00</div>
+              </div>
+              <div style="width:0.5px;background:#f0ede2"></div>
+              <div style="flex:1;padding-left:12px">
+                <div style="font-size:11px;color:#888;margin-bottom:4px">🔴 還車</div>
+                <div style="font-size:13px;font-weight:600">2026/7/1（三）</div>
+                <div style="font-size:15px;font-weight:700;color:#b45309">14:00</div>
+              </div>
+            </div>
+          </div>
+          <div style="padding:12px 14px;border-bottom:0.5px solid #f0ede2">
+            <div style="font-size:11px;color:#888;margin-bottom:4px">📍 取車 / 還車店舖</div>
+            <div style="font-size:13px;font-weight:600;margin-bottom:3px">TOYOTA 租車 名古屋站前店</div>
+            <div style="font-size:12px;color:#555;margin-bottom:6px">愛知県名古屋市中村区名駅 4-5-26 ユニモール桜ビル</div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <a href="https://www.google.com/maps/search/?api=1&query=%E3%83%88%E3%83%A8%E3%82%BF%E3%83%AC%E3%83%B3%E3%82%BF%E3%82%AB%E3%83%BC+%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85%E5%89%8D%E5%BA%97" target="_blank" class="map-link" style="margin-top:0">
+                <span>🗺</span><span>開啟地圖導航</span>
+              </a>
+              <a href="tel:0525410100" style="display:inline-flex;align-items:center;gap:4px;padding:4px 10px;background:#FEF3C7;color:#92400e;border-radius:14px;font-size:11.5px;font-weight:500;text-decoration:none;border:0.5px solid #FCD34D">
+                📞 052-541-0100
+              </a>
+            </div>
+          </div>
+          <div style="padding:12px 14px">
+            <div style="font-size:11px;color:#888;margin-bottom:4px">💳 付款方式</div>
+            <div style="font-size:13px;font-weight:600">現場付款（取車當天店鋪付款）</div>
+          </div>
+        </div>
+
+        <!-- 附加項目 -->
+        <div style="background:#f5f5f0;border-radius:10px;padding:12px 14px;margin-bottom:14px">
+          <div style="font-size:12px;font-weight:700;color:#444;margin-bottom:8px">📦 附加選項</div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:#555;margin-bottom:6px">
+            <span>🛡 免除支付 NOC（1台）</span>
+            <span style="font-weight:600">¥1,650</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:#555;margin-bottom:8px">
+            <span>💳 ETC 卡租用（1台）</span>
+            <span style="font-weight:600">¥550</span>
+          </div>
+          <div style="height:0.5px;background:#e0ddd2;margin-bottom:8px"></div>
+          <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:700;color:#1a1a1a">
+            <span>合計</span>
+            <span>¥45,100</span>
+          </div>
+        </div>
+
+        <!-- 提醒 -->
+        <div class="tc-tip" style="margin-bottom:8px">
+          <span class="tip-icon">🪪</span>
+          <span>取車時請帶：<strong>台灣駕照正本 + 日文譯本 + 護照</strong>，三件缺一不可！</span>
+        </div>
+        <div class="tc-tip">
+          <span class="tip-icon">💡</span>
+          <span>ETC 卡已含在選項內，上高速公路直接走 ETC 車道刷卡，省去排隊繳費時間。</span>
+        </div>`
+    },
+    "airport-transfer-d9": {
+      icon: "🚐",
+      title: "送機專車 訂單資訊",
+      sub: "難波 Eslead → KIX・2026/7/5 11:00",
+      color: "#0e7490",
+      body: `
+        <!-- 專車視覺卡 -->
+        <div style="background:linear-gradient(135deg,#0e7490,#155e75);border-radius:12px;padding:14px 16px;margin-bottom:16px;color:#fff">
+          <div style="font-size:11px;opacity:0.8;letter-spacing:1px;margin-bottom:10px">送機接送 · 預約確認</div>
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="font-size:32px">🚐</div>
+            <div>
+              <div style="font-size:15px;font-weight:700;line-height:1.3">Toyota Hiace</div>
+              <div style="font-size:12px;opacity:0.85;margin-top:2px">14 人座巴士・含司機</div>
+            </div>
+            <div style="margin-left:auto;text-align:right">
+              <div style="font-size:11px;opacity:0.8">費用</div>
+              <div style="font-size:16px;font-weight:700">NT$ 2,851</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 行程資訊 -->
+        <div style="border:0.5px solid #e8e5da;border-radius:12px;overflow:hidden;margin-bottom:14px">
+          <div style="padding:12px 14px;border-bottom:0.5px solid #f0ede2">
+            <div style="font-size:11px;color:#888;margin-bottom:4px">📅 接送日期及時間</div>
+            <div style="font-size:14px;font-weight:600">2026年7月5日 11:00</div>
+            <div style="font-size:11.5px;color:#888;margin-top:2px">當地時間（日本）・30 分鐘免費等候</div>
+          </div>
+          <div style="padding:12px 14px;border-bottom:0.5px solid #f0ede2">
+            <div style="font-size:11px;color:#888;margin-bottom:6px">🛣 送機路線</div>
+            <div style="display:flex;align-items:flex-start;gap:10px">
+              <div style="display:flex;flex-direction:column;align-items:center;padding-top:3px">
+                <div style="width:8px;height:8px;border-radius:50%;background:#d85a30;flex-shrink:0"></div>
+                <div style="width:1.5px;height:28px;background:#fca5a5"></div>
+                <div style="width:8px;height:8px;border-radius:50%;background:#0e7490;flex-shrink:0"></div>
+              </div>
+              <div style="flex:1">
+                <div style="font-size:13px;font-weight:600;margin-bottom:2px">Eslead Hotel Namba East</div>
+                <div style="font-size:11px;color:#888;margin-bottom:14px">4-chôme-1-11 Nipponbashi, Naniwa Ward</div>
+                <div style="font-size:13px;font-weight:600;margin-bottom:2px">關西國際機場（KIX）</div>
+                <div style="font-size:11px;color:#888">目的地</div>
+              </div>
+            </div>
+          </div>
+          <div style="padding:12px 14px">
+            <div style="font-size:11px;color:#888;margin-bottom:4px">👥 乘客 / 行李</div>
+            <div style="font-size:13px;font-weight:600">13 人・6 件行李</div>
+          </div>
+        </div>
+
+        <!-- 時間資訊 -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px">
+          <div style="background:#ECFEFF;border-radius:10px;padding:10px 12px;border:0.5px solid #A5F3FC">
+            <div style="font-size:11px;color:#0e7490;margin-bottom:4px">⏱ 預估車程</div>
+            <div style="font-size:14px;font-weight:700;color:#155e75">約 60 分鐘</div>
+          </div>
+          <div style="background:#ECFEFF;border-radius:10px;padding:10px 12px;border:0.5px solid #A5F3FC">
+            <div style="font-size:11px;color:#0e7490;margin-bottom:4px">✈️ 預計抵達</div>
+            <div style="font-size:14px;font-weight:700;color:#155e75">約 12:00</div>
+          </div>
+          <div style="background:#ECFEFF;border-radius:10px;padding:10px 12px;border:0.5px solid #A5F3FC">
+            <div style="font-size:11px;color:#0e7490;margin-bottom:4px">⏳ 免費等候</div>
+            <div style="font-size:14px;font-weight:700;color:#155e75">30 分鐘</div>
+          </div>
+          <div style="background:#ECFEFF;border-radius:10px;padding:10px 12px;border:0.5px solid #A5F3FC">
+            <div style="font-size:11px;color:#0e7490;margin-bottom:4px">🛫 航班</div>
+            <div style="font-size:14px;font-weight:700;color:#155e75">14:00 起飛</div>
+          </div>
+        </div>
+
+        <!-- 提示 -->
+        <div class="tc-tip">
+          <span class="tip-icon">💡</span>
+          <span>司機 11:00 準時到 Eslead 飯店門口。請提前在大廳整理好行李等候，確保時間充裕辦理登機及免稅購物。</span>
+        </div>`
+    },
+    "airport-transfer": {
+      icon: "🚐",
+      title: "機場接送專車 訂單資訊",
+      sub: "KIX → 大阪梅田 Intergate・2026/6/27 20:00",
+      color: "#7c3aed",
+      body: `
+        <!-- 專車視覺卡 -->
+        <div style="background:linear-gradient(135deg,#7c3aed,#5b21b6);border-radius:12px;padding:14px 16px;margin-bottom:16px;color:#fff">
+          <div style="font-size:11px;opacity:0.8;letter-spacing:1px;margin-bottom:10px">機場接送 · 預約確認</div>
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="font-size:32px">🚐</div>
+            <div>
+              <div style="font-size:15px;font-weight:700;line-height:1.3">Toyota Hiace</div>
+              <div style="font-size:12px;opacity:0.85;margin-top:2px">14 人座巴士・含司機</div>
+            </div>
+            <div style="margin-left:auto;text-align:right">
+              <div style="font-size:11px;opacity:0.8">費用</div>
+              <div style="font-size:16px;font-weight:700">NT$ 2,995</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 行程資訊 -->
+        <div style="display:flex;flex-direction:column;gap:0;margin-bottom:14px;border:0.5px solid #e8e5da;border-radius:12px;overflow:hidden">
+          <div style="padding:12px 14px;border-bottom:0.5px solid #f0ede2">
+            <div style="font-size:11px;color:#888;margin-bottom:4px">📅 接送日期及時間</div>
+            <div style="font-size:14px;font-weight:600">2026年6月27日 20:00</div>
+            <div style="font-size:11.5px;color:#888;margin-top:2px">當地時間（日本）</div>
+          </div>
+          <div style="padding:12px 14px;border-bottom:0.5px solid #f0ede2">
+            <div style="font-size:11px;color:#888;margin-bottom:6px">🛣 接送路線</div>
+            <div style="display:flex;align-items:flex-start;gap:10px">
+              <div style="display:flex;flex-direction:column;align-items:center;padding-top:3px">
+                <div style="width:8px;height:8px;border-radius:50%;background:#7c3aed;flex-shrink:0"></div>
+                <div style="width:1.5px;height:28px;background:#d4b8ff"></div>
+                <div style="width:8px;height:8px;border-radius:50%;background:#d85a30;flex-shrink:0"></div>
+              </div>
+              <div style="flex:1">
+                <div style="font-size:13px;font-weight:600;margin-bottom:2px">關西國際機場（KIX）</div>
+                <div style="font-size:11px;color:#888;margin-bottom:14px">出發地</div>
+                <div style="font-size:13px;font-weight:600;margin-bottom:2px">大阪梅田 Intergate 飯店</div>
+                <div style="font-size:11px;color:#888">Kita, 2 Chome-5-2 Umeda</div>
+              </div>
+            </div>
+          </div>
+          <div style="padding:12px 14px;border-bottom:0.5px solid #f0ede2">
+            <div style="font-size:11px;color:#888;margin-bottom:4px">✈️ 接機航班</div>
+            <div style="font-size:14px;font-weight:600">D7378 TPE → KIX</div>
+          </div>
+          <div style="padding:12px 14px">
+            <div style="font-size:11px;color:#888;margin-bottom:4px">👥 乘客 / 行李</div>
+            <div style="font-size:13px;font-weight:600">13 人・6 件行李</div>
+          </div>
+        </div>
+
+        <!-- 時間資訊 -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px">
+          <div style="background:#F3EEFF;border-radius:10px;padding:10px 12px;border:0.5px solid #D4BCFF">
+            <div style="font-size:11px;color:#6b21a8;margin-bottom:4px">⏱ 預估車程</div>
+            <div style="font-size:14px;font-weight:700;color:#5b21b6">約 60 分鐘</div>
+          </div>
+          <div style="background:#F3EEFF;border-radius:10px;padding:10px 12px;border:0.5px solid #D4BCFF">
+            <div style="font-size:11px;color:#6b21a8;margin-bottom:4px">🏨 預計抵達</div>
+            <div style="font-size:14px;font-weight:700;color:#5b21b6">約 21:00</div>
+          </div>
+        </div>
+
+        <!-- 免費取消 -->
+        <div style="background:#E8F8EF;border-radius:10px;padding:11px 14px;border:0.5px solid #A8E6C0;margin-bottom:10px">
+          <div style="font-size:12px;font-weight:700;color:#1a7a45;margin-bottom:4px">✅ 免費取消期限</div>
+          <div style="font-size:12px;color:#2d6a4f;line-height:1.6">2026年6月26日 19:20（目的地當地時間）前可免費取消</div>
+        </div>
+
+        <!-- 注意事項 -->
+        <div class="tc-tip">
+          <span class="tip-icon">💡</span>
+          <span>司機會在出口舉牌等候。入境後請先確認行李齊全再前往接機點。出關後如需等候，請保持電話暢通。</span>
+        </div>`
+    },
+    "shinkansen-d2": {
+      icon: "🚄",
+      title: "NOZOMI 386 號 車票資訊",
+      sub: "新大阪 12:24 → 名古屋 13:13・預約編號 2002",
+      color: "#27ae60",
+      body: `
+        <!-- 路線視覺 -->
+        <div style="background:linear-gradient(135deg,#27ae60,#1a8a4a);border-radius:12px;padding:14px 16px;margin-bottom:16px;color:#fff">
+          <div style="font-size:11px;opacity:0.85;letter-spacing:1px;margin-bottom:8px">SMART EX · 預約編號 2002</div>
+          <div style="display:flex;align-items:center;gap:0;justify-content:space-between">
+            <div style="text-align:center">
+              <div style="font-size:22px;font-weight:700;letter-spacing:1px">12:24</div>
+              <div style="font-size:12px;opacity:0.9;margin-top:2px">新大阪</div>
+            </div>
+            <div style="flex:1;text-align:center;padding:0 8px">
+              <div style="font-size:10px;opacity:0.85;margin-bottom:4px">NOZOMI 386</div>
+              <div style="height:1.5px;background:rgba(255,255,255,0.5);position:relative">
+                <span style="position:absolute;left:50%;transform:translateX(-50%) translateY(-50%);font-size:16px">🚄</span>
+              </div>
+              <div style="font-size:10px;opacity:0.75;margin-top:4px">約 49 分鐘</div>
+            </div>
+            <div style="text-align:center">
+              <div style="font-size:22px;font-weight:700;letter-spacing:1px">13:13</div>
+              <div style="font-size:12px;opacity:0.9;margin-top:2px">名古屋</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 出發日期 + 車型 -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px">
+          <div style="background:#f5f5f0;border-radius:10px;padding:10px 12px">
+            <div style="font-size:11px;color:#888;margin-bottom:4px">出發日期</div>
+            <div style="font-size:13px;font-weight:600">2026 / 6 / 28</div>
+          </div>
+          <div style="background:#f5f5f0;border-radius:10px;padding:10px 12px">
+            <div style="font-size:11px;color:#888;margin-bottom:4px">車型</div>
+            <div style="font-size:13px;font-weight:600">N700 系（16 節）</div>
+          </div>
+          <div style="background:#f5f5f0;border-radius:10px;padding:10px 12px">
+            <div style="font-size:11px;color:#888;margin-bottom:4px">座位等級</div>
+            <div style="font-size:13px;font-weight:600">普通車 Ordinary</div>
+          </div>
+          <div style="background:#f5f5f0;border-radius:10px;padding:10px 12px">
+            <div style="font-size:11px;color:#888;margin-bottom:4px">乘客</div>
+            <div style="font-size:13px;font-weight:600">大人 2・兒童 2</div>
+          </div>
+        </div>
+
+        <!-- 座位資訊 -->
+        <div style="background:#E8F8EF;border-radius:12px;padding:14px 16px;border:0.5px solid #A8E6C0;margin-bottom:14px">
+          <div style="font-size:12px;font-weight:700;color:#1a7a45;margin-bottom:10px">🪑 座位資訊 · 5 號車廂</div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px">
+            <div style="background:#fff;border-radius:8px;padding:8px 4px;text-align:center;border:1.5px solid #27ae60">
+              <div style="font-size:10px;color:#888">座位</div>
+              <div style="font-size:14px;font-weight:700;color:#1a7a45">1-B</div>
+            </div>
+            <div style="background:#fff;border-radius:8px;padding:8px 4px;text-align:center;border:1.5px solid #27ae60">
+              <div style="font-size:10px;color:#888">座位</div>
+              <div style="font-size:14px;font-weight:700;color:#1a7a45">1-C</div>
+            </div>
+            <div style="background:#fff;border-radius:8px;padding:8px 4px;text-align:center;border:1.5px solid #27ae60">
+              <div style="font-size:10px;color:#888">座位</div>
+              <div style="font-size:14px;font-weight:700;color:#1a7a45">1-D</div>
+            </div>
+            <div style="background:#fff;border-radius:8px;padding:8px 4px;text-align:center;border:1.5px solid #27ae60">
+              <div style="font-size:10px;color:#888">座位</div>
+              <div style="font-size:14px;font-weight:700;color:#1a7a45">1-E</div>
+            </div>
+          </div>
+          <div style="font-size:11px;color:#1a7a45;margin-top:8px;opacity:0.85">🧳 附大型行李放置區・座位後方專用空間</div>
+        </div>
+
+        <!-- 注意事項 -->
+        <div class="tc-tip" style="margin-bottom:10px">
+          <span class="tip-icon">⚠️</span>
+          <span>此票僅適用新幹線，<strong>無法</strong>搭乘一般在來線（普通鐵路）。</span>
+        </div>
+        <div class="tc-tip">
+          <span class="tip-icon">📱</span>
+          <span>請至 Smart EX App「My Trips（我的行程）」確認最新乘車方式，班次時間可能有異動。</span>
+        </div>`
+    }
+  };
+  return guides[key] || null;
+}
+
+function renderGuide(key) {
+  const g = guideData(key);
+  if (!g) return '';
+  const colorMap = {
+    "#1a6fb5": { bg: "#EBF4FF", border: "#C3DEFF", text: "#0C4E8C" },
+    "#e84040": { bg: "#FFF0F0", border: "#FFCDD2", text: "#b52c2c" },
+    "#f0a500": { bg: "#FFF8E7", border: "#F5D87A", text: "#7a5800" },
+    "#7c3aed": { bg: "#F3EEFF", border: "#D4BCFF", text: "#5b21b6" },
+    "#0e7490": { bg: "#ECFEFF", border: "#A5F3FC", text: "#155e75" },
+    "#b45309": { bg: "#FEF3C7", border: "#FCD34D", text: "#78350f" },
+    "#16a34a": { bg: "#F0FDF4", border: "#86EFAC", text: "#15803d" },
+    "#0891b2": { bg: "#ECFEFF", border: "#A5F3FC", text: "#0e7490" },
+    "#d85a30": { bg: "#FFF4ED", border: "#FDBA74", text: "#9a3412" },
+    "#27ae60": { bg: "#E8F8EF", border: "#A8E6C0", text: "#1a5c38" }
+  };
+  const c = colorMap[g.color] || { bg: "#EBF4FF", border: "#C3DEFF", text: "#0C4E8C" };
+  return `
+    <button class="guide-trigger" onclick="openGuideModal('${key}')"
+      style="background:${c.bg};border:1.5px solid ${c.border};color:${c.text}">
+      <span class="gt-icon">${g.icon}</span>
+      <div class="gt-text">
+        <div class="gt-title">${g.title}</div>
+        <div class="gt-sub">${g.sub}</div>
+      </div>
+      <span class="gt-arrow">▶</span>
+    </button>`;
+}
+
+const overlay = document.getElementById('guideOverlay');
+const modal = document.getElementById('guideModal');
+
+function openGuideModal(key) {
+  const g = guideData(key);
+  if (!g) return;
+  document.getElementById('guideModalIcon').textContent = g.icon;
+  document.getElementById('guideModalTitle').textContent = g.title;
+  document.getElementById('guideModalSub').textContent = g.sub;
+  document.getElementById('guideModalBody').innerHTML = g.body;
+  document.getElementById('guideModalClose').onclick = closeGuideModal;
+  overlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeGuideModal() {
+  overlay.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+overlay.addEventListener('click', e => {
+  if (e.target === overlay) closeGuideModal();
+});
+
+// Swipe down to close
+let touchStartY = 0;
+modal.addEventListener('touchstart', e => { touchStartY = e.touches[0].clientY; }, { passive: true });
+modal.addEventListener('touchend', e => {
+  const dy = e.changedTouches[0].clientY - touchStartY;
+  if (dy > 80) closeGuideModal();
+}, { passive: true });
+
+
+
+function renderDay() {
+  const d = days.find(x => x.n === activeDay);
+
+  const schHtml = d.schedule.map(s => `
+    <div class="sch-item">
+      <div class="sch-time-col"><div class="sch-time">${s.time}</div></div>
+      <div class="sch-dot-col">
+        <div class="sch-dot"></div>
+        <div class="sch-line"></div>
+      </div>
+      <div class="sch-content">
+        <div class="sch-title">${s.title}</div>
+        ${s.note ? `<div class="sch-note">${s.note}</div>` : ''}
+        ${s.mapUrl ? `
+          <a class="map-link" href="${s.mapUrl}" target="_blank">
+            <span class="map-icon">🗺</span>
+            <span>${s.addr || '開啟地圖'}</span>
+          </a>` : ''}
+        ${s.guide ? renderGuide(s.guide) : ''}
+
+      </div>
+    </div>
+  `).join("");
+
+  const hotelHtml = d.hotel !== "—" ? `
+    <div class="hotel-strip">
+      <div class="hotel-strip-top">
+        <span>🏨</span>
+        <div>
+          <div class="hlabel">今晚住宿</div>
+          <div class="hname">${d.hotel}</div>
+        </div>
+      </div>
+      <div class="hotel-strip-details">
+        ${d.hotelAddress ? `<div class="hotel-detail-row"><span class="icon">📍</span><a href="${d.hotelMapUrl}" target="_blank">${d.hotelAddress}</a></div>` : ''}
+        ${d.hotelTel ? `<div class="hotel-detail-row"><span class="icon">📞</span><a href="${d.hotelTelLink}">${d.hotelTel}</a></div>` : ''}
+        ${d.hotelMapUrl ? `<a class="hotel-map-btn" href="${d.hotelMapUrl}" target="_blank">🗺 開啟 Google Maps 導航</a>` : ''}
+      </div>
+      ${d.hotelParking ? `
+      <div style="margin-top:10px;padding-top:10px;border-top:0.5px solid #e0ddd2">
+        <div style="font-size:11px;color:#888;margin-bottom:6px;font-weight:600;letter-spacing:0.5px">🅿️ 推薦停車場</div>
+        <div style="font-size:12.5px;font-weight:600;color:#1a1a1a;margin-bottom:2px">${d.hotelParking.name}</div>
+        <div style="font-size:11.5px;color:#555;margin-bottom:4px">📍 ${d.hotelParking.addr}</div>
+        <div style="font-size:11.5px;color:#555;margin-bottom:6px">💴 ${d.hotelParking.fee}</div>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <span style="font-size:11px;background:#FEF3C7;color:#92400e;padding:3px 8px;border-radius:8px;border:0.5px solid #FCD34D">🚶 ${d.hotelParking.walk}</span>
+          <a href="${d.hotelParking.mapUrl}" target="_blank" class="map-link" style="margin-top:0;font-size:11px;padding:4px 10px"><span>🗺</span><span>停車場導航</span></a>
+        </div>
+      </div>` : ''}
+    </div>
+  ` : '';
+
+  viewDay.innerHTML = `
+    <div class="day-hero">
+      <div class="tags">
+        <span class="tag">DAY ${d.n} · ${d.date} (${d.dow})</span>
+        <span class="tag city-${d.city}">📍 ${d.cityLabel}</span>
+      </div>
+      <h2>${d.title}</h2>
+      <div class="focus">${d.focus}</div>
+    </div>
+    <div class="info-section">
+      <h3>當日行程</h3>
+      <div class="schedule">${schHtml}</div>
+    </div>
+    ${hotelHtml}
+  `;
+}
+
+function renderOverviewList() {
+  overviewList.innerHTML = days.map(d => `
+    <div class="item" style="cursor:pointer" data-jump="${d.n}">
+      <div class="k">Day ${d.n} · ${d.date} ${d.dow} · ${d.cityLabel}</div>
+      <div class="v">${d.title}</div>
+    </div>
+  `).join("");
+  overviewList.querySelectorAll("[data-jump]").forEach(el => {
+    el.addEventListener("click", () => {
+      activeDay = parseInt(el.dataset.jump);
+      setTab("day"); renderScroller(); renderDay();
+      window.scrollTo({top:0, behavior:"smooth"});
+    });
+  });
+}
+
+function setTab(t) {
+  activeTab = t;
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b.dataset.tab === t));
+  viewDay.classList.toggle("hidden", t !== "day");
+  viewOverview.classList.toggle("hidden", t !== "overview");
+  viewChecklist.classList.toggle("hidden", t !== "checklist");
+  viewTips.classList.toggle("hidden", t !== "tips");
+}
+
+document.querySelectorAll(".tab-btn").forEach(b => b.addEventListener("click", () => setTab(b.dataset.tab)));
+
+const fab = document.getElementById("fab");
+window.addEventListener("scroll", () => fab.classList.toggle("show", window.scrollY > 300));
+fab.addEventListener("click", () => window.scrollTo({top:0, behavior:"smooth"}));
+
+renderScroller();
+renderDay();
+renderOverviewList();
+initChecklist();
+</script>
+</body>
+</html>
