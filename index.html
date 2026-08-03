@@ -49,7 +49,7 @@
   a{ color: inherit; text-decoration: none; }
   button{ font-family: inherit; }
 
-  header{ max-width: 1040px; margin: 0 auto; padding: 56px 24px 36px; }
+  header{ max-width: 1040px; margin: 0 auto; padding: 48px 24px 24px; }
 
   .eyebrow{
     display: flex; align-items: center; gap: 10px;
@@ -65,7 +65,7 @@
   }
   h1 em{ font-style: italic; font-weight: 400; color: var(--gold); }
 
-  .subtitle{ font-size: 16px; line-height: 1.7; color: #B9C3D4; max-width: 46ch; margin: 0 0 34px; }
+  .subtitle{ font-size: 16px; line-height: 1.7; color: #B9C3D4; max-width: 46ch; margin: 0 0 24px; }
 
   .stats{ display: flex; flex-wrap: wrap; gap: 12px; }
   .stat{
@@ -76,8 +76,34 @@
   .stat b{ font-family: var(--font-display); font-size: 19px; font-weight: 600; color: var(--paper); }
 
   .filters{
-    max-width: 1040px; margin: 0 auto; padding: 0 24px 28px;
-    display: flex; flex-wrap: wrap; gap: 22px 32px;
+    max-width: 1040px; margin: 0 auto 18px; padding: 0 24px;
+    border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  }
+
+  .filters-summary{
+    display: flex; align-items: center; gap: 8px;
+    padding: 13px 0; cursor: pointer; list-style: none;
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em;
+    color: #A9B4C6; -webkit-tap-highlight-color: transparent;
+  }
+  .filters-summary::-webkit-details-marker{ display: none; }
+  .filters-summary::marker{ content: ""; }
+
+  .filters-summary .chevron{
+    display: inline-flex; transition: transform .2s ease; color: #6B7A93; font-size: 11px;
+  }
+  .filters[open] .filters-summary .chevron{ transform: rotate(180deg); }
+
+  .filters-summary .filter-count{
+    display: none; align-items: center; justify-content: center;
+    min-width: 18px; height: 18px; padding: 0 5px; border-radius: 999px;
+    background: var(--gold); color: var(--bg); font-size: 10.5px; font-weight: 700;
+  }
+  .filters-summary .filter-count.show{ display: inline-flex; }
+
+  .filters-body{
+    display: flex; flex-wrap: wrap; gap: 16px 28px;
+    padding: 2px 0 20px;
   }
   .filter-group{ display: flex; flex-direction: column; gap: 9px; }
   .filter-label{
@@ -238,25 +264,32 @@
   <div class="stats" id="stats"></div>
 </header>
 
-<div class="filters">
-  <div class="filter-group">
-    <span class="filter-label">國家</span>
-    <div class="chip-row" id="country-chips"></div>
-  </div>
-  <div class="filter-group">
-    <span class="filter-label">城市</span>
-    <div class="chip-row" id="city-chips"></div>
-  </div>
-  <div class="filter-group">
-    <span class="filter-label">日期範圍</span>
-    <div class="date-inputs">
-      <input type="date" id="date-from" aria-label="起始日期">
-      <span class="date-sep">–</span>
-      <input type="date" id="date-to" aria-label="結束日期">
-      <button type="button" class="clear-btn" id="clear-filters">清除篩選</button>
+<details class="filters" id="filters">
+  <summary class="filters-summary">
+    <span class="chevron">▾</span>
+    篩選行程
+    <span class="filter-count" id="filter-count">0</span>
+  </summary>
+  <div class="filters-body">
+    <div class="filter-group">
+      <span class="filter-label">國家</span>
+      <div class="chip-row" id="country-chips"></div>
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">城市</span>
+      <div class="chip-row" id="city-chips"></div>
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">日期範圍</span>
+      <div class="date-inputs">
+        <input type="date" id="date-from" aria-label="起始日期">
+        <span class="date-sep">–</span>
+        <input type="date" id="date-to" aria-label="結束日期">
+        <button type="button" class="clear-btn" id="clear-filters">清除篩選</button>
+      </div>
     </div>
   </div>
-</div>
+</details>
 
 <main>
   <div class="section-row">
@@ -345,8 +378,24 @@
     return state.country === "all" && state.city === "all" && !state.dateFrom && !state.dateTo;
   }
 
+  function activeFilterCount(){
+    let n = 0;
+    if (state.country !== "all") n++;
+    if (state.city !== "all") n++;
+    if (state.dateFrom || state.dateTo) n++;
+    return n;
+  }
+
+  function updateFilterBadge(){
+    const badge = document.getElementById("filter-count");
+    const n = activeFilterCount();
+    badge.textContent = n;
+    badge.classList.toggle("show", n > 0);
+  }
+
   function render(){
     grid.innerHTML = "";
+    updateFilterBadge();
     const filtered = trips
       .filter(matchesFilters)
       .slice()
