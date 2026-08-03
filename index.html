@@ -509,13 +509,10 @@
   render();
 
   const countryCount = new Set(trips.map(t => t.country)).size;
-  const totalNights = trips.reduce((sum, t) => sum + nightsBetween(t.start, t.end), 0);
 
   document.getElementById("stats").innerHTML = `
     <div class="stat"><b>${trips.length}</b> 趟旅程</div>
     <div class="stat"><b>${countryCount}</b> 個國家</div>
-    <div class="stat"><b>${totalNights}</b> 個夜晚</div>
-    <div class="stat"><b>5</b> 人同行</div>
   `;
 
   document.getElementById("last-updated").textContent =
