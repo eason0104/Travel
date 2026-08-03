@@ -3,33 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>旅行護照 · Eason 的行程總覽</title>
+<title>我們家的環遊誌 · 行程總覽</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg: #0F1826;
-    --bg-soft: #16223580;
     --paper: #F4EFE3;
-    --paper-shadow: #E7DFC9;
     --ink: #16202E;
     --ink-soft: #4C5A6E;
-    --cream-70: #F4EFE380;
     --line: #2A3850;
     --jp: #2E6B52;
     --jp-soft: #E4EFE9;
     --kr: #B23C3C;
     --kr-soft: #F5E3E1;
     --gold: #C79A5B;
-    --radius-card: 22px;
     --font-display: 'Fraunces', serif;
     --font-body: 'Inter', -apple-system, 'PingFang TC', 'Microsoft JhengHei', sans-serif;
     --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+    --col-flag: 26px;
+    --col-id: minmax(150px, 1fr);
+    --col-status: 112px;
+    --col-dates: 158px;
+    --col-duration: 84px;
+    --col-arrow: 30px;
   }
 
   *{ box-sizing: border-box; }
-
   html{ scroll-behavior: smooth; }
 
   body{
@@ -46,302 +47,181 @@
   }
 
   a{ color: inherit; text-decoration: none; }
+  button{ font-family: inherit; }
 
-  /* ---------- Header ---------- */
-  header{
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 56px 24px 40px;
-  }
+  header{ max-width: 1040px; margin: 0 auto; padding: 56px 24px 36px; }
 
   .eyebrow{
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-family: var(--font-mono);
-    font-size: 12px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 22px;
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 22px;
   }
-
-  .eyebrow::before{
-    content: "";
-    width: 26px;
-    height: 1px;
-    background: var(--gold);
-    display: inline-block;
-  }
+  .eyebrow::before{ content: ""; width: 26px; height: 1px; background: var(--gold); display: inline-block; }
 
   h1{
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: clamp(34px, 6vw, 56px);
-    line-height: 1.15;
-    margin: 0 0 16px;
-    letter-spacing: -0.01em;
+    font-family: var(--font-display); font-weight: 600;
+    font-size: clamp(34px, 6vw, 56px); line-height: 1.15;
+    margin: 0 0 16px; letter-spacing: -0.01em;
   }
+  h1 em{ font-style: italic; font-weight: 400; color: var(--gold); }
 
-  h1 em{
-    font-style: italic;
-    font-weight: 400;
-    color: var(--gold);
-  }
+  .subtitle{ font-size: 16px; line-height: 1.7; color: #B9C3D4; max-width: 46ch; margin: 0 0 34px; }
 
-  .subtitle{
-    font-size: 16px;
-    line-height: 1.7;
-    color: #B9C3D4;
-    max-width: 46ch;
-    margin: 0 0 34px;
-  }
-
-  .stats{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-
+  .stats{ display: flex; flex-wrap: wrap; gap: 12px; }
   .stat{
-    display: flex;
-    align-items: baseline;
-    gap: 7px;
-    padding: 10px 18px;
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    background: #131F32;
-    font-size: 13px;
-    color: #A9B4C6;
+    display: flex; align-items: baseline; gap: 7px;
+    padding: 10px 18px; border: 1px solid var(--line); border-radius: 999px;
+    background: #131F32; font-size: 13px; color: #A9B4C6;
   }
+  .stat b{ font-family: var(--font-display); font-size: 19px; font-weight: 600; color: var(--paper); }
 
-  .stat b{
-    font-family: var(--font-display);
-    font-size: 19px;
-    font-weight: 600;
-    color: var(--paper);
+  .filters{
+    max-width: 1040px; margin: 0 auto; padding: 0 24px 28px;
+    display: flex; flex-wrap: wrap; gap: 22px 32px;
   }
-
-  /* ---------- Trip list ---------- */
-  main{
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 0 24px;
+  .filter-group{ display: flex; flex-direction: column; gap: 9px; }
+  .filter-label{
+    font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: #6B7A93;
   }
+  .chip-row{ display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip{
+    font-family: var(--font-body); font-size: 13px; font-weight: 500;
+    padding: 7px 14px; border-radius: 999px; border: 1px solid var(--line);
+    background: transparent; color: #A9B4C6; cursor: pointer;
+    transition: background .2s ease, color .2s ease, border-color .2s ease;
+  }
+  .chip:hover{ border-color: var(--gold); color: var(--paper); }
+  .chip.active{ background: var(--paper); color: var(--ink); border-color: var(--paper); }
 
+  .date-inputs{ display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .date-inputs input[type="date"]{
+    font-family: var(--font-mono); font-size: 12.5px;
+    padding: 6px 10px; border-radius: 8px; border: 1px solid var(--line);
+    background: #131F32; color: var(--paper); color-scheme: dark;
+  }
+  .date-inputs input[type="date"]:focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }
+  .date-sep{ color: #6B7A93; font-size: 12px; }
+
+  .clear-btn{
+    font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.04em;
+    padding: 7px 12px; border-radius: 999px; border: 1px dashed var(--line);
+    background: transparent; color: #8B98AC; cursor: pointer;
+    transition: border-color .2s ease, color .2s ease;
+  }
+  .clear-btn:hover{ border-color: var(--gold); color: var(--gold); }
+
+  main{ max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+
+  .section-row{ display: flex; align-items: baseline; justify-content: space-between; margin: 0 0 12px; padding-left: 2px; }
   .section-label{
-    font-family: var(--font-mono);
-    font-size: 12px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: #6B7A93;
-    margin: 0 0 18px;
-    padding-left: 2px;
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: #6B7A93; margin: 0;
+  }
+  .result-count{ font-family: var(--font-mono); font-size: 11.5px; color: #5C6B84; }
+
+  .trip-header{
+    display: grid;
+    grid-template-columns: var(--col-flag) var(--col-id) var(--col-status) var(--col-dates) var(--col-duration) var(--col-arrow);
+    align-items: center; column-gap: 18px;
+    padding: 0 20px 8px; margin-top: 6px;
+  }
+  .trip-header span{
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: #55637C;
   }
 
-  .trip-grid{
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 22px;
-  }
+  .trip-grid{ display: flex; flex-direction: column; gap: 12px; }
 
   .ticket{
     position: relative;
     display: grid;
-    grid-template-columns: 1fr 132px;
+    grid-template-columns: var(--col-flag) var(--col-id) var(--col-status) var(--col-dates) var(--col-duration) var(--col-arrow);
+    align-items: center; column-gap: 18px;
     background: var(--paper);
-    border-radius: var(--radius-card);
+    border-radius: 14px;
+    border-left: 4px solid var(--ink-soft);
     color: var(--ink);
-    box-shadow: 0 18px 40px -18px rgba(0,0,0,0.55);
-    overflow: hidden;
-    transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease;
+    padding: 14px 20px;
+    box-shadow: 0 10px 24px -14px rgba(0,0,0,0.5);
+    transition: transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s ease;
   }
 
-  .ticket:hover,
-  .ticket:focus-visible{
-    transform: translateY(-4px);
-    box-shadow: 0 26px 50px -18px rgba(0,0,0,0.65);
-  }
+  .ticket[data-country="jp"]{ border-left-color: var(--jp); }
+  .ticket[data-country="kr"]{ border-left-color: var(--kr); }
 
-  .ticket:focus-visible{
-    outline: 2px solid var(--gold);
-    outline-offset: 3px;
-  }
+  .ticket:hover, .ticket:focus-visible{ transform: translateX(4px); box-shadow: 0 16px 30px -14px rgba(0,0,0,0.6); }
+  .ticket:focus-visible{ outline: 2px solid var(--gold); outline-offset: 3px; }
 
-  .ticket-main{
-    padding: 28px 26px 24px;
-    position: relative;
+  .ticket-flag{ font-size: 21px; line-height: 1; }
+
+  .ticket-country{
+    font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.12em;
+    color: var(--ink-soft); margin: 0 0 2px;
+  }
+  .ticket-city{
+    font-family: var(--font-display); font-weight: 600; font-size: 19px;
+    line-height: 1.2; margin: 0; letter-spacing: -0.005em;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
   }
 
   .ticket-status{
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 5px 11px;
-    border-radius: 999px;
-    margin-bottom: 16px;
+    display: inline-flex; align-items: center; gap: 6px; justify-self: start;
+    font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.06em;
+    text-transform: uppercase; padding: 4px 10px; border-radius: 999px; white-space: nowrap;
   }
-
   .ticket-status.completed{ background: #E4E1D3; color: #6B6752; }
   .ticket-status.upcoming{ background: var(--jp-soft); color: var(--jp); }
   .ticket-status.live{ background: var(--kr-soft); color: var(--kr); }
-
   .ticket[data-country="jp"] .ticket-status.completed{ background: var(--jp-soft); color: var(--jp); }
   .ticket[data-country="kr"] .ticket-status.upcoming{ background: var(--kr-soft); color: var(--kr); }
 
-  .ticket-country{
-    font-family: var(--font-mono);
-    font-size: 12px;
-    letter-spacing: 0.14em;
-    color: var(--ink-soft);
-    margin: 0 0 6px;
+  .col-label{ display: none; }
+  .col-value{
+    font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+    color: var(--ink); white-space: nowrap;
   }
 
-  .ticket-city{
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 32px;
-    line-height: 1.1;
-    margin: 0 0 14px;
-    letter-spacing: -0.01em;
-  }
-
-  .ticket-meta{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 18px;
-    margin-top: 4px;
-  }
-
-  .meta-item{ display: flex; flex-direction: column; gap: 3px; }
-
-  .meta-label{
-    font-size: 10.5px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-  }
-
-  .meta-value{
-    font-family: var(--font-mono);
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--ink);
-  }
-
-  /* perforated divider */
-  .ticket-divider{
-    position: relative;
-    width: 0;
-    border-left: 2px dashed #C9C1AB;
-  }
-
-  .ticket-divider::before,
-  .ticket-divider::after{
-    content: "";
-    position: absolute;
-    left: -13px;
-    width: 26px;
-    height: 26px;
-    background: var(--bg);
-    border-radius: 50%;
-  }
-  .ticket-divider::before{ top: -13px; }
-  .ticket-divider::after{ bottom: -13px; }
-
-  .ticket-stub{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    padding: 24px 14px;
-    text-align: center;
-  }
-
-  .stub-code{
-    writing-mode: vertical-rl;
-    text-orientation: mixed;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    color: var(--ink-soft);
-  }
-
-  .stub-cta{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    font-size: 12.5px;
-    font-weight: 600;
-    color: var(--ink);
-  }
-
-  .stub-cta .arrow{
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    border: 1.5px solid var(--ink);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .ticket-arrow{
+    width: 30px; height: 30px; border-radius: 50%; border: 1.5px solid var(--ink);
+    display: flex; align-items: center; justify-content: center; font-size: 14px;
     transition: background .25s ease, color .25s ease, transform .25s ease;
   }
+  .ticket:hover .ticket-arrow{ background: var(--ink); color: var(--paper); transform: translateX(2px); }
+  .ticket[data-country="jp"] .ticket-arrow{ border-color: var(--jp); color: var(--jp); }
+  .ticket[data-country="jp"]:hover .ticket-arrow{ background: var(--jp); color: var(--paper); }
+  .ticket[data-country="kr"] .ticket-arrow{ border-color: var(--kr); color: var(--kr); }
+  .ticket[data-country="kr"]:hover .ticket-arrow{ background: var(--kr); color: var(--paper); }
 
-  .ticket:hover .stub-cta .arrow{
-    background: var(--ink);
-    color: var(--paper);
-    transform: translateX(2px);
-  }
-
-  .ticket[data-country="jp"] .stub-cta .arrow{ border-color: var(--jp); color: var(--jp); }
-  .ticket[data-country="jp"]:hover .stub-cta .arrow{ background: var(--jp); color: var(--paper); }
-  .ticket[data-country="kr"] .stub-cta .arrow{ border-color: var(--kr); color: var(--kr); }
-  .ticket[data-country="kr"]:hover .stub-cta .arrow{ background: var(--kr); color: var(--paper); }
-
-  .flag{ font-size: 15px; }
-
-  /* ---------- empty slot for future trips ---------- */
   .ticket.placeholder{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 140px;
-    background: transparent;
-    border: 1.5px dashed var(--line);
-    color: #5C6B84;
-    font-size: 13px;
-    box-shadow: none;
+    display: flex; align-items: center; justify-content: center; min-height: 56px;
+    background: transparent; border: 1.5px dashed var(--line); border-left: 1.5px dashed var(--line);
+    color: #5C6B84; font-size: 12.5px; box-shadow: none;
   }
   .ticket.placeholder:hover{ transform: none; }
 
+  .empty-state{
+    padding: 34px 20px; text-align: center; color: #8B98AC; font-size: 13.5px;
+    border: 1.5px dashed var(--line); border-radius: 14px;
+  }
+
+  @media (max-width: 680px){
+    .trip-header{ display: none; }
+    .ticket{
+      grid-template-columns: var(--col-flag) 1fr var(--col-arrow);
+      row-gap: 10px; padding: 14px 16px;
+    }
+    .ticket-id{ grid-column: 2; }
+    .ticket-status{ grid-column: 2; }
+    .ticket-arrow{ grid-row: 1; grid-column: 3; }
+    .ticket-dates, .ticket-duration{ grid-column: 1 / -1; display: flex; gap: 6px; align-items: baseline; }
+    .col-label{ display: inline; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); }
+  }
+
   footer{
-    max-width: 960px;
-    margin: 56px auto 0;
-    padding: 24px 24px 0;
-    border-top: 1px solid var(--line);
-    font-family: var(--font-mono);
-    font-size: 11.5px;
-    color: #5C6B84;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  @media (min-width: 640px){
-    .trip-grid{ grid-template-columns: 1fr 1fr; }
-  }
-
-  @media (max-width: 480px){
-    .ticket{ grid-template-columns: 1fr 96px; }
-    .ticket-city{ font-size: 26px; }
-    .ticket-main{ padding: 24px 18px 20px; }
-    .stub-code{ display: none; }
+    max-width: 1040px; margin: 56px auto 0; padding: 24px 24px 0;
+    border-top: 1px solid var(--line); font-family: var(--font-mono); font-size: 11.5px;
+    color: #5C6B84; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -352,14 +232,47 @@
 <body>
 
 <header>
-  <p class="eyebrow">Travel Log</p>
-  <h1>我的<em>旅行</em>護照</h1>
-  <p class="subtitle">每一趟旅程都值得被好好記錄。點選任一目的地，回到當時規劃的完整行程表。</p>
+  <p class="eyebrow">Family Travel Log</p>
+  <h1>我們家的<em>環遊</em>誌</h1>
+  <p class="subtitle">帶著三個孩子，一起走過的城市與海岸。點選任一目的地，回到當時規劃的完整行程表。</p>
   <div class="stats" id="stats"></div>
 </header>
 
+<div class="filters">
+  <div class="filter-group">
+    <span class="filter-label">國家</span>
+    <div class="chip-row" id="country-chips"></div>
+  </div>
+  <div class="filter-group">
+    <span class="filter-label">城市</span>
+    <div class="chip-row" id="city-chips"></div>
+  </div>
+  <div class="filter-group">
+    <span class="filter-label">日期範圍</span>
+    <div class="date-inputs">
+      <input type="date" id="date-from" aria-label="起始日期">
+      <span class="date-sep">–</span>
+      <input type="date" id="date-to" aria-label="結束日期">
+      <button type="button" class="clear-btn" id="clear-filters">清除篩選</button>
+    </div>
+  </div>
+</div>
+
 <main>
-  <p class="section-label">Destinations</p>
+  <div class="section-row">
+    <p class="section-label">Destinations</p>
+    <span class="result-count" id="result-count"></span>
+  </div>
+
+  <div class="trip-header">
+    <span></span>
+    <span>Trip</span>
+    <span>Status</span>
+    <span>Dates</span>
+    <span>Duration</span>
+    <span></span>
+  </div>
+
   <div class="trip-grid" id="trip-grid"></div>
 </main>
 
@@ -369,16 +282,13 @@
 </footer>
 
 <script>
-  // ---------------------------------------------------------------
-  // 行程資料：未來新增旅程，只要在這裡加一筆物件即可自動出現在總覽上
-  // ---------------------------------------------------------------
   const trips = [
     {
       country: "jp",
       countryLabel: "JAPAN",
+      countryZh: "日本",
       flag: "🇯🇵",
-      city: "大阪 · 名古屋",
-      code: "OSA / NGO",
+      cities: ["大阪", "名古屋"],
       start: "2026-06-27",
       end: "2026-07-05",
       href: "nagoya/"
@@ -386,9 +296,9 @@
     {
       country: "kr",
       countryLabel: "SOUTH KOREA",
+      countryZh: "韓國",
       flag: "🇰🇷",
-      city: "釜山",
-      code: "PUS",
+      cities: ["釜山"],
       start: "2026-12-26",
       end: "2027-01-01",
       href: "busan/"
@@ -415,20 +325,47 @@
       const days = Math.round((s - today) / (1000*60*60*24));
       return { type: "upcoming", label: `倒數 ${days} 天` };
     }
-    if (today > e) {
-      return { type: "completed", label: "已完成" };
-    }
+    if (today > e) return { type: "completed", label: "已完成" };
     return { type: "live", label: "旅行中" };
   };
 
+  const state = { country: "all", city: "all", dateFrom: "", dateTo: "" };
   const grid = document.getElementById("trip-grid");
+  const resultCount = document.getElementById("result-count");
 
-  trips
-    .slice()
-    .sort((a, b) => new Date(a.start) - new Date(b.start))
-    .forEach(trip => {
+  function matchesFilters(trip){
+    if (state.country !== "all" && trip.country !== state.country) return false;
+    if (state.city !== "all" && !trip.cities.includes(state.city)) return false;
+    if (state.dateFrom && trip.end < state.dateFrom) return false;
+    if (state.dateTo && trip.start > state.dateTo) return false;
+    return true;
+  }
+
+  function isDefaultFilter(){
+    return state.country === "all" && state.city === "all" && !state.dateFrom && !state.dateTo;
+  }
+
+  function render(){
+    grid.innerHTML = "";
+    const filtered = trips
+      .filter(matchesFilters)
+      .slice()
+      .sort((a, b) => new Date(a.start) - new Date(b.start));
+
+    resultCount.textContent = `顯示 ${filtered.length} / ${trips.length} 趟`;
+
+    if (filtered.length === 0) {
+      const empty = document.createElement("div");
+      empty.className = "empty-state";
+      empty.textContent = "沒有符合條件的行程，試著調整篩選條件。";
+      grid.appendChild(empty);
+      return;
+    }
+
+    filtered.forEach(trip => {
       const nights = nightsBetween(trip.start, trip.end);
       const status = getStatus(trip.start, trip.end);
+      const cityDisplay = trip.cities.join(" · ");
 
       const card = document.createElement("a");
       card.href = trip.href;
@@ -436,46 +373,100 @@
       card.setAttribute("data-country", trip.country);
 
       card.innerHTML = `
-        <div class="ticket-main">
-          <span class="ticket-status ${status.type}">${status.label}</span>
-          <p class="ticket-country">${trip.flag} ${trip.countryLabel}</p>
-          <h2 class="ticket-city">${trip.city}</h2>
-          <div class="ticket-meta">
-            <div class="meta-item">
-              <span class="meta-label">Dates</span>
-              <span class="meta-value">${fmt(trip.start)} – ${fmt(trip.end)}</span>
-            </div>
-            <div class="meta-item">
-              <span class="meta-label">Duration</span>
-              <span class="meta-value">${nights + 1}天${nights}夜</span>
-            </div>
-          </div>
+        <span class="ticket-flag">${trip.flag}</span>
+        <div class="ticket-id">
+          <p class="ticket-country">${trip.countryLabel}</p>
+          <h2 class="ticket-city">${cityDisplay}</h2>
         </div>
-        <div class="ticket-divider"></div>
-        <div class="ticket-stub">
-          <span class="stub-code">${trip.code}</span>
-          <span class="stub-cta">查看行程<span class="arrow">→</span></span>
+        <span class="ticket-status ${status.type}">${status.label}</span>
+        <div class="ticket-dates">
+          <span class="col-label">Dates</span>
+          <span class="col-value">${fmt(trip.start)} – ${fmt(trip.end)}</span>
         </div>
+        <div class="ticket-duration">
+          <span class="col-label">Duration</span>
+          <span class="col-value">${nights + 1}天${nights}夜</span>
+        </div>
+        <span class="ticket-arrow">→</span>
       `;
       grid.appendChild(card);
     });
 
-  // 補一格「下一趟旅程」佔位卡，維持版面完整並暗示可擴充
-  const placeholder = document.createElement("div");
-  placeholder.className = "ticket placeholder";
-  placeholder.textContent = "下一趟旅程，敬請期待";
-  grid.appendChild(placeholder);
+    if (isDefaultFilter()) {
+      const placeholder = document.createElement("div");
+      placeholder.className = "ticket placeholder";
+      placeholder.textContent = "下一趟旅程，敬請期待";
+      grid.appendChild(placeholder);
+    }
+  }
 
-  // ---------------------------------------------------------------
-  // 統計數字
-  // ---------------------------------------------------------------
-  const countries = new Set(trips.map(t => t.country)).size;
+  function buildChipGroup(containerId, options, key){
+    const container = document.getElementById(containerId);
+    container.innerHTML = "";
+    options.forEach(opt => {
+      const chip = document.createElement("button");
+      chip.type = "button";
+      chip.className = "chip" + (state[key] === opt.value ? " active" : "");
+      chip.textContent = opt.label;
+      chip.addEventListener("click", () => {
+        state[key] = opt.value;
+        container.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
+        chip.classList.add("active");
+        render();
+      });
+      container.appendChild(chip);
+    });
+  }
+
+  const countryOptions = [{ value: "all", label: "全部" }];
+  const seenCountries = new Set();
+  trips.forEach(t => {
+    if (!seenCountries.has(t.country)) {
+      seenCountries.add(t.country);
+      countryOptions.push({ value: t.country, label: `${t.flag} ${t.countryZh}` });
+    }
+  });
+
+  const cityOptions = [{ value: "all", label: "全部" }];
+  const seenCities = new Set();
+  trips.forEach(t => t.cities.forEach(c => {
+    if (!seenCities.has(c)) { seenCities.add(c); cityOptions.push({ value: c, label: c }); }
+  }));
+
+  buildChipGroup("country-chips", countryOptions, "country");
+  buildChipGroup("city-chips", cityOptions, "city");
+
+  document.getElementById("date-from").addEventListener("change", (e) => {
+    state.dateFrom = e.target.value;
+    render();
+  });
+  document.getElementById("date-to").addEventListener("change", (e) => {
+    state.dateTo = e.target.value;
+    render();
+  });
+
+  document.getElementById("clear-filters").addEventListener("click", () => {
+    state.country = "all";
+    state.city = "all";
+    state.dateFrom = "";
+    state.dateTo = "";
+    document.getElementById("date-from").value = "";
+    document.getElementById("date-to").value = "";
+    buildChipGroup("country-chips", countryOptions, "country");
+    buildChipGroup("city-chips", cityOptions, "city");
+    render();
+  });
+
+  render();
+
+  const countryCount = new Set(trips.map(t => t.country)).size;
   const totalNights = trips.reduce((sum, t) => sum + nightsBetween(t.start, t.end), 0);
 
   document.getElementById("stats").innerHTML = `
     <div class="stat"><b>${trips.length}</b> 趟旅程</div>
-    <div class="stat"><b>${countries}</b> 個國家</div>
+    <div class="stat"><b>${countryCount}</b> 個國家</div>
     <div class="stat"><b>${totalNights}</b> 個夜晚</div>
+    <div class="stat"><b>5</b> 人同行</div>
   `;
 
   document.getElementById("last-updated").textContent =
