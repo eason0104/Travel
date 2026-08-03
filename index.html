@@ -399,7 +399,7 @@
     const filtered = trips
       .filter(matchesFilters)
       .slice()
-      .sort((a, b) => new Date(a.start) - new Date(b.start));
+      .sort((a, b) => new Date(b.start) - new Date(a.start));
 
     resultCount.textContent = `顯示 ${filtered.length} / ${trips.length} 趟`;
 
