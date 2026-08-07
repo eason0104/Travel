@@ -511,7 +511,7 @@
     const shareTitle = `${trip.flag} ${cityDisplay}行程`;
 
     if (navigator.share) {
-      navigator.share({ title: shareTitle, text, url }).catch(() => {});
+      navigator.share({ title: shareTitle, text }).catch(() => {});
       return;
     }
     // Fallback: open LINE's share-text screen directly
