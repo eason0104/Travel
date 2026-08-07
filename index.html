@@ -2,1720 +2,600 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="theme-color" content="#1a1a2e">
-<title>釜山冬日跨年 7天6夜</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>我們家的環遊誌 · 行程總覽</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-html, body {
-  margin: 0; padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
-  background: #0f0f1a;
-  color: #eeeef8;
-  -webkit-font-smoothing: antialiased;
-  overscroll-behavior-y: contain;
-}
-body {
-  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
-  min-height: 100vh;
-}
+  :root{
+    --bg: #0F1826;
+    --paper: #F4EFE3;
+    --ink: #16202E;
+    --ink-soft: #4C5A6E;
+    --line: #2A3850;
+    --jp: #2E6B52;
+    --jp-soft: #E4EFE9;
+    --kr: #B23C3C;
+    --kr-soft: #F5E3E1;
+    --gold: #C79A5B;
+    --font-display: 'Fraunces', serif;
+    --font-body: 'Inter', -apple-system, 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+    --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+    --col-flag: 26px;
+    --col-id: minmax(150px, 1fr);
+    --col-status: 112px;
+    --col-dates: 158px;
+    --col-duration: 84px;
+    --col-share: 34px;
+    --col-arrow: 30px;
+  }
 
-/* ── HEADER ── */
-.header {
-  background: linear-gradient(135deg, #0d0d2b 0%, #1a0d3a 40%, #0d1b4b 70%, #0d2040 100%);
-  color: #fff;
-  padding: 20px 18px 22px;
-  padding-top: calc(20px + env(safe-area-inset-top));
-  border-bottom: 0.5px solid rgba(255,255,255,0.08);
-  overflow: hidden;
-}
-.header-fireworks {
-  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-  pointer-events: none; overflow: hidden;
-}
-.fw-dot {
-  position: absolute;
-  border-radius: 50%;
-  animation: fwPulse 3s ease-in-out infinite;
-  opacity: 0;
-}
-@keyframes fwPulse {
-  0% { transform: scale(0); opacity: 0; }
-  30% { opacity: 0.6; }
-  100% { transform: scale(1); opacity: 0; }
-}
-.header-content { position: relative; z-index: 2; }
-.header .label { font-size: 10px; opacity: 0.85; letter-spacing: 3px; margin-bottom: 5px; }
-.header h1 { margin: 0 0 4px; font-size: 21px; font-weight: 700; letter-spacing: 0.5px; }
-.header .dates { font-size: 12.5px; opacity: 0.8; }
-.header .meta { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
-.header .meta span {
-  background: rgba(255,255,255,0.1);
-  border: 0.5px solid rgba(255,255,255,0.15);
-  padding: 3px 10px; border-radius: 12px; font-size: 11px; color: rgba(255,255,255,0.85);
-}
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
 
-/* ── DAY SCROLLER ── */
-.day-scroller {
-  background: #0f0f1a;
-  border-bottom: 0.5px solid #1e1e35;
-  padding: 10px 0;
-  position: sticky;
-  top: env(safe-area-inset-top);
-  z-index: 50;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-}
-.day-scroller::-webkit-scrollbar { display: none; }
-.day-scroller-inner { display: inline-flex; gap: 8px; padding: 0 14px; }
-.day-pill {
-  flex-shrink: 0; min-width: 68px;
-  padding: 8px 10px;
-  border: 1.5px solid #2a2a45;
-  border-radius: 10px;
-  background: #13132a;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-.day-pill .n { font-size: 10px; color: #8888cc; letter-spacing: 1px; }
-.day-pill .d { font-size: 12px; color: #c0c0e0; margin-top: 2px; font-weight: 500; }
-.day-pill.active { background: #4158D0; border-color: #4158D0; }
-.day-pill.active .n, .day-pill.active .d { color: #fff; }
-.day-pill.today { border-color: #C850C0; }
-.day-pill.today .n { color: #C850C0; }
+  body{
+    margin: 0;
+    background: var(--bg);
+    background-image:
+      radial-gradient(ellipse 900px 500px at 15% -10%, #1B2C46 0%, transparent 60%),
+      radial-gradient(ellipse 700px 500px at 100% 10%, #17233A 0%, transparent 55%);
+    color: var(--paper);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    padding-bottom: 40px;
+  }
 
-/* ── MAIN ── */
-main { padding: 16px 16px 24px; max-width: 600px; margin: 0 auto; }
+  a{ color: inherit; text-decoration: none; }
+  button{ font-family: inherit; }
 
-/* ── TAB NAV ── */
-.tab-nav {
-  display: grid; grid-template-columns: repeat(2, 1fr);
-  gap: 4px; background: #13132a; padding: 5px;
-  border-radius: 12px; margin-bottom: 16px;
-  border: 0.5px solid #2a2a45;
-}
-.tab-btn {
-  padding: 9px 4px; border: none; background: transparent;
-  border-radius: 8px; font-size: 12px; font-weight: 500;
-  color: #6666aa; cursor: pointer; transition: all 0.15s; font-family: inherit;
-}
-.tab-btn.active { background: #4158D0; color: #fff; }
+  header{ max-width: 1040px; margin: 0 auto; padding: 48px 24px 24px; }
 
-/* ── DAY HERO ── */
-.day-hero {
-  background: linear-gradient(135deg, #1a1a3e, #0d1b4b);
-  border-radius: 14px; padding: 18px; margin-bottom: 14px;
-  border: 0.5px solid #2a2a55;
-}
-.day-hero .tags { display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
-.tag { font-size: 11px; padding: 3px 9px; border-radius: 10px; font-weight: 500; }
-.tag.default { background: rgba(255,255,255,0.08); color: #aaa; }
-.tag.busan { background: rgba(65,88,208,0.25); color: #a0b0ff; border: 0.5px solid rgba(65,88,208,0.4); }
-.tag.new-year { background: rgba(200,80,192,0.2); color: #e090e0; border: 0.5px solid rgba(200,80,192,0.4); }
-.tag.travel { background: rgba(255,200,0,0.15); color: #ffd060; border: 0.5px solid rgba(255,200,0,0.3); }
-.day-hero h2 { margin: 0 0 6px; font-size: 17px; font-weight: 700; line-height: 1.4; color: #f0eee8; }
-.day-hero .focus { font-size: 13px; color: #a0a8cc; line-height: 1.6; }
+  .eyebrow{
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 22px;
+  }
+  .eyebrow::before{ content: ""; width: 26px; height: 1px; background: var(--gold); display: inline-block; }
 
-/* ── SCHEDULE ── */
-.schedule { margin-top: 14px; }
-.sch-item { display: flex; gap: 12px; position: relative; }
-.sch-time-col { flex-shrink: 0; width: 56px; text-align: right; padding-top: 2px; }
-.sch-time { font-size: 11px; font-weight: 600; color: #C850C0; letter-spacing: 0.5px; }
-.sch-dot-col { flex-shrink: 0; width: 14px; display: flex; flex-direction: column; align-items: center; }
-.sch-dot { width: 10px; height: 10px; border-radius: 50%; background: #0f0f1a; border: 2px solid #C850C0; margin-top: 6px; flex-shrink: 0; }
-.sch-line { width: 1.5px; flex: 1; background: #2a2a45; margin-top: 2px; }
-.sch-content { flex: 1; padding-bottom: 16px; }
-.sch-title { font-size: 14px; font-weight: 600; line-height: 1.4; margin-bottom: 3px; color: #f0eee8; }
-.sch-note { font-size: 12px; color: #9999cc; line-height: 1.6; margin-bottom: 4px; }
-.sch-item:last-child .sch-line { display: none; }
-.sch-item:last-child .sch-content { padding-bottom: 0; }
+  h1{
+    font-family: var(--font-display); font-weight: 600;
+    font-size: clamp(34px, 6vw, 56px); line-height: 1.15;
+    margin: 0 0 16px; letter-spacing: -0.01em;
+  }
+  h1 em{ font-style: italic; font-weight: 400; color: var(--gold); }
 
-/* ── MAP LINK ── */
-.map-link {
-  display: inline-flex; align-items: center; gap: 4px;
-  padding: 4px 10px; background: rgba(65,88,208,0.15);
-  color: #8899ff; border-radius: 14px; font-size: 11.5px; font-weight: 500;
-  text-decoration: none; margin-top: 4px; border: 0.5px solid rgba(65,88,208,0.3);
-}
-.map-link:active { background: rgba(65,88,208,0.3); }
+  .subtitle{ font-size: 16px; line-height: 1.7; color: #B9C3D4; max-width: 46ch; margin: 0 0 24px; }
 
-/* ── INFO SECTION ── */
-.info-section {
-  background: #161630; border-radius: 14px;
-  padding: 16px 18px; margin-bottom: 14px;
-  border: 0.5px solid #2a2a45;
-}
-.info-section h3 {
-  margin: 0 0 12px; font-size: 14px; font-weight: 600; color: #f0eee8;
-  display: flex; align-items: center; gap: 6px;
-}
-.info-section h3::before { content: ""; width: 3px; height: 14px; background: #4158D0; border-radius: 2px; }
-.info-section .item { padding: 10px 0; border-bottom: 0.5px solid #1e1e35; }
-.info-section .item:last-child { border-bottom: none; padding-bottom: 0; }
-.info-section .item:first-child { padding-top: 0; }
-.info-section .item .k { font-size: 11px; color: #7070bb; margin-bottom: 4px; font-weight: 500; letter-spacing: 0.5px; }
-.info-section .item .v { font-size: 13px; color: #d8d8f0; line-height: 1.6; }
-.info-section p { margin: 0 0 8px; font-size: 13px; line-height: 1.6; color: #aaaacc; }
-.info-section p:last-child { margin-bottom: 0; }
+  .stats{ display: flex; flex-wrap: wrap; gap: 12px; }
+  .stat{
+    display: flex; align-items: baseline; gap: 7px;
+    padding: 10px 18px; border: 1px solid var(--line); border-radius: 999px;
+    background: #131F32; font-size: 13px; color: #A9B4C6;
+  }
+  .stat b{ font-family: var(--font-display); font-size: 19px; font-weight: 600; color: var(--paper); }
 
-/* ── WEATHER BADGE ── */
-.weather-tag {
-  display: inline-flex; align-items: center; gap: 5px;
-  padding: 4px 10px; border-radius: 14px; font-size: 11.5px; font-weight: 500;
-  margin-right: 6px; margin-bottom: 6px;
-}
-.weather-tag.sunny { background: rgba(255,200,0,0.1); color: #ffd060; border: 0.5px solid rgba(255,200,0,0.3); }
-.weather-tag.light { background: rgba(100,180,255,0.1); color: #80b8ff; border: 0.5px solid rgba(100,180,255,0.3); }
-.weather-tag.rain { background: rgba(80,100,200,0.15); color: #8899cc; border: 0.5px solid rgba(80,100,200,0.3); }
+  .filters{
+    max-width: 1040px; margin: 0 auto 18px; padding: 0 24px;
+    border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  }
 
-/* ── HOTEL STRIP ── */
-.hotel-strip {
-  margin-top: 10px; padding: 14px 16px;
-  background: #13132a; border-radius: 12px;
-  border: 0.5px solid #2a2a45;
-}
-.hotel-strip-top { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-.hotel-strip .hlabel { color: #5555aa; font-size: 11px; }
-.hotel-strip .hname { font-weight: 600; color: #f0eee8; font-size: 13.5px; }
-.hotel-strip-details { display: flex; flex-direction: column; gap: 5px; }
-.hotel-detail-row { display: flex; align-items: flex-start; gap: 8px; font-size: 12px; color: #8888bb; }
-.hotel-detail-row a { color: #8899ff; text-decoration: none; }
-.hotel-map-btn {
-  display: inline-flex; align-items: center; gap: 5px;
-  margin-top: 8px; padding: 8px 14px;
-  background: #4158D0; color: #fff;
-  border-radius: 20px; font-size: 12px; font-weight: 500; text-decoration: none;
-}
+  .filters-summary{
+    display: flex; align-items: center; gap: 8px;
+    padding: 13px 0; cursor: pointer; list-style: none;
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em;
+    color: #A9B4C6; -webkit-tap-highlight-color: transparent;
+  }
+  .filters-summary::-webkit-details-marker{ display: none; }
+  .filters-summary::marker{ content: ""; }
 
-/* ── GUIDE TRIGGER ── */
-.guide-trigger {
-  display: flex; align-items: center; gap: 8px;
-  margin-top: 8px; padding: 10px 14px;
-  border-radius: 12px; border: none; cursor: pointer;
-  width: 100%; font-family: inherit; text-align: left;
-  transition: opacity 0.15s; -webkit-user-select: none; user-select: none;
-}
-.guide-trigger:active { opacity: 0.8; }
-.guide-trigger .gt-icon { font-size: 18px; flex-shrink: 0; }
-.guide-trigger .gt-text { flex: 1; }
-.guide-trigger .gt-title { font-size: 13px; font-weight: 600; line-height: 1.3; }
-.guide-trigger .gt-sub { font-size: 11px; opacity: 0.8; margin-top: 1px; }
-.guide-trigger .gt-arrow { font-size: 12px; flex-shrink: 0; }
+  .filters-summary .chevron{
+    display: inline-flex; transition: transform .2s ease; color: #6B7A93; font-size: 11px;
+  }
+  .filters[open] .filters-summary .chevron{ transform: rotate(180deg); }
 
-/* ── MODAL ── */
-.guide-modal-overlay {
-  position: fixed; inset: 0; z-index: 200;
-  background: rgba(0,0,0,0.7); display: flex; flex-direction: column;
-  justify-content: flex-end; opacity: 0; pointer-events: none; transition: opacity 0.25s;
-}
-.guide-modal-overlay.active { opacity: 1; pointer-events: auto; }
-.guide-modal {
-  background: #13132a; border-radius: 20px 20px 0 0;
-  max-height: 88vh; display: flex; flex-direction: column;
-  transform: translateY(100%);
-  transition: transform 0.3s cubic-bezier(0.32,0.72,0,1);
-  padding-bottom: env(safe-area-inset-bottom);
-  border-top: 0.5px solid #2a2a55;
-}
-.guide-modal-overlay.active .guide-modal { transform: translateY(0); }
-.guide-modal-handle {
-  flex-shrink: 0; display: flex; align-items: center; justify-content: center;
-  padding: 12px 0 4px;
-}
-.guide-modal-handle::before { content: ""; width: 36px; height: 4px; background: #2a2a55; border-radius: 2px; }
-.guide-modal-header {
-  flex-shrink: 0; display: flex; align-items: center; justify-content: space-between;
-  padding: 8px 18px 14px; border-bottom: 0.5px solid #1e1e35;
-}
-.guide-modal-header-left { display: flex; align-items: center; gap: 10px; }
-.guide-modal-header .gm-icon { font-size: 22px; }
-.guide-modal-header .gm-title { font-size: 15px; font-weight: 700; color: #f0eee8; line-height: 1.3; }
-.guide-modal-header .gm-sub { font-size: 11.5px; color: #5555aa; margin-top: 2px; }
-.guide-modal-close {
-  width: 32px; height: 32px; border-radius: 50%;
-  background: #1e1e35; border: none; cursor: pointer; font-size: 14px;
-  display: flex; align-items: center; justify-content: center;
-  color: #8888bb; font-family: inherit;
-}
-.guide-modal-body { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 16px 18px 24px; }
+  .filters-summary .filter-count{
+    display: none; align-items: center; justify-content: center;
+    min-width: 18px; height: 18px; padding: 0 5px; border-radius: 999px;
+    background: var(--gold); color: var(--bg); font-size: 10.5px; font-weight: 700;
+  }
+  .filters-summary .filter-count.show{ display: inline-flex; }
 
-/* ── GUIDE INTERNALS ── */
-.gc-section { font-size: 12px; font-weight: 700; color: #a0a8d0; margin: 14px 0 8px; letter-spacing: 0.5px; }
-.gc-section:first-child { margin-top: 0; }
-.gc-card {
-  background: #13132a; border-radius: 10px; padding: 11px 13px;
-  margin-bottom: 8px; display: flex; gap: 10px; align-items: flex-start;
-  border: 0.5px solid #2a2a45;
-}
-.gc-card-icon { font-size: 20px; flex-shrink: 0; }
-.gc-card-title { font-size: 13px; font-weight: 600; color: #f0eee8; margin-bottom: 3px; line-height: 1.4; }
-.gc-card-desc { font-size: 11.5px; color: #9999cc; line-height: 1.6; }
-.gc-tip {
-  display: flex; gap: 8px; align-items: flex-start;
-  background: rgba(65,88,208,0.08); border-radius: 10px;
-  padding: 10px 12px; margin-top: 10px;
-  font-size: 12px; color: #aabbdd; line-height: 1.6;
-  border: 0.5px solid rgba(65,88,208,0.2);
-}
-.gc-tip-icon { flex-shrink: 0; font-size: 14px; }
-.gc-warn {
-  background: rgba(200,80,192,0.08); border-radius: 10px;
-  padding: 11px 14px; border: 0.5px solid rgba(200,80,192,0.2);
-  margin-top: 10px;
-}
-.gc-warn-title { font-size: 12px; font-weight: 700; color: #e090e0; margin-bottom:6px; }
-.gc-warn-body { font-size: 12px; color: #b080b0; line-height: 1.8; }
-.gc-info-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
-.gc-badge {
-  padding: 4px 10px; border-radius: 14px; font-size: 11px; font-weight: 500;
-  background: rgba(65,88,208,0.15); color: #a0b0ff; border: 0.5px solid rgba(65,88,208,0.3);
-}
-.gc-badge.pink { background: rgba(200,80,192,0.12); color: #e090e0; border-color: rgba(200,80,192,0.3); }
-.gc-badge.green { background: rgba(0,180,100,0.1); color: #50d090; border-color: rgba(0,180,100,0.25); }
-.gc-badge.gold { background: rgba(255,200,0,0.1); color: #ffd060; border-color: rgba(255,200,0,0.25); }
-.gc-divider { height: 0.5px; background: #1e1e35; margin: 12px 0; }
-.gc-time-row {
-  display: flex; align-items: center; gap: 8px;
-  background: #0f0f1a; border-radius: 10px; padding: 10px 12px; margin-top: 8px;
-  border: 0.5px solid #2a2a45;
-}
-.gc-time-label { font-size: 11px; color: #5555aa; }
-.gc-time-val { font-size: 13px; font-weight: 600; color: #f0eee8; }
+  .filters-body{
+    display: flex; flex-wrap: wrap; gap: 16px 28px;
+    padding: 2px 0 20px;
+  }
+  .filter-group{ display: flex; flex-direction: column; gap: 9px; }
+  .filter-label{
+    font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: #6B7A93;
+  }
+  .chip-row{ display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip{
+    font-family: var(--font-body); font-size: 13px; font-weight: 500;
+    padding: 7px 14px; border-radius: 999px; border: 1px solid var(--line);
+    background: transparent; color: #A9B4C6; cursor: pointer;
+    transition: background .2s ease, color .2s ease, border-color .2s ease;
+  }
+  .chip:hover{ border-color: var(--gold); color: var(--paper); }
+  .chip.active{ background: var(--paper); color: var(--ink); border-color: var(--paper); }
 
-/* ── OVERVIEW ── */
-.summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
-.summary-card { background: #13132a; padding: 14px; border-radius: 12px; border: 0.5px solid #2a2a45; }
-.summary-card .k { font-size: 11px; color: #5555aa; margin-bottom: 6px; letter-spacing: 0.5px; }
-.summary-card .v { font-size: 15px; font-weight: 700; color: #f0eee8; line-height: 1.3; }
+  .date-inputs{ display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .date-inputs input[type="date"]{
+    font-family: var(--font-mono); font-size: 12.5px;
+    padding: 6px 10px; border-radius: 8px; border: 1px solid var(--line);
+    background: #131F32; color: var(--paper); color-scheme: dark;
+  }
+  .date-inputs input[type="date"]:focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }
+  .date-sep{ color: #6B7A93; font-size: 12px; }
 
-.day-timeline {
-  display: flex; gap: 3px; height: 32px;
-  border-radius: 8px; overflow: hidden; margin: 14px 0;
-}
-.day-timeline > div {
-  display: flex; align-items: center; justify-content: center;
-  font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.8);
-  flex-shrink: 0;
-}
+  .clear-btn{
+    font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.04em;
+    padding: 7px 12px; border-radius: 999px; border: 1px dashed var(--line);
+    background: transparent; color: #8B98AC; cursor: pointer;
+    transition: border-color .2s ease, color .2s ease;
+  }
+  .clear-btn:hover{ border-color: var(--gold); color: var(--gold); }
 
-/* ── CHECKLIST ── */
-.checklist-tabs {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 4px; background: #0f0f1a; border-radius: 10px;
-  padding: 4px; margin-bottom: 12px;
-}
-.cl-tab-btn {
-  padding: 8px 4px; border: none; border-radius: 8px;
-  font-size: 11.5px; font-weight: 600; cursor: pointer;
-  background: transparent; color: #5555aa; font-family: inherit; transition: all 0.15s;
-}
-.cl-tab-btn.active { background: #4158D0; color: #fff; }
-.checklist-group { display: none; }
-.checklist-group.active { display: block; }
-.cl-progress { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
-.cl-progress-bar-wrap { flex: 1; height: 5px; background: #1e1e35; border-radius: 3px; overflow: hidden; }
-.cl-progress-bar { height: 100%; background: #4158D0; border-radius: 3px; transition: width 0.3s; }
-.cl-progress-label { font-size: 11px; color: #5555aa; white-space: nowrap; }
-.cl-section-title { font-size: 11px; font-weight: 700; color: #8888bb; letter-spacing: 0.5px; margin: 12px 0 6px; }
-.cl-section-title:first-child { margin-top: 0; }
-.cl-item {
-  display: flex; align-items: flex-start; gap: 10px;
-  padding: 9px 0; border-bottom: 0.5px solid #1e1e35;
-  cursor: pointer; -webkit-user-select: none; user-select: none;
-  transition: opacity 0.2s;
-}
-.cl-item:last-child { border-bottom: none; }
-.cl-item.checked { opacity: 0.4; }
-.cl-checkbox {
-  flex-shrink: 0; width: 22px; height: 22px;
-  border: 2px solid #2a2a55; border-radius: 6px;
-  background: #0f0f1a; margin-top: 1px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 13px; transition: all 0.15s;
-}
-.cl-item.checked .cl-checkbox { background: #4158D0; border-color: #4158D0; color: #fff; }
-.cl-item-text { flex: 1; }
-.cl-item-title { font-size: 13px; font-weight: 600; color: #f0eee8; line-height: 1.4; margin-bottom: 2px; }
-.cl-item-note { font-size: 11.5px; color: #8888aa; line-height: 1.5; }
-.cl-badge {
-  display: inline-block; font-size: 10px; font-weight: 700;
-  padding: 2px 7px; border-radius: 8px; margin-right: 4px; vertical-align: middle;
-}
-.cl-badge.red { background: rgba(200,80,192,0.15); color: #e090e0; border: 0.5px solid rgba(200,80,192,0.3); }
-.cl-badge.blue { background: rgba(65,88,208,0.15); color: #a0b0ff; border: 0.5px solid rgba(65,88,208,0.3); }
-.cl-badge.gold { background: rgba(255,200,0,0.1); color: #ffd060; border: 0.5px solid rgba(255,200,0,0.25); }
-.cl-reset { width: 100%; margin-top: 14px; padding: 10px; background: transparent; border: 0.5px solid #2a2a45; border-radius: 10px; color: #5555aa; font-size: 12px; cursor: pointer; font-family: inherit; }
+  main{ max-width: 1040px; margin: 0 auto; padding: 0 24px; }
 
-/* ── PREP SUB-TABS (sticky pill bar) ── */
-.prep-subtabs {
-  position: sticky;
-  top: calc(56px + env(safe-area-inset-top));
-  z-index: 35;
-  background: #0f0f1a;
-  display: flex; gap: 6px;
-  overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
-  padding: 10px 14px 10px;
-  margin: 0 -16px 14px;
-}
-.prep-subtabs::-webkit-scrollbar { display: none; }
-.prep-sub-btn {
-  flex-shrink: 0; padding: 8px 16px;
-  border: 1.5px solid #2a2a45; border-radius: 20px;
-  background: #13132a; color: #6666aa;
-  font-size: 12.5px; font-weight: 600; cursor: pointer;
-  font-family: inherit; transition: all 0.15s; white-space: nowrap;
-}
-.prep-sub-btn.active {
-  background: #4158D0; border-color: #4158D0; color: #fff;
-}
-.prep-panel { display: none; }
-.prep-panel.active { display: block; }
+  .section-row{ display: flex; align-items: baseline; justify-content: space-between; margin: 0 0 12px; padding-left: 2px; }
+  .section-label{
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: #6B7A93; margin: 0;
+  }
+  .result-count{ font-family: var(--font-mono); font-size: 11.5px; color: #5C6B84; }
 
-/* ── TIMELINE (overview) ── */
-.day-timeline-row {
-  display: flex; gap: 10px; align-items: flex-start;
-  padding: 10px 0; border-bottom: 0.5px solid #1e1e35;
-  cursor: pointer;
-}
-.day-timeline-row:last-child { border-bottom: none; }
-.day-timeline-dot {
-  flex-shrink: 0; margin-top: 3px;
-  width: 28px; height: 28px; border-radius: 50%;
-  background: #1a1a3e; border: 2px solid #2a2a55;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 11px; font-weight: 700; color: #6666aa;
-  transition: all 0.15s;
-}
-.day-timeline-row.today-row .day-timeline-dot {
-  background: #C850C0; border-color: #C850C0; color: #fff;
-}
-.day-timeline-content { flex: 1; }
-.day-timeline-label {
-  font-size: 10px; color: #5555aa; letter-spacing: 0.5px; margin-bottom: 3px;
-}
-.day-timeline-title { font-size: 13.5px; font-weight: 600; color: #f0eee8; line-height: 1.4; }
-.day-timeline-focus { font-size: 11.5px; color: #6666aa; margin-top: 2px; line-height: 1.4; }
-.day-timeline-arrow { flex-shrink: 0; color: #3333aa; font-size: 12px; margin-top: 6px; }
+  .trip-header{
+    display: grid;
+    grid-template-columns: var(--col-flag) var(--col-id) var(--col-status) var(--col-dates) var(--col-duration) var(--col-share) var(--col-arrow);
+    align-items: center; column-gap: 18px;
+    padding: 0 20px 8px; margin-top: 6px;
+  }
+  .trip-header span{
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: #55637C;
+  }
 
-/* ── FACT CARDS (practical) ── */
-.fact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
-.fact-card {
-  background: #13132a; border-radius: 12px; padding: 13px;
-  border: 0.5px solid #2a2a45;
-}
-.fact-icon { font-size: 22px; margin-bottom: 6px; }
-.fact-label { font-size: 10px; color: #8080bb; letter-spacing: 0.5px; margin-bottom: 4px; }
-.fact-value { font-size: 13px; font-weight: 600; color: #f0eee8; line-height: 1.4; }
+  .trip-grid{ display: flex; flex-direction: column; gap: 12px; }
 
-/* ── APP ROWS ── */
-.app-row {
-  background: #0f0f1a; border-radius: 10px; padding: 10px 12px;
-  border: 0.5px solid #2a2a45; display: flex; gap: 10px; align-items: center;
-  margin-bottom: 6px;
-}
-.app-icon { font-size: 22px; flex-shrink: 0; width: 36px; text-align: center; }
-.app-name { font-size: 13px; font-weight: 600; color: #f0eee8; margin-bottom: 2px; }
-.app-desc { font-size: 11.5px; color: #9999bb; line-height: 1.5; }
-.app-cat { font-size: 10px; font-weight: 700; color: #8888bb; letter-spacing: 0.5px; margin: 12px 0 6px; }
+  .ticket{
+    position: relative;
+    display: grid;
+    grid-template-columns: var(--col-flag) var(--col-id) var(--col-status) var(--col-dates) var(--col-duration) var(--col-share) var(--col-arrow);
+    align-items: center; column-gap: 18px;
+    background: var(--paper);
+    border-radius: 14px;
+    border-left: 4px solid var(--ink-soft);
+    color: var(--ink);
+    padding: 14px 20px;
+    box-shadow: 0 10px 24px -14px rgba(0,0,0,0.5);
+    transition: transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s ease;
+  }
 
-/* ── VBP TABLE ── */
-.vbp-row {
-  display: flex; gap: 10px; align-items: flex-start;
-  padding: 9px 0; border-bottom: 0.5px solid #1e1e35;
-}
-.vbp-row:last-child { border-bottom: none; }
-.vbp-day {
-  flex-shrink: 0; width: 36px; height: 36px; border-radius: 8px;
-  background: rgba(65,88,208,0.15); border: 0.5px solid rgba(65,88,208,0.3);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 10px; font-weight: 700; color: #a0b0ff; text-align: center; line-height: 1.3;
-}
-.vbp-content { flex: 1; }
-.vbp-title { font-size: 12px; font-weight: 600; color: #f0eee8; margin-bottom: 3px; }
-.vbp-items { font-size: 11.5px; color: #9999bb; line-height: 1.6; }
+  .ticket-link{
+    position: absolute; inset: 0;
+    border-radius: inherit;
+    z-index: 0;
+  }
 
-/* ── BUDGET BAR ── */
-.budget-row {
-  display: flex; align-items: center; gap: 10px; padding: 7px 0;
-  border-bottom: 0.5px solid #1e1e35;
-}
-.budget-row:last-child { border-bottom: none; }
-.budget-day { font-size: 12px; color: #b8b8dd; width: 80px; flex-shrink: 0; }
-.budget-bar-wrap { flex: 1; height: 5px; background: #1e1e35; border-radius: 3px; overflow: hidden; }
-.budget-bar { height: 100%; border-radius: 3px; background: #4158D0; }
-.budget-amt { font-size: 12px; font-weight: 600; color: #a0b0ff; text-align: right; width: 72px; flex-shrink: 0; }
+  .ticket[data-country="jp"]{ border-left-color: var(--jp); }
+  .ticket[data-country="kr"]{ border-left-color: var(--kr); }
 
-/* ── MISC ── */
-.hidden { display: none !important; }
-.fab {
-  position: fixed; bottom: calc(20px + env(safe-area-inset-bottom)); right: 16px;
-  width: 44px; height: 44px; border-radius: 50%;
-  background: #4158D0; color: #fff; border: none;
-  box-shadow: 0 4px 16px rgba(65,88,208,0.4);
-  font-size: 18px; cursor: pointer; opacity: 0; pointer-events: none;
-  transition: opacity 0.2s; z-index: 60;
-}
-.fab.show { opacity: 1; pointer-events: auto; }
-footer {
-  text-align: center; padding: 24px 16px calc(24px + env(safe-area-inset-bottom));
-  font-size: 11px; color: #6666aa;
-}
-@media (max-width: 360px) {
-  .header h1 { font-size: 18px; }
-  .day-hero h2 { font-size: 16px; }
-}
+  .ticket:hover, .ticket:focus-visible{ transform: translateX(4px); box-shadow: 0 16px 30px -14px rgba(0,0,0,0.6); }
+  .ticket:focus-visible{ outline: 2px solid var(--gold); outline-offset: 3px; }
+
+  .ticket-flag{ font-size: 21px; line-height: 1; }
+
+  .ticket-country{
+    font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.12em;
+    color: var(--ink-soft); margin: 0 0 2px;
+  }
+  .ticket-city{
+    font-family: var(--font-display); font-weight: 600; font-size: 19px;
+    line-height: 1.2; margin: 0; letter-spacing: -0.005em;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+
+  .ticket-status{
+    display: inline-flex; align-items: center; gap: 6px; justify-self: start;
+    font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.06em;
+    text-transform: uppercase; padding: 4px 10px; border-radius: 999px; white-space: nowrap;
+  }
+  .ticket-status.completed{ background: #E4E1D3; color: #6B6752; }
+  .ticket-status.upcoming{ background: var(--jp-soft); color: var(--jp); }
+  .ticket-status.live{ background: var(--kr-soft); color: var(--kr); }
+  .ticket[data-country="jp"] .ticket-status.completed{ background: var(--jp-soft); color: var(--jp); }
+  .ticket[data-country="kr"] .ticket-status.upcoming{ background: var(--kr-soft); color: var(--kr); }
+
+  .col-label{ display: none; }
+  .col-value{
+    font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+    color: var(--ink); white-space: nowrap;
+  }
+
+  .ticket-arrow{
+    width: 30px; height: 30px; border-radius: 50%; border: 1.5px solid var(--ink);
+    display: flex; align-items: center; justify-content: center; font-size: 14px;
+    transition: background .25s ease, color .25s ease, transform .25s ease;
+  }
+  .ticket:hover .ticket-arrow{ background: var(--ink); color: var(--paper); transform: translateX(2px); }
+  .ticket[data-country="jp"] .ticket-arrow{ border-color: var(--jp); color: var(--jp); }
+  .ticket[data-country="jp"]:hover .ticket-arrow{ background: var(--jp); color: var(--paper); }
+  .ticket[data-country="kr"] .ticket-arrow{ border-color: var(--kr); color: var(--kr); }
+  .ticket[data-country="kr"]:hover .ticket-arrow{ background: var(--kr); color: var(--paper); }
+
+  .ticket-share-btn{
+    position: relative; z-index: 2;
+    width: 30px; height: 30px; border-radius: 50%;
+    border: 1.5px solid var(--line);
+    background: transparent; color: var(--ink-soft);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; cursor: pointer;
+    transition: background .2s ease, color .2s ease, border-color .2s ease, transform .15s ease;
+  }
+  .ticket-share-btn:hover{ background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .ticket-share-btn:active{ transform: scale(0.9); }
+  .ticket[data-country="jp"] .ticket-share-btn:hover{ background: var(--jp); border-color: var(--jp); }
+  .ticket[data-country="kr"] .ticket-share-btn:hover{ background: var(--kr); border-color: var(--kr); }
+
+  .share-toast{
+    position: fixed; left: 50%; bottom: 40px; transform: translateX(-50%) translateY(20px);
+    background: var(--ink); color: var(--paper); border: 1px solid var(--line);
+    padding: 10px 18px; border-radius: 20px; font-size: 12.5px;
+    opacity: 0; pointer-events: none; transition: all .25s ease;
+    z-index: 300; box-shadow: 0 6px 24px rgba(0,0,0,0.4);
+    white-space: nowrap; font-family: var(--font-body);
+  }
+  .share-toast.show{ opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  .ticket.placeholder{
+    display: flex; align-items: center; justify-content: center; min-height: 56px;
+    background: transparent; border: 1.5px dashed var(--line); border-left: 1.5px dashed var(--line);
+    color: #5C6B84; font-size: 12.5px; box-shadow: none;
+  }
+  .ticket.placeholder:hover{ transform: none; }
+
+  .empty-state{
+    padding: 34px 20px; text-align: center; color: #8B98AC; font-size: 13.5px;
+    border: 1.5px dashed var(--line); border-radius: 14px;
+  }
+
+  @media (max-width: 680px){
+    .trip-header{ display: none; }
+    .ticket{
+      grid-template-columns: var(--col-flag) 1fr var(--col-share) var(--col-arrow);
+      row-gap: 10px; padding: 14px 16px;
+    }
+    .ticket-id{ grid-column: 2; }
+    .ticket-status{ grid-column: 2; }
+    .ticket-share-btn{ grid-row: 1; grid-column: 3; }
+    .ticket-arrow{ grid-row: 1; grid-column: 4; }
+    .ticket-dates, .ticket-duration{ grid-column: 1 / -1; display: flex; gap: 6px; align-items: baseline; }
+    .col-label{ display: inline; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); }
+  }
+
+  footer{
+    max-width: 1040px; margin: 56px auto 0; padding: 24px 24px 0;
+    border-top: 1px solid var(--line); font-family: var(--font-mono); font-size: 11.5px;
+    color: #5C6B84; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ transition: none !important; scroll-behavior: auto !important; }
+  }
 </style>
 </head>
 <body>
 
-<header class="header" style="position:relative;overflow:hidden;padding-bottom:20px">
-  <!-- Animated stars bg -->
-  <div id="starsBg" style="position:absolute;inset:0;pointer-events:none;overflow:hidden"></div>
-  
-  <!-- Gwangan Bridge full-width SVG -->
-  <div style="position:absolute;bottom:0;left:0;right:0;pointer-events:none">
-    <svg viewBox="0 0 400 90" preserveAspectRatio="xMidYMax meet" width="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- Night sky gradient -->
-      <defs>
-        <linearGradient id="skyG" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#0a0a25" stop-opacity="0"/>
-          <stop offset="100%" stop-color="#0a0a25" stop-opacity="0.3"/>
-        </linearGradient>
-      </defs>
-      <rect width="400" height="90" fill="url(#skyG)"/>
-      <!-- City silhouette -->
-      <rect x="0" y="72" width="28" height="18" fill="rgba(255,255,255,0.08)" rx="1"/>
-      <rect x="8" y="64" width="10" height="8" fill="rgba(255,255,255,0.08)"/>
-      <rect x="30" y="68" width="18" height="22" fill="rgba(255,255,255,0.06)" rx="1"/>
-      <rect x="50" y="70" width="12" height="20" fill="rgba(255,255,255,0.07)"/>
-      <rect x="320" y="65" width="20" height="25" fill="rgba(255,255,255,0.07)" rx="1"/>
-      <rect x="345" y="70" width="15" height="20" fill="rgba(255,255,255,0.06)"/>
-      <rect x="362" y="60" width="12" height="30" fill="rgba(255,255,255,0.08)"/>
-      <rect x="376" y="68" width="24" height="22" fill="rgba(255,255,255,0.06)"/>
-      <!-- Sea reflection -->
-      <rect x="0" y="82" width="400" height="8" fill="rgba(65,88,208,0.15)" rx="0"/>
-      <!-- Bridge deck -->
-      <rect x="0" y="76" width="400" height="3.5" fill="rgba(255,255,255,0.35)" rx="1"/>
-      <!-- Left tower -->
-      <rect x="98" y="20" width="5" height="58" fill="rgba(255,255,255,0.5)" rx="1"/>
-      <!-- Right tower -->
-      <rect x="298" y="20" width="5" height="58" fill="rgba(255,255,255,0.5)" rx="1"/>
-      <!-- Tower cross beams -->
-      <rect x="96" y="32" width="9" height="2" fill="rgba(255,255,255,0.4)"/>
-      <rect x="96" y="44" width="9" height="2" fill="rgba(255,255,255,0.4)"/>
-      <rect x="296" y="32" width="9" height="2" fill="rgba(255,255,255,0.4)"/>
-      <rect x="296" y="44" width="9" height="2" fill="rgba(255,255,255,0.4)"/>
-      <!-- Bridge cables left side -->
-      <line x1="100" y1="20" x2="20"  y2="76" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
-      <line x1="100" y1="22" x2="50"  y2="76" stroke="rgba(255,255,255,0.25)" stroke-width="0.8"/>
-      <line x1="100" y1="24" x2="80"  y2="76" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/>
-      <line x1="100" y1="24" x2="130" y2="76" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/>
-      <line x1="100" y1="22" x2="165" y2="76" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/>
-      <!-- Bridge cables right side -->
-      <line x1="300" y1="20" x2="380" y2="76" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
-      <line x1="300" y1="22" x2="350" y2="76" stroke="rgba(255,255,255,0.25)" stroke-width="0.8"/>
-      <line x1="300" y1="24" x2="320" y2="76" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/>
-      <line x1="300" y1="24" x2="272" y2="76" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/>
-      <line x1="300" y1="22" x2="237" y2="76" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/>
-      <!-- Center suspension cables -->
-      <line x1="100" y1="20" x2="200" y2="76" stroke="rgba(255,255,255,0.15)" stroke-width="0.6"/>
-      <line x1="300" y1="20" x2="200" y2="76" stroke="rgba(255,255,255,0.15)" stroke-width="0.6"/>
-      <!-- Fireworks bursts -->
-      <!-- Pink burst left -->
-      <g opacity="0.9">
-        <line x1="60" y1="22" x2="60" y2="8"  stroke="#f472b6" stroke-width="1.2"/>
-        <line x1="60" y1="22" x2="72" y2="12" stroke="#f472b6" stroke-width="1.2"/>
-        <line x1="60" y1="22" x2="74" y2="22" stroke="#f472b6" stroke-width="1.2"/>
-        <line x1="60" y1="22" x2="70" y2="32" stroke="#f472b6" stroke-width="1.2"/>
-        <line x1="60" y1="22" x2="58" y2="34" stroke="#f472b6" stroke-width="1.2"/>
-        <line x1="60" y1="22" x2="48" y2="30" stroke="#f472b6" stroke-width="1.2"/>
-        <line x1="60" y1="22" x2="46" y2="22" stroke="#f472b6" stroke-width="1.2"/>
-        <line x1="60" y1="22" x2="50" y2="12" stroke="#f472b6" stroke-width="1.2"/>
-        <circle cx="60" cy="22" r="2" fill="#f472b6"/>
-      </g>
-      <!-- Gold burst center-right -->
-      <g opacity="0.85">
-        <line x1="220" y1="14" x2="220" y2="2"  stroke="#fbbf24" stroke-width="1.2"/>
-        <line x1="220" y1="14" x2="232" y2="4"  stroke="#fbbf24" stroke-width="1.2"/>
-        <line x1="220" y1="14" x2="234" y2="14" stroke="#fbbf24" stroke-width="1.2"/>
-        <line x1="220" y1="14" x2="232" y2="24" stroke="#fbbf24" stroke-width="1.2"/>
-        <line x1="220" y1="14" x2="220" y2="26" stroke="#fbbf24" stroke-width="1.2"/>
-        <line x1="220" y1="14" x2="208" y2="24" stroke="#fbbf24" stroke-width="1.2"/>
-        <line x1="220" y1="14" x2="206" y2="14" stroke="#fbbf24" stroke-width="1.2"/>
-        <line x1="220" y1="14" x2="208" y2="4"  stroke="#fbbf24" stroke-width="1.2"/>
-        <circle cx="220" cy="14" r="2" fill="#fbbf24"/>
-      </g>
-      <!-- Cyan burst right -->
-      <g opacity="0.8">
-        <line x1="350" y1="28" x2="350" y2="16" stroke="#67e8f9" stroke-width="1"/>
-        <line x1="350" y1="28" x2="360" y2="18" stroke="#67e8f9" stroke-width="1"/>
-        <line x1="350" y1="28" x2="362" y2="28" stroke="#67e8f9" stroke-width="1"/>
-        <line x1="350" y1="28" x2="360" y2="38" stroke="#67e8f9" stroke-width="1"/>
-        <line x1="350" y1="28" x2="350" y2="40" stroke="#67e8f9" stroke-width="1"/>
-        <line x1="350" y1="28" x2="340" y2="38" stroke="#67e8f9" stroke-width="1"/>
-        <line x1="350" y1="28" x2="338" y2="28" stroke="#67e8f9" stroke-width="1"/>
-        <line x1="350" y1="28" x2="340" y2="18" stroke="#67e8f9" stroke-width="1"/>
-        <circle cx="350" cy="28" r="1.5" fill="#67e8f9"/>
-      </g>
-      <!-- Sparkle dots -->
-      <circle cx="140" cy="15" r="1.5" fill="#f472b6" opacity="0.8"/>
-      <circle cx="170" cy="8"  r="1"   fill="#fbbf24" opacity="0.7"/>
-      <circle cx="250" cy="20" r="1.5" fill="#a78bfa" opacity="0.8"/>
-      <circle cx="280" cy="10" r="1"   fill="#67e8f9" opacity="0.7"/>
-      <circle cx="80"  cy="35" r="1"   fill="#fbbf24" opacity="0.6"/>
-      <circle cx="180" cy="30" r="1"   fill="#f472b6" opacity="0.6"/>
-      <!-- Bridge lights -->
-      <circle cx="100" cy="76" r="2" fill="#fbbf24" opacity="0.9"/>
-      <circle cx="300" cy="76" r="2" fill="#fbbf24" opacity="0.9"/>
-      <circle cx="50"  cy="76" r="1.2" fill="rgba(255,255,255,0.5)"/>
-      <circle cx="150" cy="76" r="1.2" fill="rgba(255,255,255,0.5)"/>
-      <circle cx="200" cy="76" r="1.2" fill="rgba(255,255,255,0.5)"/>
-      <circle cx="250" cy="76" r="1.2" fill="rgba(255,255,255,0.5)"/>
-      <circle cx="350" cy="76" r="1.2" fill="rgba(255,255,255,0.5)"/>
-    </svg>
-  </div>
-  
-  <div style="position:relative;z-index:2;padding-bottom:18px">
-    <div class="label">7 DAYS · BUSAN NEW YEAR 🎆</div>
-    <h1 style="font-size:22px;margin:4px 0 4px;text-shadow:0 2px 20px rgba(200,80,192,0.4)">🇰🇷 釜山冬日跨年</h1>
-    <div class="dates" style="color:rgba(255,255,255,0.9)">12/26 (六) — 1/1 (五)</div>
-    <div class="meta" style="margin-top:10px">
-      <span>✈️ 桃園 ⇄ 金海</span>
-      <span>🎆 廣安里跨年</span>
-      <span>🎿 Eden Valley 滑雪</span>
-    </div>
-  </div>
+<header>
+  <p class="eyebrow">Family Travel Log</p>
+  <h1>我們家的<em>環遊</em>誌</h1>
+  <p class="subtitle">帶著三個孩子，一起走過的城市與海岸。點選任一目的地，回到當時規劃的完整行程表。</p>
+  <div class="stats" id="stats"></div>
 </header>
 
-<div class="day-scroller">
-  <div class="day-scroller-inner" id="dayScroller"></div>
-</div>
+<details class="filters" id="filters">
+  <summary class="filters-summary">
+    <span class="chevron">▾</span>
+    篩選行程
+    <span class="filter-count" id="filter-count">0</span>
+  </summary>
+  <div class="filters-body">
+    <div class="filter-group">
+      <span class="filter-label">國家</span>
+      <div class="chip-row" id="country-chips"></div>
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">城市</span>
+      <div class="chip-row" id="city-chips"></div>
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">日期範圍</span>
+      <div class="date-inputs">
+        <input type="date" id="date-from" aria-label="起始日期">
+        <span class="date-sep">–</span>
+        <input type="date" id="date-to" aria-label="結束日期">
+        <button type="button" class="clear-btn" id="clear-filters">清除篩選</button>
+      </div>
+    </div>
+  </div>
+</details>
 
 <main>
-  <div class="tab-nav">
-    <button class="tab-btn active" data-tab="prep">✈️ 出發前 & 備忘</button>
-    <button class="tab-btn" data-tab="day">📅 每日行程</button>
+  <div class="section-row">
+    <p class="section-label">Destinations</p>
+    <span class="result-count" id="result-count"></span>
   </div>
 
-  <section id="view-day" class="hidden"></section>
+  <div class="trip-header">
+    <span></span>
+    <span>Trip</span>
+    <span>Status</span>
+    <span>Dates</span>
+    <span>Duration</span>
+    <span></span>
+    <span></span>
+  </div>
 
-  <!-- Pre-departure Prep -->
-  <section id="view-prep">
-
-    <div class="prep-subtabs" id="prepSubtabs">
-      <button class="prep-sub-btn active" onclick="switchPrepTab('summary',this)">📋 總覽</button>
-      <button class="prep-sub-btn" onclick="switchPrepTab('vbp',this)">🎫 Pass</button>
-      <button class="prep-sub-btn" onclick="switchPrepTab('practical',this)">ℹ️ 資訊</button>
-      <button class="prep-sub-btn" onclick="switchPrepTab('food',this)">🍽 美食</button>
-      <button class="prep-sub-btn" onclick="switchPrepTab('checklist',this)">🎒 清單</button>
-      <button class="prep-sub-btn" onclick="switchPrepTab('apps',this)">📱 APP</button>
-    </div>
-
-    <!-- ══ Summary ══ -->
-    <div class="prep-panel active" id="pp-summary">
-
-      <!-- Hero trip card -->
-      <div style="background:linear-gradient(135deg,#1a1a3e 0%,#0d1b4b 60%,#0d2040 100%);border-radius:16px;padding:20px;margin-bottom:14px;border:0.5px solid #2a2a55;position:relative;overflow:hidden">
-        <div style="position:absolute;top:-20px;right:-20px;font-size:80px;opacity:0.05">🎆</div>
-        <div style="font-size:10px;color:#5555aa;letter-spacing:3px;margin-bottom:12px">TRIP OVERVIEW</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
-          <div>
-            <div style="font-size:10px;color:#5555aa;letter-spacing:0.5px;margin-bottom:3px">總天數</div>
-            <div style="font-size:22px;font-weight:800;color:#f0eee8;line-height:1">7<span style="font-size:14px;font-weight:400;color:#6666aa;margin-left:3px">天 6 夜</span></div>
-          </div>
-          <div>
-            <div style="font-size:10px;color:#5555aa;letter-spacing:0.5px;margin-bottom:3px">目的地</div>
-            <div style="font-size:18px;font-weight:800;color:#f0eee8;line-height:1">🇰🇷 釜山</div>
-          </div>
-          <div>
-            <div style="font-size:10px;color:#5555aa;letter-spacing:0.5px;margin-bottom:3px">成員</div>
-            <div style="font-size:14px;font-weight:700;color:#f0eee8">4大 5小</div>
-          </div>
-          <div>
-            <div style="font-size:10px;color:#5555aa;letter-spacing:0.5px;margin-bottom:3px">住宿</div>
-            <div style="font-size:13px;font-weight:700;color:#f0eee8">Haeundae</div>
-            <div style="font-size:11px;color:#6666aa">Centum Hotel</div>
-          </div>
-        </div>
-        <!-- Flights -->
-        <div style="display:flex;flex-direction:column;gap:8px">
-          <div style="background:rgba(255,255,255,0.04);border-radius:10px;padding:11px 14px;border:0.5px solid rgba(255,255,255,0.07);display:flex;align-items:center;gap:12px">
-            <span style="font-size:20px">✈️</span>
-            <div style="flex:1">
-              <div style="font-size:10px;color:#5555aa;letter-spacing:1px;margin-bottom:2px">去程 JX902</div>
-              <div style="font-size:13px;font-weight:600;color:#f0eee8">12/26（六）14:50 桃園 → 17:55 金海</div>
-            </div>
-            <div style="font-size:12px;font-weight:600;color:#C850C0">3h 05m</div>
-          </div>
-          <div style="background:rgba(255,255,255,0.04);border-radius:10px;padding:11px 14px;border:0.5px solid rgba(255,255,255,0.07);display:flex;align-items:center;gap:12px">
-            <span style="font-size:20px">🛬</span>
-            <div style="flex:1">
-              <div style="font-size:10px;color:#5555aa;letter-spacing:1px;margin-bottom:2px">回程 JX901</div>
-              <div style="font-size:13px;font-weight:600;color:#f0eee8">1/1（五）12:30 金海 → 14:15 桃園</div>
-            </div>
-            <div style="font-size:12px;font-weight:600;color:#4158D0">1h 45m</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Day-by-day timeline -->
-      <div class="info-section">
-        <h3>每日主題一覽</h3>
-        <div id="overviewList"></div>
-      </div>
-
-    </div><!-- /pp-summary -->
-
-    <!-- ══ VBP & 備案 ══ -->
-    <div class="prep-panel hidden" id="pp-vbp">
-
-      <div class="info-section">
-        <h3>🎫 Visit Busan Pass 使用計畫</h3>
-        <div style="background:rgba(65,88,208,0.08);border-radius:10px;padding:12px 14px;border:0.5px solid rgba(65,88,208,0.2);margin-bottom:12px">
-          <div style="font-size:12px;color:#a0b0ff;font-weight:600;margin-bottom:4px">建議購買 48 小時通行證</div>
-          <div style="font-size:11.5px;color:#8899cc;line-height:1.7">Day 2（12/27）啟用，覆蓋 Day 2–3 主要景點門票<br>購買地點：釜山站 VBP 官方櫃台 / 金海機場旅遊諮詢處<br>💡 建議提前線上購買，節省現場排隊時間</div>
-        </div>
-        <div class="vbp-row">
-          <div class="vbp-day">D2<br>12/27</div>
-          <div class="vbp-content">
-            <div class="vbp-title">海雲台一日遊</div>
-            <div class="vbp-items">🚠 Sky Capsule（普通車廂）<br>🌆 X the SKY 展望台門票<br>🏃 Running Man 體驗館（視情況）</div>
-          </div>
-        </div>
-        <div class="vbp-row">
-          <div class="vbp-day">D3<br>12/28</div>
-          <div class="vbp-content">
-            <div class="vbp-title">西釜山散策</div>
-            <div class="vbp-items">🚠 松島海上纜車 來回</div>
-          </div>
-        </div>
-        <div class="vbp-row">
-          <div class="vbp-day">D4<br>12/29</div>
-          <div class="vbp-content">
-            <div class="vbp-title">Osiria 一日遊</div>
-            <div class="vbp-items">🛷 Skyline Luge 斜坡滑車（1次）<br>🎢 樂天世界 Adventure 門票<br>🛍 東釜山 Outlet 購物折扣</div>
-          </div>
-        </div>
-        <div class="vbp-row">
-          <div class="vbp-day">D5<br>12/30</div>
-          <div class="vbp-content">
-            <div class="vbp-title">Eden Valley / 備案</div>
-            <div class="vbp-items">🏊 ClubD Oasis（水上樂園＋汗蒸幕）<br><span style="color:#5555aa;font-size:11px">※ 若不去滑雪改去 Osiria 可用</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="info-section">
-        <h3>🌧 各天雨天備案</h3>
-        <div style="display:flex;flex-direction:column;gap:8px">
-          <div style="background:#0f0f1a;border-radius:10px;padding:11px 13px;border:0.5px solid #2a2a45">
-            <div style="font-size:11px;color:#4158D0;font-weight:600;margin-bottom:5px">Day 2 大雨 · 海雲台</div>
-            <div style="font-size:12px;color:#8888bb;line-height:1.8">SEA LIFE 水族館・X the SKY（室內）<br>Running Man 體驗館・東釜山 Outlet・Lotte Mall</div>
-          </div>
-          <div style="background:#0f0f1a;border-radius:10px;padding:11px 13px;border:0.5px solid #2a2a45">
-            <div style="font-size:11px;color:#7c3aed;font-weight:600;margin-bottom:5px">Day 3 大雨 · 西釜山</div>
-            <div style="font-size:12px;color:#8888bb;line-height:1.8">ARTE MUSEUM・Running Man（若未玩）<br>南浦洞換錢・BIFF 地下街・Olive Young 大採購</div>
-          </div>
-          <div style="background:#0f0f1a;border-radius:10px;padding:11px 13px;border:0.5px solid #2a2a45">
-            <div style="font-size:11px;color:#e84040;font-weight:600;margin-bottom:5px">Day 4 大雨 · Osiria</div>
-            <div style="font-size:12px;color:#8888bb;line-height:1.8">SEA LIFE 水族館・X the SKY<br>東釜山 Outlet・Lotte Mall・樂天世界（室內設施為主）</div>
-          </div>
-          <div style="background:#0f0f1a;border-radius:10px;padding:11px 13px;border:0.5px solid #2a2a45">
-            <div style="font-size:11px;color:#0891b2;font-weight:600;margin-bottom:5px">Day 5 不去滑雪 · 備案</div>
-            <div style="font-size:12px;color:#8888bb;line-height:1.8">海東龍宮寺（海景寺廟）<br>青沙浦咖啡廳・海雲台散步逛街</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="info-section">
-        <h3>💰 預估每日花費</h3>
-        <div id="budgetRows"></div>
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0 0;border-top:0.5px solid #1e1e35;margin-top:8px">
-          <span style="font-size:13px;font-weight:700;color:#f0eee8">全程 7 天合計</span>
-          <span style="font-size:16px;font-weight:800;color:#C850C0">KRW ~1,900,000</span>
-        </div>
-      </div>
-
-    </div><!-- /pp-vbp -->
-
-    <!-- ══ Practical Info ══ -->
-    <div class="prep-panel hidden" id="pp-practical">
-
-      <div class="fact-grid">
-        <div class="fact-card"><div class="fact-icon">💴</div><div class="fact-label">貨幣</div><div class="fact-value">韓圜（KRW）<br><span style="font-size:11px;color:#5555aa">南浦洞換匯最優惠</span></div></div>
-        <div class="fact-card"><div class="fact-icon">🔌</div><div class="fact-label">電壓・插座</div><div class="fact-value">220V 雙圓孔<br><span style="font-size:11px;color:#5555aa">帶萬國轉接頭</span></div></div>
-        <div class="fact-card"><div class="fact-icon">🌡</div><div class="fact-label">12月天氣</div><div class="fact-value">0°C – 5°C<br><span style="font-size:11px;color:#5555aa">海邊更冷</span></div></div>
-        <div class="fact-card"><div class="fact-icon">🚕</div><div class="fact-label">主要交通</div><div class="fact-value">計程車為主<br><span style="font-size:11px;color:#5555aa">Kakao T 叫車</span></div></div>
-        <div class="fact-card"><div class="fact-icon">💬</div><div class="fact-label">語言</div><div class="fact-value">韓語<br><span style="font-size:11px;color:#5555aa">+ Papago 翻譯</span></div></div>
-        <div class="fact-card"><div class="fact-icon">💳</div><div class="fact-label">付款</div><div class="fact-value">現金 + 信用卡<br><span style="font-size:11px;color:#5555aa">大部分可刷卡</span></div></div>
-      </div>
-
-      <div class="info-section">
-        <h3>🚇 交通攻略</h3>
-        <div class="item">
-          <div class="k">機場 ↔ 飯店</div>
-          <div class="v">計程車直達（推薦）・或金海輕軌→沙上站→地鐵 2 號線→Centum City 站（約 50–60 分）</div>
-        </div>
-        <div class="item">
-          <div class="k">市區移動</div>
-          <div class="v">地鐵 2 號線貫穿主要景點・Kakao T 叫大型計程車（Venti/Van）可容納全家人</div>
-        </div>
-        <div class="item">
-          <div class="k">⚠️ 跨年夜散場</div>
-          <div class="v">不要在廣安站搭地鐵！步行至金蓮山站或水營站（約 15–20 分）避開人潮，也不建議叫計程車</div>
-        </div>
-      </div>
-
-      <div class="info-section">
-        <h3>🧾 退稅攻略</h3>
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px">
-          <div style="background:#0f0f1a;border-radius:10px;padding:10px 8px;border:0.5px solid #2a2a45;text-align:center">
-            <div style="font-size:16px;margin-bottom:5px">🏪</div>
-            <div style="font-size:11px;font-weight:700;color:#50d090;margin-bottom:3px">現場退稅</div>
-            <div style="font-size:10.5px;color:#6666aa;line-height:1.5">出示護照<br>購買時扣除<br>（Olive Young）</div>
-          </div>
-          <div style="background:#0f0f1a;border-radius:10px;padding:10px 8px;border:0.5px solid #2a2a45;text-align:center">
-            <div style="font-size:16px;margin-bottom:5px">🏢</div>
-            <div style="font-size:11px;font-weight:700;color:#a0b0ff;margin-bottom:3px">市區退稅</div>
-            <div style="font-size:10.5px;color:#6666aa;line-height:1.5">索取退稅單<br>→ 退稅處<br>自助機台</div>
-          </div>
-          <div style="background:#0f0f1a;border-radius:10px;padding:10px 8px;border:0.5px solid #2a2a45;text-align:center">
-            <div style="font-size:16px;margin-bottom:5px">✈️</div>
-            <div style="font-size:11px;font-weight:700;color:#ffd060;margin-bottom:3px">機場退稅</div>
-            <div style="font-size:10.5px;color:#6666aa;line-height:1.5">帶退稅單<br>掃 QR Code<br>辦理完成</div>
-          </div>
-        </div>
-        <div style="background:rgba(200,80,192,0.08);border-radius:10px;padding:10px 13px;border:0.5px solid rgba(200,80,192,0.2);font-size:12px;color:#b080b0;line-height:1.7">
-          💡 門檻：單筆 KRW 15,000 以上 · 3 個月內攜出境<br>
-          ⚠️ 商品超過 KRW 75,000 需到出關後左手邊櫃台查驗<br>
-          📍 釜山藥局有退稅機台，以橘色 Global Tax Free 為主
-        </div>
-      </div>
-
-      <div class="info-section">
-        <h3>🛍 購物必逛清單</h3>
-        <div style="display:flex;flex-direction:column;gap:6px">
-          <div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:0.5px solid #1e1e35">
-            <span style="font-size:16px;flex-shrink:0">⭐⭐⭐⭐⭐</span>
-            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">MUJI・JAJU・Olive Young</div><div style="font-size:11px;color:#5555aa">新世界百貨 9F/8F/B1·1F·2F・來釜山一定要逛</div></div>
-          </div>
-          <div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:0.5px solid #1e1e35">
-            <span style="font-size:16px;flex-shrink:0">⭐⭐⭐⭐⭐</span>
-            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">DAISO 大創</div><div style="font-size:11px;color:#5555aa">步行 3 分・韓國限定商品超多・生活小物文具</div></div>
-          </div>
-          <div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:0.5px solid #1e1e35">
-            <span style="font-size:16px;flex-shrink:0">⭐⭐⭐⭐</span>
-            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">ARTBOX</div><div style="font-size:11px;color:#5555aa">步行 8 分・文具・可愛雜貨・送禮自用都划算</div></div>
-          </div>
-          <div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:0.5px solid #1e1e35">
-            <span style="font-size:16px;flex-shrink:0">⭐⭐⭐⭐</span>
-            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">國際市場 / BIFF 廣場</div><div style="font-size:11px;color:#5555aa">南浦洞・伴手禮・乾貨・衣物・黑糖餅必吃</div></div>
-          </div>
-          <div style="display:flex;align-items:center;gap:10px;padding:9px 0">
-            <span style="font-size:16px;flex-shrink:0">⭐⭐⭐⭐</span>
-            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">樂天百貨 Centum City 店</div><div style="font-size:11px;color:#5555aa">新世界百貨旁・更多元品牌選擇</div></div>
-          </div>
-        </div>
-      </div>
-
-    </div><!-- /pp-practical -->
-
-    <!-- ══ Food ══ -->
-    <div class="prep-panel hidden" id="pp-food">
-      <div class="info-section">
-        <h3>🍽 推薦美食（親子友善）</h3>
-        <div style="background:rgba(65,88,208,0.08);border-radius:10px;padding:10px 14px;border:0.5px solid rgba(65,88,208,0.2);margin-bottom:14px;font-size:12px;color:#8899cc">
-          💡 每家餐廳都附上電話號碼，Naver Map 搜中文店名常常找不到，直接用電話號碼搜尋最準確。
-        </div>
-
-        <div style="font-size:11px;color:#C850C0;font-weight:600;margin-bottom:8px">🥩 海雲台</div>
-        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px">
-          <div style="background:#0f0f1a;border-radius:10px;padding:10px 13px;border:0.5px solid #2a2a45">
-            <div style="font-size:13px;font-weight:600;color:#f0eee8;margin-bottom:2px">味贊王鹽烤肉</div>
-            <div style="font-size:11.5px;color:#8888bb;margin-bottom:6px">專人代烤・可要求不辣・海雲台市場內</div>
-            <div style="font-size:12px;color:#8899ff;margin-bottom:6px">📞 <a href="tel:0517420106" style="color:#8899ff;text-decoration:none">0517420106</a></div>
-            <a class="hotel-map-btn" style="margin-top:0" href="https://map.naver.com/p/search/0517420106" target="_blank">🗺 開啟 Naver Map 導航（電話搜尋）</a>
-          </div>
-          <div style="background:#0f0f1a;border-radius:10px;padding:10px 13px;border:0.5px solid #2a2a45">
-            <div style="font-size:13px;font-weight:600;color:#f0eee8;margin-bottom:2px">加耶冷麵（가야밀면）</div>
-            <div style="font-size:11.5px;color:#8888bb;margin-bottom:6px">平板多語點餐・釜山在地招牌小麥冷麵</div>
-            <div style="font-size:12px;color:#8899ff;margin-bottom:6px">📞 <a href="tel:0517479404" style="color:#8899ff;text-decoration:none">0517479404</a></div>
-            <a class="hotel-map-btn" style="margin-top:0" href="https://map.naver.com/p/search/0517479404" target="_blank">🗺 開啟 Naver Map 導航（電話搜尋）</a>
-          </div>
-        </div>
-
-        <div style="font-size:11px;color:#4158D0;font-weight:600;margin-bottom:8px">🍗 南浦洞</div>
-        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px">
-          <div style="background:#0f0f1a;border-radius:10px;padding:10px 13px;border:0.5px solid #2a2a45">
-            <div style="font-size:13px;font-weight:600;color:#f0eee8;margin-bottom:2px">密陽血腸豬肉湯飯（밀양순대돼지국밥）</div>
-            <div style="font-size:11.5px;color:#8888bb;margin-bottom:6px">在地人氣豬肉湯飯・血腸推薦必點</div>
-            <div style="font-size:12px;color:#8899ff;margin-bottom:6px">📞 <a href="tel:0512425020" style="color:#8899ff;text-decoration:none">0512425020</a></div>
-            <a class="hotel-map-btn" style="margin-top:0" href="https://map.naver.com/p/search/0512425020" target="_blank">🗺 開啟 Naver Map 導航（電話搜尋）</a>
-          </div>
-          <div style="background:#0f0f1a;border-radius:10px;padding:10px 13px;border:0.5px solid #2a2a45">
-            <div style="font-size:13px;font-weight:600;color:#f0eee8;margin-bottom:2px">李在模披薩（이재모피자）</div>
-            <div style="font-size:11.5px;color:#8888bb;margin-bottom:6px">釜山排隊名店・起司蛋糕般厚切披薩</div>
-            <div style="font-size:12px;color:#8899ff;margin-bottom:6px">📞 <a href="tel:0512559494" style="color:#8899ff;text-decoration:none">0512559494</a></div>
-            <a class="hotel-map-btn" style="margin-top:0" href="https://map.naver.com/p/search/0512559494" target="_blank">🗺 開啟 Naver Map 導航（電話搜尋）</a>
-          </div>
-          <div style="background:#0f0f1a;border-radius:10px;padding:10px 13px;border:0.5px solid #2a2a45">
-            <div style="font-size:13px;font-weight:600;color:#f0eee8;margin-bottom:2px">巨人炸雞（거인통닭）</div>
-            <div style="font-size:11.5px;color:#8888bb;margin-bottom:6px">國際市場內傳奇炸雞・只賣一種口味・現炸需稍候</div>
-            <div style="font-size:12px;color:#8899ff;margin-bottom:6px">📞 <a href="tel:0512466079" style="color:#8899ff;text-decoration:none">0512466079</a></div>
-            <a class="hotel-map-btn" style="margin-top:0" href="https://map.naver.com/p/search/0512466079" target="_blank">🗺 開啟 Naver Map 導航（電話搜尋）</a>
-          </div>
-          <div style="background:#0f0f1a;border-radius:10px;padding:10px 13px;border:0.5px solid #2a2a45">
-            <div style="font-size:13px;font-weight:600;color:#f0eee8;margin-bottom:2px">BIFF廣場黑糖餅（씨앗호떡）</div>
-            <div style="font-size:11.5px;color:#8888bb;margin-bottom:6px">街邊小吃攤位・無固定電話・直接前往 BIFF 廣場尋找排隊攤位即可</div>
-            <a class="hotel-map-btn" style="margin-top:0" href="https://map.naver.com/p/search/%EB%B9%84%ED%94%84%EA%B4%91%EC%9E%A5" target="_blank">🗺 開啟 Naver Map 導航</a>
-          </div>
-        </div>
-
-        <div style="font-size:11px;color:#e84040;font-weight:600;margin-bottom:8px">🎢 Osiria 樂天世界</div>
-        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px">
-          <div style="background:#0f0f1a;border-radius:10px;padding:10px 13px;border:0.5px solid #2a2a45">
-            <div style="font-size:13px;font-weight:600;color:#f0eee8;margin-bottom:2px">미식일상 Food Hall（樂天世界旁美食廣場）</div>
-            <div style="font-size:11.5px;color:#8888bb;margin-bottom:6px">韓・中・日・義式選擇多・內含中式餐廳</div>
-            <div style="font-size:12px;color:#8899ff;margin-bottom:6px">📞 <a href="tel:0517228155" style="color:#8899ff;text-decoration:none">0517228155</a></div>
-            <a class="hotel-map-btn" style="margin-top:0" href="https://map.naver.com/p/search/0517228155" target="_blank">🗺 開啟 Naver Map 導航（電話搜尋）</a>
-          </div>
-          <div style="background:#0f0f1a;border-radius:10px;padding:10px 13px;border:0.5px solid #2a2a45">
-            <div style="font-size:13px;font-weight:600;color:#f0eee8;margin-bottom:2px">Lotte Mall 美食廣場（동부산점）</div>
-            <div style="font-size:11.5px;color:#8888bb;margin-bottom:6px">與 Lotte Premium Outlet 相連・美食街選擇多</div>
-            <div style="font-size:12px;color:#8899ff;margin-bottom:6px">📞 <a href="tel:15770001" style="color:#8899ff;text-decoration:none">1577-0001</a>（Lotte 客服代表號）</div>
-            <a class="hotel-map-btn" style="margin-top:0" href="https://map.naver.com/p/search/%EB%A1%AF%EB%8D%B0%EB%AA%B0%20%EB%8F%99%EB%B6%80%EC%82%B0%EC%A0%90" target="_blank">🗺 開啟 Naver Map 導航</a>
-          </div>
-        </div>
-
-        <div style="font-size:11px;color:#7c3aed;font-weight:600;margin-bottom:8px">🏬 Centum City</div>
-        <div style="display:flex;flex-direction:column;gap:8px">
-          <div style="background:#0f0f1a;border-radius:10px;padding:10px 13px;border:0.5px solid #2a2a45">
-            <div style="font-size:13px;font-weight:600;color:#f0eee8;margin-bottom:2px">新世界美食街 9F（신세계백화점 센텀시티점）</div>
-            <div style="font-size:11.5px;color:#8888bb;margin-bottom:6px">韓食・中式・日式・咖啡廳選擇多，適合全家用餐</div>
-            <div style="font-size:12px;color:#8899ff;margin-bottom:6px">📞 <a href="tel:15881234" style="color:#8899ff;text-decoration:none">1588-1234</a>（新世界百貨代表號）</div>
-            <a class="hotel-map-btn" style="margin-top:0" href="https://map.naver.com/p/search/%EC%8B%A0%EC%84%B8%EA%B3%84%EB%B0%B1%ED%99%94%EC%A0%90%20%EC%84%BC%ED%85%80%EC%8B%9C%ED%8B%B0%EC%A0%90" target="_blank">🗺 開啟 Naver Map 導航</a>
-          </div>
-        </div>
-      </div>
-    </div><!-- /pp-food -->
-
-    <!-- ══ Checklist ══ -->
-    <div class="prep-panel hidden" id="pp-checklist">
-      <div class="info-section">
-        <h3>🎒 行李準備清單</h3>
-        <div class="checklist-tabs">
-          <button class="cl-tab-btn active" onclick="switchClTab('docs',this)">📄 證件 3C</button>
-          <button class="cl-tab-btn" onclick="switchClTab('clothes',this)">👗 衣物</button>
-          <button class="cl-tab-btn" onclick="switchClTab('special',this)">🎿 特殊裝備</button>
-        </div>
-        <div class="cl-progress">
-          <div class="cl-progress-bar-wrap"><div class="cl-progress-bar" id="clProgressBar" style="width:0%"></div></div>
-          <div class="cl-progress-label" id="clProgressLabel">0 / 0 完成</div>
-        </div>
-        <div class="checklist-group active" id="cl-docs">
-          <div class="cl-section-title">📄 重要證件</div>
-          <div class="cl-item" onclick="toggleCl(this)" data-id="d1"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">🛂 護照 × 5 本</div><div class="cl-item-note">確認有效期限 6 個月以上</div></div></div>
-          <div class="cl-item" onclick="toggleCl(this)" data-id="d2"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">機票（去回程確認）</div></div></div>
-          <div class="cl-item" onclick="toggleCl(this)" data-id="d3"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">飯店訂房資料</div></div></div>
-          <div class="cl-item" onclick="toggleCl(this)" data-id="d4"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title"><span class="cl-badge blue">提前購買</span>Visit Busan Pass</div><div class="cl-item-note">建議線上購買並截圖備存</div></div></div>
-          <div class="cl-item" onclick="toggleCl(this)" data-id="d5"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">滑雪行程預約確認單</div></div></div>
-          <div class="cl-item" onclick="toggleCl(this)" data-id="d6"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">💳 海外信用卡 × 2–3 張</div></div></div>
-          <div class="cl-item" onclick="toggleCl(this)" data-id="d7"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">💴 韓元現金</div><div class="cl-item-note">換錢建議在南浦洞，匯率最好</div></div></div>
-          <div class="cl-item" onclick="toggleCl(this)" data-id="d8"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">📡 韓國 eSIM / SIM 卡</div><div class="cl-item-note">KKday / Klook eSIM，抵達直接使用</div></div></div>
-          <div class="cl-item" onclick="toggleCl(this)" data-id="d9"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">海外旅平險</div></div></div>
-          <div class="cl-section-title">📱 3C 用品</div>
-          <div class="cl-item" onclick="toggleCl(this)" data-id="t1"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">🔋 行動電源（隨身帶・不可托運）</div></div></div>
-          <div class="cl-item" onclick="toggleCl(this)" data-id="t2"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">充電線（Lightning + Type-C）</div></div></div>
-          <div class="cl-item" onclick="toggleCl(this)" data-id="t3"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">多孔 USB 充電頭</div></div></div>
-          <div class="cl-item" onclick="toggleCl(this)" data-id="t4"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title"><span class="cl-badge gold">推薦</span>延長線 + 萬國轉接頭</div><div class="cl-item-note">韓國插座 220V 雙圓孔</div></div></div>
-          <div class="cl-item" onclick="toggleCl(this)" data-id="t5"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">Apple Watch 充電器</div></div></div>
-        </div>
-        <div class="checklist-group" id="cl-clothes">
-          <div class="cl-section-title">👩 瑞秋衣物</div>
-          <div class="cl-item" onclick="toggleCl(this)" data-id="c1"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">發熱衣 × 3・毛衣 × 2・長袖 × 3</div></div></div>
-          <div class="cl-item" onclick="toggleCl(this)" data-id="c2"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">羽絨外套・長褲 × 3・睡衣</div></div></div>
-          <div class="cl-item" onclick="toggleCl(this)" data-id="c3"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">圍巾・毛帽・手套・厚襪 × 5</div></div></div>
-          <div class="cl-section-title">👨 爸爸衣物</div>
-          <div class="cl-item" onclick="toggleCl(this)" data-id="c4"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">發熱衣 × 3・長袖 × 3・羽絨外套</div></div></div>
-          <div class="cl-item" onclick="toggleCl(this)" data-id="c5"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">長褲 × 3・毛帽・手套・厚襪 × 5</div></div></div>
-          <div class="cl-section-title">👧 11歲・9歲（各）</div>
-          <div class="cl-item" onclick="toggleCl(this)" data-id="c6"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">發熱衣 × 3・毛衣 × 2・長袖 × 3</div></div></div>
-          <div class="cl-item" onclick="toggleCl(this)" data-id="c7"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">羽絨外套・長褲 × 3・圍巾・毛帽・手套</div></div></div>
-          <div class="cl-section-title">👦 6歲（多備一份替換）</div>
-          <div class="cl-item" onclick="toggleCl(this)" data-id="c8"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">發熱衣 × 4・毛衣 × 3・長袖 × 4</div></div></div>
-          <div class="cl-item" onclick="toggleCl(this)" data-id="c9"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">羽絨外套・長褲 × 4・睡衣 × 2</div></div></div>
-          <div class="cl-item" onclick="toggleCl(this)" data-id="c10"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">內褲 × 7・手套 × 2・圍巾・厚襪 × 7</div><div class="cl-item-note">6歲容易弄濕，多帶替換</div></div></div>
-        </div>
-        <div class="checklist-group" id="cl-special">
-          <div class="cl-section-title"><span class="cl-badge red">必備</span> 滑雪用品（每人）</div>
-          <div class="cl-item" onclick="toggleCl(this)" data-id="s1"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title"><span class="cl-badge red">最重要</span>防水雪褲（每人一件）</div><div class="cl-item-note">建議迪卡儂先買好，不要到韓國再買</div></div></div>
-          <div class="cl-item" onclick="toggleCl(this)" data-id="s2"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title"><span class="cl-badge red">必備</span>防水滑雪手套（每人）</div><div class="cl-item-note">6歲建議備兩雙替換</div></div></div>
-          <div class="cl-item" onclick="toggleCl(this)" data-id="s3"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">厚羊毛襪・脖圍</div></div></div>
-          <div class="cl-item" onclick="toggleCl(this)" data-id="s4"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">暖暖包（每人每天 2–3 片）</div></div></div>
-          <div class="cl-section-title">♨️ ClubD Oasis / 水上樂園</div>
-          <div class="cl-item" onclick="toggleCl(this)" data-id="s5"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">泳衣/泳褲（全家）・泳帽</div></div></div>
-          <div class="cl-item" onclick="toggleCl(this)" data-id="s6"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">拖鞋・保溫水壺・保濕乳液</div></div></div>
-          <div class="cl-section-title">💊 醫藥包</div>
-          <div class="cl-item" onclick="toggleCl(this)" data-id="s7"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title"><span class="cl-badge red">重要</span>兒童常備藥</div><div class="cl-item-note">退燒藥・感冒藥・止瀉藥・止吐藥・抗組織胺</div></div></div>
-          <div class="cl-item" onclick="toggleCl(this)" data-id="s8"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">普拿疼・腸胃藥・OK繃・優碘・體溫計</div></div></div>
-          <div class="cl-section-title">🍪 孩子包（每日）</div>
-          <div class="cl-item" onclick="toggleCl(this)" data-id="s9"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">水壺・餅乾・巧克力・濕紙巾</div></div></div>
-          <div class="cl-item" onclick="toggleCl(this)" data-id="s10"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">暖暖包・小玩具・行動電源（大人保管）</div></div></div>
-          <div class="cl-section-title">🧳 行李小提醒</div>
-          <div class="cl-item" onclick="toggleCl(this)" data-id="s11"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">保溫瓶・摺疊購物袋・壓縮袋</div></div></div>
-          <div class="cl-item" onclick="toggleCl(this)" data-id="s12"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">行李秤</div><div class="cl-item-note">去程 29 吋行李箱預留 30–40% 空間</div></div></div>
-        </div>
-        <button class="cl-reset" onclick="resetCl()">↺ 重置所有勾選</button>
-      </div>
-    </div><!-- /pp-checklist -->
-
-    <!-- ══ Apps ══ -->
-    <div class="prep-panel hidden" id="pp-apps">
-      <div class="info-section">
-        <h3>📱 出發前必裝 APP</h3>
-        <div style="background:rgba(65,88,208,0.08);border-radius:10px;padding:10px 14px;border:0.5px solid rgba(65,88,208,0.2);margin-bottom:14px;font-size:12px;color:#8899cc">
-          💡 出發前下載設好，建議完成離線地圖與翻譯！大部分 APP 可以下載離線版。
-        </div>
-        <!-- Transport -->
-        <div style="font-size:11px;font-weight:700;color:#5555aa;letter-spacing:0.5px;margin-bottom:8px">🚕 交通・叫車</div>
-        <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px">
-          <div style="background:#0f0f1a;border-radius:10px;padding:10px 12px;border:0.5px solid #2a2a45;display:flex;gap:10px;align-items:center">
-            <span style="font-size:20px;flex-shrink:0">🚖</span>
-            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">Kakao T</div><div style="font-size:11.5px;color:#7777aa">韓國最大叫車 APP・可叫一般計程車・機場接送・代駕</div></div>
-          </div>
-          <div style="background:#0f0f1a;border-radius:10px;padding:10px 12px;border:0.5px solid #2a2a45;display:flex;gap:10px;align-items:center">
-            <span style="font-size:20px;flex-shrink:0">🚇</span>
-            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">韓巢地鐵</div><div style="font-size:11.5px;color:#7777aa">查詢地鐵路線・時刻表・票價・支援中韓雙語</div></div>
-          </div>
-          <div style="background:#0f0f1a;border-radius:10px;padding:10px 12px;border:0.5px solid #2a2a45;display:flex;gap:10px;align-items:center">
-            <span style="font-size:20px;flex-shrink:0">🗺</span>
-            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">韓國地圖 / NAVER Map</div><div style="font-size:11.5px;color:#7777aa">中文介面地圖・可離線使用・搜尋餐廳景點最準確</div></div>
-          </div>
-        </div>
-        <!-- Communication -->
-        <div style="font-size:11px;font-weight:700;color:#5555aa;letter-spacing:0.5px;margin-bottom:8px">💬 翻譯・通訊</div>
-        <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px">
-          <div style="background:#0f0f1a;border-radius:10px;padding:10px 12px;border:0.5px solid #2a2a45;display:flex;gap:10px;align-items:center">
-            <span style="font-size:20px;flex-shrink:0">🐦</span>
-            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">Papago</div><div style="font-size:11.5px;color:#7777aa">NAVER 出品・韓文最強翻譯 APP・拍照即翻超好用</div></div>
-          </div>
-          <div style="background:#0f0f1a;border-radius:10px;padding:10px 12px;border:0.5px solid #2a2a45;display:flex;gap:10px;align-items:center">
-            <span style="font-size:20px;flex-shrink:0">💬</span>
-            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">KakaoTalk</div><div style="font-size:11.5px;color:#7777aa">免費通話・可聯絡飯店、店家、計程車司機</div></div>
-          </div>
-          <div style="background:#0f0f1a;border-radius:10px;padding:10px 12px;border:0.5px solid #2a2a45;display:flex;gap:10px;align-items:center">
-            <span style="font-size:20px;flex-shrink:0">🌐</span>
-            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">Google 翻譯</div><div style="font-size:11.5px;color:#7777aa">拍照・語音・文字翻譯都很好用</div></div>
-          </div>
-        </div>
-        <!-- Tickets & payment -->
-        <div style="font-size:11px;font-weight:700;color:#5555aa;letter-spacing:0.5px;margin-bottom:8px">🎟 票券・支付</div>
-        <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px">
-          <div style="background:#0f0f1a;border-radius:10px;padding:10px 12px;border:0.5px solid #2a2a45;display:flex;gap:10px;align-items:center">
-            <span style="font-size:20px;flex-shrink:0">🎡</span>
-            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">樂天世界 APP</div><div style="font-size:11.5px;color:#7777aa">查看設施等待時間・地圖導覽・可線上購票預約</div></div>
-          </div>
-          <div style="background:#0f0f1a;border-radius:10px;padding:10px 12px;border:0.5px solid #2a2a45;display:flex;gap:10px;align-items:center">
-            <span style="font-size:20px;flex-shrink:0">💳</span>
-            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">WOWPASS</div><div style="font-size:11.5px;color:#7777aa">外國人專屬換幣卡・可換匯・結帳・還能退稅</div></div>
-          </div>
-          <div style="background:#0f0f1a;border-radius:10px;padding:10px 12px;border:0.5px solid #2a2a45;display:flex;gap:10px;align-items:center">
-            <span style="font-size:20px;flex-shrink:0">💱</span>
-            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">幣值轉換器</div><div style="font-size:11.5px;color:#7777aa">即時率換算・購物時最實用</div></div>
-          </div>
-        </div>
-        <!-- Shopping -->
-        <div style="font-size:11px;font-weight:700;color:#5555aa;letter-spacing:0.5px;margin-bottom:8px">🛍 購物・優惠</div>
-        <div style="display:flex;flex-direction:column;gap:6px">
-          <div style="background:#0f0f1a;border-radius:10px;padding:10px 12px;border:0.5px solid #2a2a45;display:flex;gap:10px;align-items:center">
-            <span style="font-size:20px;flex-shrink:0">🌿</span>
-            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">Olive Young APP</div><div style="font-size:11.5px;color:#7777aa">會員優惠・積點・限定組合超好買</div></div>
-          </div>
-          <div style="background:#0f0f1a;border-radius:10px;padding:10px 12px;border:0.5px solid #2a2a45;display:flex;gap:10px;align-items:center">
-            <span style="font-size:20px;flex-shrink:0">🏪</span>
-            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">昇恆昌 everrich APP</div><div class="font-size:11.5px;color:#7777aa">線上預購機場免稅商品・常有限定優惠</div></div>
-          </div>
-          <div style="background:#0f0f1a;border-radius:10px;padding:10px 12px;border:0.5px solid #2a2a45;display:flex;gap:10px;align-items:center">
-            <span style="font-size:20px;flex-shrink:0">🇰🇷</span>
-            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">Visit Korea</div><div style="font-size:11.5px;color:#7777aa">韓國觀光公社官方 APP・優惠券與景點資訊</div></div>
-          </div>
-        </div>
-        <!-- Extra practical apps -->
-        <div style="font-size:11px;font-weight:700;color:#5555aa;letter-spacing:0.5px;margin:14px 0 8px">✈️ 其他實用 APP</div>
-        <div style="display:flex;flex-direction:column;gap:6px">
-          <div style="background:#0f0f1a;border-radius:10px;padding:10px 12px;border:0.5px solid #2a2a45;display:flex;gap:10px;align-items:center">
-            <span style="font-size:20px;flex-shrink:0">💳</span>
-            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">Naver Pay</div><div style="font-size:11.5px;color:#7777aa">行動支付・優惠多・實體與線上都適用</div></div>
-          </div>
-          <div style="background:#0f0f1a;border-radius:10px;padding:10px 12px;border:0.5px solid #2a2a45;display:flex;gap:10px;align-items:center">
-            <span style="font-size:20px;flex-shrink:0">🏬</span>
-            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">CU / GS25</div><div style="font-size:11.5px;color:#7777aa">便利商店 APP・會員優惠與集點・商品資訊查詢</div></div>
-          </div>
-          <div style="background:#0f0f1a;border-radius:10px;padding:10px 12px;border:0.5px solid #2a2a45;display:flex;gap:10px;align-items:center">
-            <span style="font-size:20px;flex-shrink:0">🛒</span>
-            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">다이소몰（Daiso Mall）</div><div style="font-size:11.5px;color:#7777aa">生活用品線上購物・可查詢商品與庫存・部分商品可線上購買</div></div>
-          </div>
-          <div style="background:#0f0f1a;border-radius:10px;padding:10px 12px;border:0.5px solid #2a2a45;display:flex;gap:10px;align-items:center">
-            <span style="font-size:20px;flex-shrink:0">🧳</span>
-            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">FindTag</div><div style="font-size:11.5px;color:#7777aa">綁定防丟器裝置・可定位行李・避免行李遺失（親子出遊尤其實用）</div></div>
-          </div>
-          <div style="background:#0f0f1a;border-radius:10px;padding:10px 12px;border:0.5px solid #2a2a45;display:flex;gap:10px;align-items:center">
-            <span style="font-size:20px;flex-shrink:0">🛡</span>
-            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">國泰人壽</div><div style="font-size:11.5px;color:#7777aa">旅平險服務・理賠申請・緊急支援與保單查詢</div></div>
-          </div>
-        </div>
-      </div>
-    </div><!-- /pp-apps -->
-
-  </section><!-- /view-prep -->
-
+  <div class="trip-grid" id="trip-grid"></div>
 </main>
 
-<button class="fab" id="fab">↑</button>
-<footer>🎆 跨年快樂・釜山見！</footer>
-
-<!-- Guide Modal -->
-<div class="guide-modal-overlay" id="guideOverlay">
-  <div class="guide-modal" id="guideModal">
-    <div class="guide-modal-handle"></div>
-    <div class="guide-modal-header">
-      <div class="guide-modal-header-left">
-        <span class="gm-icon" id="guideModalIcon"></span>
-        <div>
-          <div class="gm-title" id="guideModalTitle"></div>
-          <div class="gm-sub" id="guideModalSub"></div>
-        </div>
-      </div>
-      <button class="guide-modal-close" id="guideModalClose">✕</button>
-    </div>
-    <div class="guide-modal-body" id="guideModalBody"></div>
-  </div>
-</div>
+<footer>
+  <span>Crafted by Eason</span>
+  <span id="last-updated"></span>
+</footer>
 
 <script>
-// 韓國境內地圖搜尋以 Naver Map 為主（Google Maps 在韓國無法提供完整導航資料）
-const gmap = q => `https://map.naver.com/p/search/${encodeURIComponent(q)}`;
+  const trips = [
+    {
+      country: "jp",
+      countryLabel: "JAPAN",
+      countryZh: "日本",
+      flag: "🇯🇵",
+      cities: ["大阪", "名古屋"],
+      start: "2026-06-27",
+      end: "2026-07-05",
+      href: "nagoya/"
+    },
+    {
+      country: "kr",
+      countryLabel: "SOUTH KOREA",
+      countryZh: "韓國",
+      flag: "🇰🇷",
+      cities: ["釜山"],
+      start: "2026-12-26",
+      end: "2027-01-01",
+      href: "busan/"
+    }
+  ];
 
-const TRIP_START = new Date('2025-12-26');
-const TRIP_END   = new Date('2026-01-01');
-
-function getTodayDay() {
-  const now = new Date(); now.setHours(0,0,0,0);
-  const start = new Date(TRIP_START); start.setHours(0,0,0,0);
-  const diff = Math.floor((now - start) / 86400000) + 1;
-  if (diff >= 1 && diff <= 7) return diff;
-  return null;
-}
-const todayN = getTodayDay();
-
-// ── DAYS DATA ──
-const days = [
-  {
-    n:1, date:"12/26", dow:"六",
-    title:"出發日：桃園飛釜山，廣安里夜景",
-    focus:"14:50 JX902 起飛・17:55 抵韓・大型計程車接送・廣安里無人機秀",
-    hotel:"Haeundae Centum Hotel", hotelAddr:"부산 해운대구 센텀3로 20",
-    hotelMapUrl: gmap("0517209000"), hotelPhone:"0517209000",
-    schedule:[
-      { time:"14:50", title:"✈️ 桃園機場出發 JX902", note:"建議提早到機場辦理登機" },
-      { time:"17:55", title:"🛬 抵達金海機場", note:"入境後提領行李" },
-      { time:"18:30", title:"🚐 大型計程車前往飯店", note:"建議預訂 6 人座大型計程車，直達 Centum Hotel",
-        mapUrl: gmap("김해국제공항"), addr:"부산 강서구 공항진입로 108" },
-      { time:"19:30", title:"🏨 Check-in・整理行李", note:"Haeundae Centum Hotel",
-        mapUrl: gmap("Haeundae Centum Hotel Busan"), addr:"부산 해운대구 센텀3로 20" },
-      { time:"20:30", title:"🍽 晚餐・南浦洞", note:"親子友善餐廳・可要求不辣",
-        mapUrl: gmap("남포동 맛집"), addr:"부산 중구 남포동" },
-      { time:"21:00", title:"🚁 廣安里無人機秀（若趕得上）", note:"廣安大橋為背景的無人機表演・若天候取消則回飯店休息",
-        mapUrl: gmap("광안리해수욕장"), addr:"부산 수영구 광안리해수욕장 (해변 중앙)" },
-      { time:"22:00", title:"🏨 回飯店休息", note:"" }
-    ]
-  },
-  {
-    n:2, date:"12/27", dow:"日",
-    title:"海雲台一日遊：Sky Capsule & X the SKY",
-    focus:"青沙浦・Sky Capsule・Q版肖像畫・海雲台市場・X the SKY・Running Man",
-    hotel:"Haeundae Centum Hotel", hotelAddr:"부산 해운대구 센텀3로 20",
-    hotelMapUrl: gmap("0517209000"), hotelPhone:"0517209000",
-    schedule:[
-      { time:"09:30", title:"🚶 前往青沙浦", note:"計程車或步行・海岸拍照打卡",
-        mapUrl: gmap("청사포 등대"), addr:"부산 해운대구 중동 591-7" },
-      { time:"10:00", title:"⛵ 青沙浦燈台・海岸散步", note:"韓劇取景地・小漁村復古氛圍・好拍照",
-        mapUrl: gmap("청사포 등대") },
-      { time:"10:30", title:"🚠 Sky Capsule（青沙浦 → 尾浦）", note:"VBP 涵蓋・全景玻璃車廂沿海岸線行駛・水晶車廂需補差價",
-        mapUrl: gmap("해운대 블루라인파크 미포정거장"), addr:"부산 해운대구 달맞이길62번길 13",
-        guide: "sky-capsule" },
-      { time:"11:30", title:"🍽 海雲台市場午餐", note:"推薦：味贊王鹽烤肉（專人代烤・可要求不辣）",
-        mapUrl: gmap("해운대전통시장"), addr:"부산 해운대구 구남로41번길 22-1" },
-      { time:"12:30", title:"🎨 Q版肖像畫（海雲台市場內）", note:"讓插畫師幫全家畫 Q 版漫畫，超有紀念意義！" },
-      { time:"13:30", title:"🏖 海雲台沙灘散步", note:"冬天沙灘別有風情" },
-      { time:"16:30", title:"🌆 BUSAN X the SKY（PASS 適用）", note:"VBP 涵蓋門票・99F 釜山最高展望台・玻璃棧道必拍",
-        mapUrl: gmap("부산 엑스더스카이"), addr:"부산 해운대구 달맞이길 30",
-        guide: "x-the-sky" },
-      { time:"18:30", title:"🏃 Running Man 體驗館", note:"韓綜粉絲必去・闖關任務超有趣",
-        mapUrl: gmap("런닝맨 부산") },
-      { time:"20:00", title:"🏨 回飯店", note:"" }
-    ]
-  },
-  {
-    n:3, date:"12/28", dow:"一",
-    title:"西釜山文化散策：甘川・松島・南浦洞",
-    focus:"甘川文化村・松島海上纜車・BIFF廣場換錢・SES申請",
-    hotel:"Haeundae Centum Hotel", hotelAddr:"부산 해운대구 센텀3로 20",
-    hotelMapUrl: gmap("0517209000"), hotelPhone:"0517209000",
-    schedule:[
-      { time:"08:30", title:"🚕 出發前往甘川", note:"計程車約 30–40 分，建議早出發避人潮" },
-      { time:"09:30", title:"🎨 甘川文化村", note:"⭐ 建議 09:00–10:00 前抵達！馬丘比丘式彩色巷弄超好拍",
-        mapUrl: gmap("감천문화마을"), addr:"부산 사하구 감내2로 203" },
-      { time:"11:00", title:"🚠 松島海上纜車", note:"VBP 涵蓋・俯瞰松島海灣・玻璃底車廂走在海面上",
-        mapUrl: gmap("송도해상케이블카"), addr:"부산 서구 송도해변로 171" },
-      { time:"12:00", title:"🌉 松島天空步道", note:"纜車附近・玻璃步道免費入場",
-        mapUrl: gmap("송도구름산책로") },
-      { time:"13:30", title:"🍽 南浦洞午餐", note:"推薦：密陽血腸豬肉湯飯・李在模披薩・巨人炸雞",
-        mapUrl: gmap("남포동"), addr:"부산 중구 남포동" },
-      { time:"14:30", title:"💱 友利換錢所", note:"南浦洞換錢最優惠・記得比較匯率・找不到店可撥 010-7670-7987 或直接輸入電話號碼搜尋",
-        mapUrl: gmap("우리환전 남포점") },
-      { time:"15:00", title:"📱 SES 自動通關申請", note:"回程省時利器・此時辦比機場快",
-        guide: "ses-guide" },
-      { time:"16:00", title:"🎬 BIFF 廣場・國際市場", note:"必吃黑糖餅・伴手禮掃貨",
-        mapUrl: gmap("비프광장"), addr:"부산 중구 구덕로 58-1" },
-      { time:"20:00", title:"🏨 回飯店", note:"" }
-    ]
-  },
-  {
-    n:4, date:"12/29", dow:"二",
-    title:"Osiria 一日遊：Skyline Luge + 樂天世界",
-    focus:"Skyline Luge・Lotte Premium Outlet・Lotte Mall・樂天世界夜間遊行",
-    hotel:"Haeundae Centum Hotel", hotelAddr:"부산 해운대구 센텀3로 20",
-    hotelMapUrl: gmap("0517209000"), hotelPhone:"0517209000",
-    schedule:[
-      { time:"09:00", title:"🚕 出發前往 Osiria", note:"計程車約 40 分，或地鐵轉東海線至 Osiria 站" },
-      { time:"10:00", title:"🛷 Skyline Luge 釜山", note:"VBP 涵蓋・斜坡滑車從山頂往下超刺激",
-        mapUrl: gmap("Skyline Luge Busan"), addr:"부산 기장군 기장해안로 205",
-        guide: "luge-guide" },
-      { time:"11:30", title:"🛍 Lotte Premium Outlet", note:"品牌折扣・Nike・Adidas・各大品牌",
-        mapUrl: gmap("롯데프리미엄아울렛 동부산점"), addr:"부산 기장군 기장해안로 147" },
-      { time:"13:00", title:"🍽 午餐・Lotte Mall", note:"Mall 內餐廳多・親子友善",
-        mapUrl: gmap("롯데몰 동부산점") },
-      { time:"14:00", title:"🛒 Lotte Mall 自由逛街", note:"免稅購物・生活用品・零食" },
-      { time:"15:30", title:"🎢 樂天世界 Adventure Busan", note:"VBP 涵蓋門票・夜間遊行必看",
-        mapUrl: gmap("롯데월드 어드벤처 부산"), addr:"부산 기장군 동부산관광로 42",
-        guide: "lotte-world" },
-      { time:"20:00", title:"🏨 回飯店", note:"Osiria 站→東海線→地鐵→Centum City 站" }
-    ]
-  },
-  {
-    n:5, date:"12/30", dow:"三",
-    title:"Eden Valley 玩雪・雪盆",
-    focus:"海雲台站集合・Eden Valley 玩雪滑雪橇",
-    hotel:"Haeundae Centum Hotel", hotelAddr:"부산 해운대구 센텀3로 20",
-    hotelMapUrl: gmap("0517209000"), hotelPhone:"0517209000",
-    schedule:[
-      { time:"07:30", title:"🚕 海雲台站集合・出發", note:"建議預訂含接送一日遊行程",
-        mapUrl: gmap("해운대역") },
-      { time:"09:20", title:"🏔 Eden Valley 抵達", note:"釜山近郊唯一滑雪場・距市區約 50 分",
-        mapUrl: gmap("에덴밸리리조트"), addr:"경남 양산시 원동면 어실로 1206",
-        guide: "eden-valley" },
-      { time:"09:30", title:"⛷ 玩雪・雪盆・滑雪體驗", note:"6歲→雪盆場・9/11歲→可試初級坡" },
-      { time:"12:30", title:"🍽 雪場午餐", note:"雪場內餐廳補充體力" },
-      { time:"15:00", title:"🚕 返回（依行程）", note:"依實際狀況彈性調整" },
-      { time:"18:00", title:"🏨 回飯店休息", note:"⭐ 若滑雪場回程太晚，直接回飯店休息" }
-    ]
-  },
-  {
-    n:6, date:"12/31", dow:"四",
-    title:"購物天堂・廣安里跨年！",
-    focus:"新世界百貨血拼・整理戰利品・廣安里官方跨年倒數",
-    hotel:"Haeundae Centum Hotel", hotelAddr:"부산 해운대구 센텀3로 20",
-    hotelMapUrl: gmap("0517209000"), hotelPhone:"0517209000",
-    schedule:[
-      { time:"09:30", title:"😴 睡晚一點・出發購物", note:"今天重頭戲在晚上，早上輕鬆出發" },
-      { time:"10:00", title:"🏬 新世界百貨 Centum City", note:"MUJI → JAJU → Olive Young → 午餐 → DAISO → ARTBOX → 下午茶",
-        mapUrl: gmap("신세계백화점 센텀시티점"), addr:"부산 해운대구 센텀남대로 35",
-        guide: "centum-shopping" },
-      { time:"15:00", title:"🏨 回飯店・整理戰利品・換保暖衣", note:"備好暖暖包・充好電" },
-      { time:"17:45", title:"🚕 出發前往廣安里", note:"提早出發確保搶到好位置",
-        mapUrl: gmap("광안리해수욕장") },
-      { time:"18:00", title:"🌉 晚餐・散步・拍照", note:"廣安大橋夜景絕美" },
-      { time:"20:00", title:"📍 找位置佔好夜景位", note:"海灘中間偏左至民樂港防波堤之間視角最好",
-        guide: "new-year-busan" },
-      { time:"22:00", title:"🎆 官方跨年活動開始", note:"音樂表演・廣安大橋燈光秀" },
-      { time:"23:56", title:"🚁 無人機表演・跨年倒數", note:"廣安大橋為幕・數千架無人機倒數" },
-      { time:"00:00", title:"🎊 跨年煙火！HAPPY 2026！", note:"" },
-      { time:"00:30", title:"🚶 散場步行回", note:"步行至金蓮山站或水營站搭地鐵（不要在廣安站搭！）",
-        mapUrl: gmap("금련산역") }
-    ]
-  },
-  {
-    n:7, date:"1/1", dow:"五",
-    title:"返程回家",
-    focus:"早餐・退房・大型計程車前往機場・JX901 回台",
-    hotel:"—", hotelAddr:null, hotelMapUrl:null,
-    schedule:[
-      { time:"07:00", title:"🍳 早餐", note:"飯店早餐或便利商店" },
-      { time:"08:00", title:"🧳 收行李", note:"行李秤確認重量・壓縮袋打包戰利品" },
-      { time:"08:30", title:"🚪 退房", note:"" },
-      { time:"09:00", title:"🚐 大型計程車前往機場", note:"約 40–50 分",
-        mapUrl: gmap("김해국제공항") },
-      { time:"10:00", title:"✈️ 機場辦理登機・退稅", note:"預留足夠時間辦退稅",
-        guide: "tax-refund" },
-      { time:"12:30", title:"🛫 JX901 金海機場出發", note:"" },
-      { time:"14:15", title:"🏠 抵達桃園機場", note:"平安回家！7天6夜跨年旅程圓滿結束 🎉" }
-    ]
-  }
-];
-
-// ── GUIDE DATA (小提醒/攻略卡片內容) ──
-const GUIDES = {
-  "sky-capsule": {
-    icon:"🚠", title:"Sky Capsule 搭乘攻略", sub:"青沙浦 → 尾浦・海景纜車", color:"#4158D0",
-    body:`<p>連接青沙浦與尾浦的海景纜車，全程約 1.5 公里，可俯瞰整段海岸線。</p>
-      <ul>
-        <li><b>車廂種類：</b>一般車廂（VBP 已涵蓋）／水晶透明車廂（需現場加價）</li>
-        <li><b>建議：</b>假日人潮較多，建議提早前往現場排隊或線上預約時段</li>
-        <li><b>拍照重點：</b>車廂內可拍到青沙浦燈塔與海岸線全景</li>
-        <li><b>所需時間：</b>單程約 10–15 分鐘</li>
-      </ul>`
-  },
-  "x-the-sky": {
-    icon:"🌆", title:"BUSAN X the SKY 導覽", sub:"海雲台 99 樓展望台", color:"#7c3aed",
-    body:`<p>釜山最高的觀景台，位於海雲台 LCT 大樓 99–100 樓，VBP（Visit Busan Pass）已含門票。</p>
-      <ul>
-        <li><b>必拍：</b>玻璃棧道（Sky Walk），可俯視腳下街景，建議著襪子或使用現場提供的鞋套</li>
-        <li><b>景觀：</b>白天可遠眺廣安大橋，傍晚時段可等待日落與夜景切換</li>
-        <li><b>建議停留時間：</b>約 1 小時</li>
-        <li><b>小提醒：</b>週末黃昏時段人潮較多，建議提前 15–20 分鐘入場</li>
-      </ul>`
-  },
-  "ses-guide": {
-    icon:"📱", title:"SES 自動通關申請教學", sub:"回程省時利器", color:"#0891b2",
-    body:`<p>SES（Smart Entry Service）是韓國的自動通關系統，申請後回國可走自動通關通道，省去排隊蓋章時間。</p>
-      <ul>
-        <li><b>申請地點：</b>市區內的 SES 申請中心（無需到機場，較不用排隊）</li>
-        <li><b>需準備：</b>護照正本</li>
-        <li><b>流程：</b>現場填寫申請表 → 錄指紋與拍照 → 現場即可完成註冊</li>
-        <li><b>建議：</b>安排在行程較鬆的下午前往，避開週末人潮</li>
-        <li><b>注意：</b>並非所有國籍/簽證別皆可申請，請以現場公告為準</li>
-      </ul>`
-  },
-  "luge-guide": {
-    icon:"🛷", title:"Skyline Luge 釜山攻略", sub:"Osiria・滑坡卡丁車", color:"#e84040",
-    body:`<p>從山頂搭乘纜車上去後，乘坐無動力滑車一路滑下山，適合親子同樂，VBP 已涵蓋門票。</p>
-      <ul>
-        <li><b>玩法：</b>纜車上山 → 滑車滑下山（可重複遊玩多趟，視票種而定）</li>
-        <li><b>賽道：</b>提供不同難度賽道，初次體驗建議選較平緩路線</li>
-        <li><b>建議服裝：</b>保暖外套 + 手套（冬季山頂風大）</li>
-        <li><b>注意事項：</b>年紀太小的兒童需與大人共乘，現場會有身高限制規定</li>
-      </ul>`
-  },
-  "lotte-world": {
-    icon:"🎢", title:"樂天世界 Adventure Busan", sub:"Osiria・遊樂園全攻略", color:"#C850C0",
-    body:`<p>釜山版樂天世界，VBP 已含門票，適合安排半天到一天的時間遊玩。</p>
-      <ul>
-        <li><b>必玩設施：</b>雲霄飛車、自由落體等刺激設施，也有適合親子的溫和遊樂設施</li>
-        <li><b>夜間遊行：</b>晚上有燈光遊行表演，建議提前找好觀賞位置</li>
-        <li><b>建議：</b>先規劃想玩的設施動線，避免來回走冤枉路</li>
-        <li><b>周邊：</b>outlet 及 Lotte Mall 就在附近，可安排購物時段銜接</li>
-      </ul>`
-  },
-  "eden-valley": {
-    icon:"🏔", title:"Eden Valley 滑雪場攻略", sub:"釜山近郊唯一雪場", color:"#4158D0",
-    body:`<p>釜山近郊唯一的滑雪場，距市區約 50 分鐘車程，適合安排一日雪地體驗。</p>
-      <ul>
-        <li><b>裝備租借：</b>現場可租借雪具、雪衣雪褲，建議提早到達辦理</li>
-        <li><b>雪道分級：</b>提供初、中、高級雪道，新手建議先上初級教學區</li>
-        <li><b>穿著建議：</b>保暖層 + 防水外層 + 手套、雪鏡，室內可寄放隨身物品</li>
-        <li><b>用餐：</b>雪場內設有簡易餐飲區，建議先用餐再上雪道</li>
-        <li><b>電話：</b>0553798000（Naver Map 搜尋店名或電話號碼皆可，中文名稱搜不到）</li>
-      </ul>`
-  },
-  "centum-shopping": {
-    icon:"🏬", title:"釜山必逛購物地圖・Centum City", sub:"從飯店步行 5 分鐘・日系生活雜貨天堂", color:"#16a34a",
-    body:`<p>從 Haeundae Centum Hotel 步行約 5 分鐘即達，大部分店家都在同一區域，親子友善，也是下雨天備案首選。</p>
-      <div style="font-weight:700;color:#f0eee8;margin:10px 0 4px">🏢 新世界百貨 Centum City Mall</div>
-      <ul>
-        <li><b>① MUJI 無印良品</b>（9F）－日本必買品牌，生活用品、文具、收納、服飾、食品一應俱全・10:30–20:00・價格中等</li>
-        <li><b>② JAJU</b>（8F）－韓國版 MUJI，簡約質感生活選物，價格更親民・10:30–20:00・價格中等偏低</li>
-        <li><b>③ Olive Young</b>（B1／1F／2F）－韓國最大美妝保養連鎖，彩妝、面膜、保養品、限定組合超好買・10:00–22:00・價格中等</li>
-        <li><b>④ 新世界美食街</b>（9F）－各式韓食、中式、日式、咖啡廳選擇多，適合全家用餐・10:30–21:00・價格中等</li>
-      </ul>
-      <div style="font-weight:700;color:#f0eee8;margin:10px 0 4px">🚶 步行 5–10 分鐘內可到</div>
-      <ul>
-        <li><b>⑤ DAISO 大創</b>－步行約 3 分・韓國大創商品更多元，文具、收納、廚房、旅行小物、分裝瓶必買・10:00–22:00・價格超便宜 ₩1,000 起</li>
-        <li><b>⑥ ARTBOX</b>－步行約 8 分（或計程車約 2 分）・文具、可愛雜貨、杯子、飾品、玩偶，生活小物超好逛・10:30–22:00・價格 ₩1,000–₩10,000</li>
-        <li><b>⑦ Homeplus</b>－步行約 7 分・大型超市，零食、泡麵、伴手禮、水果、生活用品一次買足・10:00–24:00・價格便宜</li>
-      </ul>
-      <div style="font-weight:700;color:#f0eee8;margin:10px 0 4px">⭐ 推薦指數</div>
-      <ul>
-        <li><b>必逛 ★★★★★：</b>MUJI／JAJU／Olive Young（來釜山一定要逛！）、DAISO（韓國限定商品超多！）</li>
-        <li><b>推薦 ★★★★☆：</b>ARTBOX（送禮自用兩相宜）、Homeplus（伴手禮補貨好地方）</li>
-        <li><b>推薦 ★★★★★：</b>新世界美食街（選擇多，方便又好吃）</li>
-      </ul>
-      <div style="font-weight:700;color:#f0eee8;margin:10px 0 4px">🕐 建議行程（Day 6 購物日安排）</div>
-      <ul>
-        <li>09:30 飯店出發 → 10:00 新世界百貨開始逛街</li>
-        <li>10:00–11:30 MUJI → JAJU</li>
-        <li>11:30–12:30 午餐・美食街</li>
-        <li>12:30–14:00 Olive Young → DAISO</li>
-        <li>14:00–15:30 ARTBOX</li>
-        <li>15:30–16:00 咖啡休息</li>
-        <li>17:00 前往廣安里跨年煙火</li>
-      </ul>
-      <div style="font-weight:700;color:#f0eee8;margin:10px 0 4px">🚕 交通方式</div>
-      <ul>
-        <li><b>步行：</b>飯店出發約 5 分鐘內到新世界百貨</li>
-        <li><b>地鐵：</b>Centum City 站（2 號線）直達</li>
-        <li><b>計程車：</b>商圈內短距離 ₩3,000–₩5,000</li>
-      </ul>
-      <div style="font-weight:700;color:#f0eee8;margin:10px 0 4px">💡 小提醒</div>
-      <ul>
-        <li>新世界百貨營業時間依公告為準，部分店家可能因天氣或活動調整營業時間</li>
-        <li>大量購買後建議回飯店先放東西再出發</li>
-        <li>有些店可退稅（滿 ₩30,000 以上）</li>
-        <li>附近便利商店：GS25、CU、7-ELEVEN（步行 2–5 分鐘內）</li>
-        <li>洗手間：各商場、百貨內皆有（參考商場樓層指示）</li>
-      </ul>`
-  },
-  "new-year-busan": {
-    icon:"🎆", title:"廣安里跨年攻略", sub:"卡位・煙火觀賞重點", color:"#C850C0",
-    body:`<p>廣安里海灘是釜山最熱門的跨年煙火觀賞地點之一，以廣安大橋為背景。</p>
-      <ul>
-        <li><b>最佳觀賞位置：</b>海灘中間偏左至民樂港防波堤之間，可完整拍到大橋與煙火</li>
-        <li><b>卡位時間：</b>建議晚間 8 點前抵達卡位，跨年夜人潮眾多</li>
-        <li><b>禦寒準備：</b>海邊風大且久站等待，建議攜帶暖暖包、保溫瓶熱飲</li>
-        <li><b>交通：</b>結束後計程車與地鐵會非常擁擠，建議提前規劃離場路線或預留較長等待時間</li>
-      </ul>`
-  },
-  "tax-refund": {
-    icon:"💰", title:"韓國退稅標準 & 步驟", sub:"現場・市區・機場港口 三種方式", color:"#0891b2",
-    body:`<p>韓國退稅分成現場退稅、市區退稅及機場退稅三種。</p>
-      <ul>
-        <li><b>消費門檻：</b>單筆消費達 ₩15,000 韓元以上</li>
-        <li><b>期限限制：</b>需於 3 個月內攜帶出境</li>
-      </ul>
-      <div style="font-weight:700;color:#50d090;margin:10px 0 4px">① 現場退稅</div>
-      <ul>
-        <li>需要護照，購買時已直接扣除，沒有特別狀況不用另外找海關查驗</li>
-        <li>例：Olive Young、部分藥局、專櫃</li>
-        <li>流程：出示護照 → 購買時直接扣除退稅</li>
-      </ul>
-      <div style="font-weight:700;color:#a0b0ff;margin:10px 0 4px">② 市區退稅</div>
-      <ul>
-        <li>在無法現場退稅的店家消費後，需索取「退稅單（Tax Refund）」</li>
-        <li>前往百貨公司或熱門商圈的市區退稅處或自助機台辦理</li>
-        <li>流程：索取退稅單 → 退稅處／自助機台 → 領取退稅</li>
-      </ul>
-      <div style="font-weight:700;color:#ffd060;margin:10px 0 4px">③ 機場、港口退稅</div>
-      <ul>
-        <li>出境當天，帶著所有退稅單據、護照與未拆封的商品，前往機場處理</li>
-        <li>當天搭船離開在碼頭沒有機台，需用手機連上現場 WiFi，掃描對應退稅公司的 QRcode 辦理退稅即可成功，不用特別去請海關查驗</li>
-        <li>流程：準備退稅單據、護照與未拆封商品 → 掃描 QRcode 辦理退稅 → 退稅成功</li>
-        <li style="color:#e090e0">⚠️ 若商品超過 ₩75,000，且系統提示需查驗，請至出關後左手邊的櫃檯查驗</li>
-      </ul>
-      <div style="background:rgba(255,215,96,0.08);border-radius:10px;padding:10px 13px;border:0.5px solid rgba(255,215,96,0.2);font-size:12.5px;color:#d0c090;line-height:1.7;margin-top:8px">
-        💡 釜山很多藥局也有退稅機台，但機台會對應不同家退稅的行號，不一定每台都適用，以橘色的 Global Tax Free 為大宗。其他要去機場或港口才可以辦。
-      </div>
-      <div style="margin-top:10px">
-        <b>建議：</b>預留至少 40–60 分鐘處理機場退稅流程，避免趕不上登機；退稅金額可選現金或退回原信用卡，現金領取處通常排隊人潮較多。
-      </div>`
-  }
-};
-
-function guideData(key) {
-  return GUIDES[key] || null;
-}
-
-// ── DOM refs ──
-const scroller    = document.getElementById("dayScroller");
-const viewDay     = document.getElementById("view-day");
-const viewPrep    = document.getElementById("view-prep");
-const dayScrollerEl = document.querySelector(".day-scroller");
-const overviewList  = document.getElementById("overviewList");
-
-let activeDay = 1;
-let activeTab = "prep";
-let activePrepTab = "summary";
-
-// ── TAB SWITCHING ──
-function setTab(t) {
-  activeTab = t;
-  document.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b.dataset.tab === t));
-  viewDay.classList.toggle("hidden", t !== "day");
-  viewPrep.classList.toggle("hidden", t !== "prep");
-  dayScrollerEl.style.display = t === "day" ? "" : "none";
-}
-document.querySelectorAll(".tab-btn").forEach(b =>
-  b.addEventListener("click", () => {
-    setTab(b.dataset.tab);
-    window.scrollTo({top:0, behavior:"smooth"});
-  })
-);
-
-function switchPrepTab(tab, btn) {
-  activePrepTab = tab;
-  document.querySelectorAll(".prep-panel").forEach(p => {
-    p.classList.remove("active");
-    p.classList.add("hidden");
-    p.style.display = "none";
-  });
-  document.querySelectorAll(".prep-sub-btn").forEach(b => b.classList.remove("active"));
-  const el = document.getElementById("pp-" + tab);
-  if (el) { el.classList.add("active"); el.classList.remove("hidden"); el.style.display = "block"; }
-  if (btn) btn.classList.add("active");
-  window.scrollTo({top:0, behavior:"smooth"});
-}
-
-// ── SCROLLER ──
-function renderScroller() {
-  scroller.innerHTML = days.map(d => {
-    let cls = d.n === activeDay ? "active" : "";
-    if (d.n === todayN && d.n !== activeDay) cls += " today";
-    return `<div class="day-pill ${cls}" data-day="${d.n}">
-      <div class="n">DAY ${d.n}</div>
-      <div class="d">${d.date} ${d.dow}</div>
-    </div>`;
-  }).join("");
-  scroller.querySelectorAll(".day-pill").forEach(el => {
-    el.addEventListener("click", () => {
-      activeDay = parseInt(el.dataset.day);
-      setTab("day");
-      renderScroller();
-      renderDay();
-      const act = scroller.querySelector(".day-pill.active");
-      if (act) act.scrollIntoView({behavior:"smooth",inline:"center",block:"nearest"});
-      window.scrollTo({top:0, behavior:"smooth"});
-    });
-  });
-}
-
-// ── DAY VIEW ──
-function renderDay() {
-  const d = days.find(x => x.n === activeDay);
-  const isToday = d.n === todayN;
-
-  const schHtml = d.schedule.map(s => `
-    <div class="sch-item">
-      <div class="sch-time-col"><div class="sch-time">${s.time}</div></div>
-      <div class="sch-dot-col"><div class="sch-dot"></div><div class="sch-line"></div></div>
-      <div class="sch-content">
-        <div class="sch-title">${s.title}</div>
-        ${s.note ? `<div class="sch-note">${s.note}</div>` : ""}
-        ${s.mapUrl ? `<a class="map-link" href="${s.mapUrl}" target="_blank">🗺 ${s.addr||"開啟地圖"}</a>` : ""}
-        ${s.guide ? renderGuide(s.guide) : ""}
-      </div>
-    </div>`).join("");
-
-  const hotelHtml = d.hotel !== "—" ? `
-    <div class="hotel-strip">
-      <div class="hotel-strip-top"><span>🏨</span><div>
-        <div class="hlabel">今晚住宿</div>
-        <div class="hname">${d.hotel}</div>
-      </div></div>
-      <div class="hotel-strip-details">
-        ${d.hotelAddr ? `<div class="hotel-detail-row">📍 ${d.hotelAddr}</div>` : ""}
-        ${d.hotelPhone ? `<div class="hotel-detail-row">📞 <a href="tel:${d.hotelPhone}">${d.hotelPhone}</a></div>` : ""}
-        ${d.hotelMapUrl ? `<a class="hotel-map-btn" href="${d.hotelMapUrl}" target="_blank">🗺 開啟 Naver Map 導航（電話搜尋）</a>` : ""}
-      </div>
-    </div>` : "";
-
-  viewDay.innerHTML = `
-    <div class="day-hero">
-      <div class="tags">
-        <span class="tag default">DAY ${d.n} · ${d.date} (${d.dow})</span>
-        ${isToday ? '<span class="tag new-year">📍 今天</span>' : ""}
-        <span class="tag busan">🇰🇷 釜山</span>
-      </div>
-      <h2>${d.title}</h2>
-      <div class="focus">${d.focus}</div>
-    </div>
-    <div class="info-section">
-      <h3>當日行程</h3>
-      <div class="schedule">${schHtml}</div>
-    </div>
-    ${hotelHtml}`;
-}
-
-// ── OVERVIEW LIST ──
-function renderOverviewList() {
-  overviewList.innerHTML = days.map(d => `
-    <div class="item" style="cursor:pointer" data-jump="${d.n}">
-      <div class="k">Day ${d.n} · ${d.date} ${d.dow}${d.n===todayN?` <span style="font-size:10px;background:rgba(200,80,192,0.2);color:#C850C0;padding:2px 7px;border-radius:8px;margin-left:4px">今天</span>`:""}</div>
-      <div class="v">${d.title}</div>
-    </div>`).join("");
-  overviewList.querySelectorAll("[data-jump]").forEach(el => {
-    el.addEventListener("click", () => {
-      activeDay = parseInt(el.dataset.jump);
-      setTab("day");
-      renderScroller();
-      renderDay();
-      window.scrollTo({top:0,behavior:"smooth"});
-    });
-  });
-}
-
-// ── GUIDE MODAL ──
-const overlay = document.getElementById("guideOverlay");
-const modal   = document.getElementById("guideModal");
-
-function renderGuide(key) {
-  const g = guideData(key);
-  if (!g) return "";
-  const colorMap = {
-    "#e84040":{ bg:"rgba(232,64,64,0.1)", border:"rgba(232,64,64,0.3)", text:"#ff8080" },
-    "#4158D0":{ bg:"rgba(65,88,208,0.1)", border:"rgba(65,88,208,0.3)", text:"#a0b0ff" },
-    "#0891b2":{ bg:"rgba(8,145,178,0.1)", border:"rgba(8,145,178,0.3)", text:"#60d0f0" },
-    "#7c3aed":{ bg:"rgba(124,58,237,0.1)", border:"rgba(124,58,237,0.3)", text:"#c090ff" },
-    "#C850C0":{ bg:"rgba(200,80,192,0.1)", border:"rgba(200,80,192,0.3)", text:"#e090e0" },
-    "#16a34a":{ bg:"rgba(22,163,74,0.1)", border:"rgba(22,163,74,0.3)", text:"#50d090" },
+  const fmt = (d) => {
+    const date = new Date(d + "T00:00:00");
+    return `${date.getFullYear()}.${String(date.getMonth()+1).padStart(2,"0")}.${String(date.getDate()).padStart(2,"0")}`;
   };
-  const c = colorMap[g.color] || colorMap["#4158D0"];
-  return `<button class="guide-trigger" onclick="openGuideModal('${key}')"
-    style="background:${c.bg};border:1.5px solid ${c.border};color:${c.text}">
-    <span class="gt-icon">${g.icon}</span>
-    <div class="gt-text">
-      <div class="gt-title">${g.title}</div>
-      <div class="gt-sub">${g.sub}</div>
-    </div>
-    <span class="gt-arrow">▶</span>
-  </button>`;
-}
 
-function openGuideModal(key) {
-  const g = guideData(key);
-  if (!g) return;
-  document.getElementById("guideModalIcon").textContent = g.icon;
-  document.getElementById("guideModalTitle").textContent = g.title;
-  document.getElementById("guideModalSub").textContent = g.sub;
-  document.getElementById("guideModalBody").innerHTML = g.body;
-  document.getElementById("guideModalClose").onclick = closeGuideModal;
-  overlay.classList.add("active");
-  document.body.style.overflow = "hidden";
-}
-function closeGuideModal() {
-  overlay.classList.remove("active");
-  document.body.style.overflow = "";
-}
-overlay.addEventListener("click", e => { if (e.target === overlay) closeGuideModal(); });
-let tsy = 0;
-modal.addEventListener("touchstart", e => { tsy = e.touches[0].clientY; }, {passive:true});
-modal.addEventListener("touchend", e => { if (e.changedTouches[0].clientY - tsy > 80) closeGuideModal(); }, {passive:true});
+  const nightsBetween = (start, end) => {
+    const s = new Date(start + "T00:00:00");
+    const e = new Date(end + "T00:00:00");
+    return Math.round((e - s) / (1000 * 60 * 60 * 24));
+  };
 
-// ── CHECKLIST ──
-const CL_KEY = "busan_cl_v1";
-function getCl() { try { return JSON.parse(localStorage.getItem(CL_KEY)||"{}"); } catch(e) { return {}; } }
-function saveCl(o) { try { localStorage.setItem(CL_KEY, JSON.stringify(o)); } catch(e) {} }
+  const getStatus = (start, end) => {
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    const s = new Date(start + "T00:00:00");
+    const e = new Date(end + "T00:00:00");
+    if (today < s) {
+      const days = Math.round((s - today) / (1000*60*60*24));
+      return { type: "upcoming", label: `倒數 ${days} 天` };
+    }
+    if (today > e) return { type: "completed", label: "已完成" };
+    return { type: "live", label: "旅行中" };
+  };
 
-function toggleCl(el) {
-  const id = el.dataset.id;
-  const d = getCl();
-  if (d[id]) delete d[id]; else d[id] = true;
-  saveCl(d);
-  el.classList.toggle("checked", !!d[id]);
-  el.querySelector(".cl-checkbox").textContent = d[id] ? "✓" : "";
-  updateClProgress();
-}
-function updateClProgress() {
-  const ag = document.querySelector(".checklist-group.active");
-  if (!ag) return;
-  const items = ag.querySelectorAll(".cl-item");
-  const d = getCl();
-  let done = 0;
-  items.forEach(el => { if (d[el.dataset.id]) done++; });
-  const pct = items.length ? Math.round(done/items.length*100) : 0;
-  const bar = document.getElementById("clProgressBar");
-  const lbl = document.getElementById("clProgressLabel");
-  if (bar) bar.style.width = pct + "%";
-  if (lbl) lbl.textContent = done + " / " + items.length + " 完成";
-}
-function initCl() {
-  const d = getCl();
-  document.querySelectorAll(".cl-item").forEach(el => {
-    if (d[el.dataset.id]) {
-      el.classList.add("checked");
-      el.querySelector(".cl-checkbox").textContent = "✓";
+  const state = { country: "all", city: "all", dateFrom: "", dateTo: "" };
+  const grid = document.getElementById("trip-grid");
+  const resultCount = document.getElementById("result-count");
+
+  function matchesFilters(trip){
+    if (state.country !== "all" && trip.country !== state.country) return false;
+    if (state.city !== "all" && !trip.cities.includes(state.city)) return false;
+    if (state.dateFrom && trip.end < state.dateFrom) return false;
+    if (state.dateTo && trip.start > state.dateTo) return false;
+    return true;
+  }
+
+  function isDefaultFilter(){
+    return state.country === "all" && state.city === "all" && !state.dateFrom && !state.dateTo;
+  }
+
+  function activeFilterCount(){
+    let n = 0;
+    if (state.country !== "all") n++;
+    if (state.city !== "all") n++;
+    if (state.dateFrom || state.dateTo) n++;
+    return n;
+  }
+
+  function updateFilterBadge(){
+    const badge = document.getElementById("filter-count");
+    const n = activeFilterCount();
+    badge.textContent = n;
+    badge.classList.toggle("show", n > 0);
+  }
+
+  function render(){
+    grid.innerHTML = "";
+    updateFilterBadge();
+    const filtered = trips
+      .filter(matchesFilters)
+      .slice()
+      .sort((a, b) => new Date(b.start) - new Date(a.start));
+
+    resultCount.textContent = `顯示 ${filtered.length} / ${trips.length} 趟`;
+
+    if (filtered.length === 0) {
+      const empty = document.createElement("div");
+      empty.className = "empty-state";
+      empty.textContent = "沒有符合條件的行程，試著調整篩選條件。";
+      grid.appendChild(empty);
+      return;
+    }
+
+    filtered.forEach(trip => {
+      const nights = nightsBetween(trip.start, trip.end);
+      const status = getStatus(trip.start, trip.end);
+      const cityDisplay = trip.cities.join(" · ");
+
+      const card = document.createElement("div");
+      card.className = "ticket";
+      card.setAttribute("data-country", trip.country);
+
+      card.innerHTML = `
+        <a class="ticket-link" href="${trip.href}" aria-label="查看${cityDisplay}行程"></a>
+        <span class="ticket-flag">${trip.flag}</span>
+        <div class="ticket-id">
+          <p class="ticket-country">${trip.countryLabel}</p>
+          <h2 class="ticket-city">${cityDisplay}</h2>
+        </div>
+        <span class="ticket-status ${status.type}">${status.label}</span>
+        <div class="ticket-dates">
+          <span class="col-label">Dates</span>
+          <span class="col-value">${fmt(trip.start)} – ${fmt(trip.end)}</span>
+        </div>
+        <div class="ticket-duration">
+          <span class="col-label">Duration</span>
+          <span class="col-value">${nights + 1}天${nights}夜</span>
+        </div>
+        <button type="button" class="ticket-share-btn" title="分享此行程" aria-label="分享${cityDisplay}行程">📤</button>
+        <span class="ticket-arrow">→</span>
+      `;
+      card.querySelector(".ticket-share-btn").addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        shareTrip(trip);
+      });
+      grid.appendChild(card);
+    });
+
+    if (isDefaultFilter()) {
+      const placeholder = document.createElement("div");
+      placeholder.className = "ticket placeholder";
+      placeholder.textContent = "下一趟旅程，敬請期待";
+      grid.appendChild(placeholder);
+    }
+  }
+
+  // ── SHARE ──
+  function showShareToast(msg) {
+    let toast = document.getElementById("shareToast");
+    if (!toast) {
+      toast = document.createElement("div");
+      toast.id = "shareToast";
+      toast.className = "share-toast";
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    toast.classList.add("show");
+    clearTimeout(showShareToast._t);
+    showShareToast._t = setTimeout(() => toast.classList.remove("show"), 2200);
+  }
+
+  function shareTrip(trip) {
+    const cityDisplay = trip.cities.join("・");
+    const nights = nightsBetween(trip.start, trip.end);
+    const url = new URL(trip.href, location.href).href;
+    const text = `${trip.flag} ${trip.countryZh}・${cityDisplay}\n${fmt(trip.start)} – ${fmt(trip.end)}（${nights + 1}天${nights}夜）\n\n📋 完整行程規劃：\n${url}`;
+    const shareTitle = `${trip.flag} ${cityDisplay}行程`;
+
+    if (navigator.share) {
+      navigator.share({ title: shareTitle, text, url }).catch(() => {});
+      return;
+    }
+    // Fallback: open LINE's share-text screen directly
+    const lineUrl = `https://line.me/R/msg/text/?${encodeURIComponent(text)}`;
+    const win = window.open(lineUrl, "_blank");
+    if (!win) {
+      // Popup blocked — fallback to clipboard
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(() => showShareToast("📋 行程已複製，可貼到 LINE 分享"));
+      } else {
+        showShareToast("⚠️ 無法開啟分享，請手動複製行程內容");
+      }
+    }
+  }
+
+  function buildChipGroup(containerId, options, key){
+    const container = document.getElementById(containerId);
+    container.innerHTML = "";
+    options.forEach(opt => {
+      const chip = document.createElement("button");
+      chip.type = "button";
+      chip.className = "chip" + (state[key] === opt.value ? " active" : "");
+      chip.textContent = opt.label;
+      chip.addEventListener("click", () => {
+        state[key] = opt.value;
+        container.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
+        chip.classList.add("active");
+        render();
+      });
+      container.appendChild(chip);
+    });
+  }
+
+  const countryOptions = [{ value: "all", label: "全部" }];
+  const seenCountries = new Set();
+  trips.forEach(t => {
+    if (!seenCountries.has(t.country)) {
+      seenCountries.add(t.country);
+      countryOptions.push({ value: t.country, label: `${t.flag} ${t.countryZh}` });
     }
   });
-  updateClProgress();
-}
-function switchClTab(tab, btn) {
-  const map = { docs:"cl-docs", clothes:"cl-clothes", special:"cl-special" };
-  document.querySelectorAll(".checklist-group").forEach(g => g.classList.remove("active"));
-  document.querySelectorAll(".cl-tab-btn").forEach(b => b.classList.remove("active"));
-  const el = document.getElementById(map[tab]);
-  if (el) el.classList.add("active");
-  if (btn) btn.classList.add("active");
-  updateClProgress();
-}
-function resetCl() {
-  if (!confirm("確定要重置所有勾選嗎？")) return;
-  try { localStorage.removeItem(CL_KEY); } catch(e) {}
-  document.querySelectorAll(".cl-item").forEach(el => {
-    el.classList.remove("checked");
-    el.querySelector(".cl-checkbox").textContent = "";
+
+  const cityOptions = [{ value: "all", label: "全部" }];
+  const seenCities = new Set();
+  trips.forEach(t => t.cities.forEach(c => {
+    if (!seenCities.has(c)) { seenCities.add(c); cityOptions.push({ value: c, label: c }); }
+  }));
+
+  buildChipGroup("country-chips", countryOptions, "country");
+  buildChipGroup("city-chips", cityOptions, "city");
+
+  document.getElementById("date-from").addEventListener("change", (e) => {
+    state.dateFrom = e.target.value;
+    render();
   });
-  updateClProgress();
-}
+  document.getElementById("date-to").addEventListener("change", (e) => {
+    state.dateTo = e.target.value;
+    render();
+  });
 
-// ── BUDGET RENDER ──
-function renderBudget() {
-  const el = document.getElementById("budgetRows");
-  if (!el) return;
-  const rows = [
-    { day:"Day 1 · 12/26", label:"抵達日", amt:150000, color:"#6666aa" },
-    { day:"Day 2 · 12/27", label:"海雲台・Sky Capsule", amt:300000, color:"#4158D0" },
-    { day:"Day 3 · 12/28", label:"西釜山・甘川・南浦洞", amt:280000, color:"#7c3aed" },
-    { day:"Day 4 · 12/29", label:"Osiria・樂天世界", amt:350000, color:"#e84040" },
-    { day:"Day 5 · 12/30", label:"Eden Valley 滑雪", amt:300000, color:"#0891b2" },
-    { day:"Day 6 · 12/31", label:"購物天堂・廣安里跨年", amt:350000, color:"#C850C0" },
-    { day:"Day 7 · 1/1",  label:"回程日", amt:150000, color:"#16a34a" },
-  ];
-  const max = Math.max(...rows.map(r => r.amt));
-  el.innerHTML = rows.map(r => `
-    <div class="budget-row">
-      <div class="budget-day"><div style="font-size:10px;color:#5555aa">${r.day.split("·")[0].trim()}</div><div style="font-size:11px;color:#8888bb;margin-top:1px">${r.label}</div></div>
-      <div class="budget-bar-wrap"><div class="budget-bar" style="width:${Math.round(r.amt/max*100)}%;background:${r.color}"></div></div>
-      <div class="budget-amt" style="color:${r.color}">~${(r.amt/1000).toFixed(0)}K</div>
-    </div>`).join("");
-}
+  document.getElementById("clear-filters").addEventListener("click", () => {
+    state.country = "all";
+    state.city = "all";
+    state.dateFrom = "";
+    state.dateTo = "";
+    document.getElementById("date-from").value = "";
+    document.getElementById("date-to").value = "";
+    buildChipGroup("country-chips", countryOptions, "country");
+    buildChipGroup("city-chips", cityOptions, "city");
+    render();
+  });
 
-// ── FAB ──
-const fab = document.getElementById("fab");
-window.addEventListener("scroll", () => fab.classList.toggle("show", window.scrollY > 300));
-fab.addEventListener("click", () => window.scrollTo({top:0,behavior:"smooth"}));
+  render();
 
-// ── INIT ──
-// Always open on prep/overview tab
-// (During the trip, user can tap 📅 to see today's schedule)
-if (todayN) {
-  activeDay = todayN;
-}
-activeTab = "prep";
+  const countryCount = new Set(trips.map(t => t.country)).size;
 
-renderScroller();
-renderDay();
-renderOverviewList();
-initCl();
-renderBudget();
+  document.getElementById("stats").innerHTML = `
+    <div class="stat"><b>${trips.length}</b> 趟旅程</div>
+    <div class="stat"><b>${countryCount}</b> 個國家</div>
+  `;
 
-// Ensure all prep panels hidden first, then show summary
-document.querySelectorAll(".prep-panel").forEach(p => {
-  p.classList.remove("active");
-  p.classList.add("hidden");
-  p.style.display = "none";
-});
-const firstPanel = document.getElementById("pp-summary");
-if (firstPanel) { firstPanel.classList.add("active"); firstPanel.classList.remove("hidden"); firstPanel.style.display = "block"; }
-document.querySelectorAll(".prep-sub-btn").forEach((b, i) => b.classList.toggle("active", i === 0));
-
-setTab("prep");
-
-setTimeout(() => {
-  const act = scroller.querySelector(".day-pill.active, .day-pill.today");
-  if (act) act.scrollIntoView({behavior:"smooth",inline:"center",block:"nearest"});
-}, 100);
+  document.getElementById("last-updated").textContent =
+    "Last updated " + new Date().toISOString().slice(0,10);
 </script>
+
 </body>
 </html>
