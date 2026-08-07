@@ -13,7 +13,7 @@ html, body {
   margin: 0; padding: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
   background: #0f0f1a;
-  color: #f0eee8;
+  color: #eeeef8;
   -webkit-font-smoothing: antialiased;
   overscroll-behavior-y: contain;
 }
@@ -24,14 +24,31 @@ body {
 
 /* ── HEADER ── */
 .header {
-  background: linear-gradient(135deg, #1a1a3e 0%, #0d1b4b 60%, #162040 100%);
+  background: linear-gradient(135deg, #0d0d2b 0%, #1a0d3a 40%, #0d1b4b 70%, #0d2040 100%);
   color: #fff;
   padding: 20px 18px 22px;
   position: sticky; top: 0; z-index: 50;
   padding-top: calc(20px + env(safe-area-inset-top));
   border-bottom: 0.5px solid rgba(255,255,255,0.08);
+  overflow: hidden;
 }
-.header .label { font-size: 10px; opacity: 0.6; letter-spacing: 3px; margin-bottom: 5px; }
+.header-fireworks {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none; overflow: hidden;
+}
+.fw-dot {
+  position: absolute;
+  border-radius: 50%;
+  animation: fwPulse 3s ease-in-out infinite;
+  opacity: 0;
+}
+@keyframes fwPulse {
+  0% { transform: scale(0); opacity: 0; }
+  30% { opacity: 0.6; }
+  100% { transform: scale(1); opacity: 0; }
+}
+.header-content { position: relative; z-index: 2; }
+.header .label { font-size: 10px; opacity: 0.85; letter-spacing: 3px; margin-bottom: 5px; }
 .header h1 { margin: 0 0 4px; font-size: 21px; font-weight: 700; letter-spacing: 0.5px; }
 .header .dates { font-size: 12.5px; opacity: 0.8; }
 .header .meta { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
@@ -65,8 +82,8 @@ body {
   cursor: pointer;
   transition: all 0.15s;
 }
-.day-pill .n { font-size: 10px; color: #6666aa; letter-spacing: 1px; }
-.day-pill .d { font-size: 12px; color: #aaa; margin-top: 2px; font-weight: 500; }
+.day-pill .n { font-size: 10px; color: #8888cc; letter-spacing: 1px; }
+.day-pill .d { font-size: 12px; color: #c0c0e0; margin-top: 2px; font-weight: 500; }
 .day-pill.active { background: #4158D0; border-color: #4158D0; }
 .day-pill.active .n, .day-pill.active .d { color: #fff; }
 .day-pill.today { border-color: #C850C0; }
@@ -77,7 +94,7 @@ main { padding: 16px 16px 80px; max-width: 600px; margin: 0 auto; }
 
 /* ── TAB NAV ── */
 .tab-nav {
-  display: grid; grid-template-columns: repeat(3, 1fr);
+  display: grid; grid-template-columns: repeat(2, 1fr);
   gap: 4px; background: #13132a; padding: 5px;
   border-radius: 12px; margin-bottom: 16px;
   border: 0.5px solid #2a2a45;
@@ -102,7 +119,7 @@ main { padding: 16px 16px 80px; max-width: 600px; margin: 0 auto; }
 .tag.new-year { background: rgba(200,80,192,0.2); color: #e090e0; border: 0.5px solid rgba(200,80,192,0.4); }
 .tag.travel { background: rgba(255,200,0,0.15); color: #ffd060; border: 0.5px solid rgba(255,200,0,0.3); }
 .day-hero h2 { margin: 0 0 6px; font-size: 17px; font-weight: 700; line-height: 1.4; color: #f0eee8; }
-.day-hero .focus { font-size: 13px; color: #8888bb; line-height: 1.6; }
+.day-hero .focus { font-size: 13px; color: #a0a8cc; line-height: 1.6; }
 
 /* ── SCHEDULE ── */
 .schedule { margin-top: 14px; }
@@ -114,7 +131,7 @@ main { padding: 16px 16px 80px; max-width: 600px; margin: 0 auto; }
 .sch-line { width: 1.5px; flex: 1; background: #2a2a45; margin-top: 2px; }
 .sch-content { flex: 1; padding-bottom: 16px; }
 .sch-title { font-size: 14px; font-weight: 600; line-height: 1.4; margin-bottom: 3px; color: #f0eee8; }
-.sch-note { font-size: 12px; color: #7777aa; line-height: 1.6; margin-bottom: 4px; }
+.sch-note { font-size: 12px; color: #9999cc; line-height: 1.6; margin-bottom: 4px; }
 .sch-item:last-child .sch-line { display: none; }
 .sch-item:last-child .sch-content { padding-bottom: 0; }
 
@@ -129,7 +146,7 @@ main { padding: 16px 16px 80px; max-width: 600px; margin: 0 auto; }
 
 /* ── INFO SECTION ── */
 .info-section {
-  background: #13132a; border-radius: 14px;
+  background: #161630; border-radius: 14px;
   padding: 16px 18px; margin-bottom: 14px;
   border: 0.5px solid #2a2a45;
 }
@@ -141,9 +158,9 @@ main { padding: 16px 16px 80px; max-width: 600px; margin: 0 auto; }
 .info-section .item { padding: 10px 0; border-bottom: 0.5px solid #1e1e35; }
 .info-section .item:last-child { border-bottom: none; padding-bottom: 0; }
 .info-section .item:first-child { padding-top: 0; }
-.info-section .item .k { font-size: 11px; color: #5555aa; margin-bottom: 4px; font-weight: 500; letter-spacing: 0.5px; }
-.info-section .item .v { font-size: 13px; color: #c0c0e0; line-height: 1.6; }
-.info-section p { margin: 0 0 8px; font-size: 13px; line-height: 1.6; color: #8888bb; }
+.info-section .item .k { font-size: 11px; color: #7070bb; margin-bottom: 4px; font-weight: 500; letter-spacing: 0.5px; }
+.info-section .item .v { font-size: 13px; color: #d8d8f0; line-height: 1.6; }
+.info-section p { margin: 0 0 8px; font-size: 13px; line-height: 1.6; color: #aaaacc; }
 .info-section p:last-child { margin-bottom: 0; }
 
 /* ── WEATHER BADGE ── */
@@ -228,21 +245,21 @@ main { padding: 16px 16px 80px; max-width: 600px; margin: 0 auto; }
 .guide-modal-body { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 16px 18px 24px; }
 
 /* ── GUIDE INTERNALS ── */
-.gc-section { font-size: 12px; font-weight: 700; color: #8888bb; margin: 14px 0 8px; letter-spacing: 0.5px; }
+.gc-section { font-size: 12px; font-weight: 700; color: #a0a8d0; margin: 14px 0 8px; letter-spacing: 0.5px; }
 .gc-section:first-child { margin-top: 0; }
 .gc-card {
-  background: #0f0f1a; border-radius: 10px; padding: 11px 13px;
+  background: #13132a; border-radius: 10px; padding: 11px 13px;
   margin-bottom: 8px; display: flex; gap: 10px; align-items: flex-start;
   border: 0.5px solid #2a2a45;
 }
 .gc-card-icon { font-size: 20px; flex-shrink: 0; }
 .gc-card-title { font-size: 13px; font-weight: 600; color: #f0eee8; margin-bottom: 3px; line-height: 1.4; }
-.gc-card-desc { font-size: 11.5px; color: #7777aa; line-height: 1.6; }
+.gc-card-desc { font-size: 11.5px; color: #9999cc; line-height: 1.6; }
 .gc-tip {
   display: flex; gap: 8px; align-items: flex-start;
   background: rgba(65,88,208,0.08); border-radius: 10px;
   padding: 10px 12px; margin-top: 10px;
-  font-size: 12px; color: #8899cc; line-height: 1.6;
+  font-size: 12px; color: #aabbdd; line-height: 1.6;
   border: 0.5px solid rgba(65,88,208,0.2);
 }
 .gc-tip-icon { flex-shrink: 0; font-size: 14px; }
@@ -304,7 +321,7 @@ main { padding: 16px 16px 80px; max-width: 600px; margin: 0 auto; }
 .cl-progress-bar-wrap { flex: 1; height: 5px; background: #1e1e35; border-radius: 3px; overflow: hidden; }
 .cl-progress-bar { height: 100%; background: #4158D0; border-radius: 3px; transition: width 0.3s; }
 .cl-progress-label { font-size: 11px; color: #5555aa; white-space: nowrap; }
-.cl-section-title { font-size: 11px; font-weight: 700; color: #5555aa; letter-spacing: 0.5px; margin: 12px 0 6px; }
+.cl-section-title { font-size: 11px; font-weight: 700; color: #8888bb; letter-spacing: 0.5px; margin: 12px 0 6px; }
 .cl-section-title:first-child { margin-top: 0; }
 .cl-item {
   display: flex; align-items: flex-start; gap: 10px;
@@ -324,7 +341,7 @@ main { padding: 16px 16px 80px; max-width: 600px; margin: 0 auto; }
 .cl-item.checked .cl-checkbox { background: #4158D0; border-color: #4158D0; color: #fff; }
 .cl-item-text { flex: 1; }
 .cl-item-title { font-size: 13px; font-weight: 600; color: #f0eee8; line-height: 1.4; margin-bottom: 2px; }
-.cl-item-note { font-size: 11.5px; color: #5555aa; line-height: 1.5; }
+.cl-item-note { font-size: 11.5px; color: #8888aa; line-height: 1.5; }
 .cl-badge {
   display: inline-block; font-size: 10px; font-weight: 700;
   padding: 2px 7px; border-radius: 8px; margin-right: 4px; vertical-align: middle;
@@ -333,6 +350,105 @@ main { padding: 16px 16px 80px; max-width: 600px; margin: 0 auto; }
 .cl-badge.blue { background: rgba(65,88,208,0.15); color: #a0b0ff; border: 0.5px solid rgba(65,88,208,0.3); }
 .cl-badge.gold { background: rgba(255,200,0,0.1); color: #ffd060; border: 0.5px solid rgba(255,200,0,0.25); }
 .cl-reset { width: 100%; margin-top: 14px; padding: 10px; background: transparent; border: 0.5px solid #2a2a45; border-radius: 10px; color: #5555aa; font-size: 12px; cursor: pointer; font-family: inherit; }
+
+/* ── PREP SUB-TABS (sticky pill bar) ── */
+.prep-subtabs {
+  position: sticky;
+  top: calc(56px + env(safe-area-inset-top));
+  z-index: 35;
+  background: #0f0f1a;
+  display: flex; gap: 6px;
+  overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+  padding: 10px 14px 10px;
+  margin: 0 -16px 14px;
+}
+.prep-subtabs::-webkit-scrollbar { display: none; }
+.prep-sub-btn {
+  flex-shrink: 0; padding: 8px 16px;
+  border: 1.5px solid #2a2a45; border-radius: 20px;
+  background: #13132a; color: #6666aa;
+  font-size: 12.5px; font-weight: 600; cursor: pointer;
+  font-family: inherit; transition: all 0.15s; white-space: nowrap;
+}
+.prep-sub-btn.active {
+  background: #4158D0; border-color: #4158D0; color: #fff;
+}
+.prep-panel { display: none; }
+.prep-panel.active { display: block; }
+
+/* ── TIMELINE (overview) ── */
+.day-timeline-row {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 10px 0; border-bottom: 0.5px solid #1e1e35;
+  cursor: pointer;
+}
+.day-timeline-row:last-child { border-bottom: none; }
+.day-timeline-dot {
+  flex-shrink: 0; margin-top: 3px;
+  width: 28px; height: 28px; border-radius: 50%;
+  background: #1a1a3e; border: 2px solid #2a2a55;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; color: #6666aa;
+  transition: all 0.15s;
+}
+.day-timeline-row.today-row .day-timeline-dot {
+  background: #C850C0; border-color: #C850C0; color: #fff;
+}
+.day-timeline-content { flex: 1; }
+.day-timeline-label {
+  font-size: 10px; color: #5555aa; letter-spacing: 0.5px; margin-bottom: 3px;
+}
+.day-timeline-title { font-size: 13.5px; font-weight: 600; color: #f0eee8; line-height: 1.4; }
+.day-timeline-focus { font-size: 11.5px; color: #6666aa; margin-top: 2px; line-height: 1.4; }
+.day-timeline-arrow { flex-shrink: 0; color: #3333aa; font-size: 12px; margin-top: 6px; }
+
+/* ── FACT CARDS (practical) ── */
+.fact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+.fact-card {
+  background: #13132a; border-radius: 12px; padding: 13px;
+  border: 0.5px solid #2a2a45;
+}
+.fact-icon { font-size: 22px; margin-bottom: 6px; }
+.fact-label { font-size: 10px; color: #8080bb; letter-spacing: 0.5px; margin-bottom: 4px; }
+.fact-value { font-size: 13px; font-weight: 600; color: #f0eee8; line-height: 1.4; }
+
+/* ── APP ROWS ── */
+.app-row {
+  background: #0f0f1a; border-radius: 10px; padding: 10px 12px;
+  border: 0.5px solid #2a2a45; display: flex; gap: 10px; align-items: center;
+  margin-bottom: 6px;
+}
+.app-icon { font-size: 22px; flex-shrink: 0; width: 36px; text-align: center; }
+.app-name { font-size: 13px; font-weight: 600; color: #f0eee8; margin-bottom: 2px; }
+.app-desc { font-size: 11.5px; color: #9999bb; line-height: 1.5; }
+.app-cat { font-size: 10px; font-weight: 700; color: #8888bb; letter-spacing: 0.5px; margin: 12px 0 6px; }
+
+/* ── VBP TABLE ── */
+.vbp-row {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 9px 0; border-bottom: 0.5px solid #1e1e35;
+}
+.vbp-row:last-child { border-bottom: none; }
+.vbp-day {
+  flex-shrink: 0; width: 36px; height: 36px; border-radius: 8px;
+  background: rgba(65,88,208,0.15); border: 0.5px solid rgba(65,88,208,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700; color: #a0b0ff; text-align: center; line-height: 1.3;
+}
+.vbp-content { flex: 1; }
+.vbp-title { font-size: 12px; font-weight: 600; color: #f0eee8; margin-bottom: 3px; }
+.vbp-items { font-size: 11.5px; color: #9999bb; line-height: 1.6; }
+
+/* ── BUDGET BAR ── */
+.budget-row {
+  display: flex; align-items: center; gap: 10px; padding: 7px 0;
+  border-bottom: 0.5px solid #1e1e35;
+}
+.budget-row:last-child { border-bottom: none; }
+.budget-day { font-size: 12px; color: #b8b8dd; width: 80px; flex-shrink: 0; }
+.budget-bar-wrap { flex: 1; height: 5px; background: #1e1e35; border-radius: 3px; overflow: hidden; }
+.budget-bar { height: 100%; border-radius: 3px; background: #4158D0; }
+.budget-amt { font-size: 12px; font-weight: 600; color: #a0b0ff; text-align: right; width: 72px; flex-shrink: 0; }
 
 /* ── MISC ── */
 .hidden { display: none !important; }
@@ -347,7 +463,7 @@ main { padding: 16px 16px 80px; max-width: 600px; margin: 0 auto; }
 .fab.show { opacity: 1; pointer-events: auto; }
 footer {
   text-align: center; padding: 24px 16px calc(24px + env(safe-area-inset-bottom));
-  font-size: 11px; color: #3333aa;
+  font-size: 11px; color: #6666aa;
 }
 @media (max-width: 360px) {
   .header h1 { font-size: 18px; }
@@ -357,14 +473,122 @@ footer {
 </head>
 <body>
 
-<header class="header">
-  <div class="label">7 DAYS · BUSAN NEW YEAR</div>
-  <h1>🇰🇷 釜山冬日跨年</h1>
-  <div class="dates">12/26 (六) — 1/1 (五) · 瑞秋家 2大3小</div>
-  <div class="meta">
-    <span>✈️ 桃園 ⇄ 金海</span>
-    <span>🎆 廣安里跨年</span>
-    <span>🎿 Eden Valley 滑雪</span>
+<header class="header" style="position:relative;overflow:hidden;padding-bottom:20px">
+  <!-- Animated stars bg -->
+  <div id="starsBg" style="position:absolute;inset:0;pointer-events:none;overflow:hidden"></div>
+  
+  <!-- Gwangan Bridge full-width SVG -->
+  <div style="position:absolute;bottom:0;left:0;right:0;pointer-events:none">
+    <svg viewBox="0 0 400 90" preserveAspectRatio="xMidYMax meet" width="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Night sky gradient -->
+      <defs>
+        <linearGradient id="skyG" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#0a0a25" stop-opacity="0"/>
+          <stop offset="100%" stop-color="#0a0a25" stop-opacity="0.3"/>
+        </linearGradient>
+      </defs>
+      <rect width="400" height="90" fill="url(#skyG)"/>
+      <!-- City silhouette -->
+      <rect x="0" y="72" width="28" height="18" fill="rgba(255,255,255,0.08)" rx="1"/>
+      <rect x="8" y="64" width="10" height="8" fill="rgba(255,255,255,0.08)"/>
+      <rect x="30" y="68" width="18" height="22" fill="rgba(255,255,255,0.06)" rx="1"/>
+      <rect x="50" y="70" width="12" height="20" fill="rgba(255,255,255,0.07)"/>
+      <rect x="320" y="65" width="20" height="25" fill="rgba(255,255,255,0.07)" rx="1"/>
+      <rect x="345" y="70" width="15" height="20" fill="rgba(255,255,255,0.06)"/>
+      <rect x="362" y="60" width="12" height="30" fill="rgba(255,255,255,0.08)"/>
+      <rect x="376" y="68" width="24" height="22" fill="rgba(255,255,255,0.06)"/>
+      <!-- Sea reflection -->
+      <rect x="0" y="82" width="400" height="8" fill="rgba(65,88,208,0.15)" rx="0"/>
+      <!-- Bridge deck -->
+      <rect x="0" y="76" width="400" height="3.5" fill="rgba(255,255,255,0.35)" rx="1"/>
+      <!-- Left tower -->
+      <rect x="98" y="20" width="5" height="58" fill="rgba(255,255,255,0.5)" rx="1"/>
+      <!-- Right tower -->
+      <rect x="298" y="20" width="5" height="58" fill="rgba(255,255,255,0.5)" rx="1"/>
+      <!-- Tower cross beams -->
+      <rect x="96" y="32" width="9" height="2" fill="rgba(255,255,255,0.4)"/>
+      <rect x="96" y="44" width="9" height="2" fill="rgba(255,255,255,0.4)"/>
+      <rect x="296" y="32" width="9" height="2" fill="rgba(255,255,255,0.4)"/>
+      <rect x="296" y="44" width="9" height="2" fill="rgba(255,255,255,0.4)"/>
+      <!-- Bridge cables left side -->
+      <line x1="100" y1="20" x2="20"  y2="76" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+      <line x1="100" y1="22" x2="50"  y2="76" stroke="rgba(255,255,255,0.25)" stroke-width="0.8"/>
+      <line x1="100" y1="24" x2="80"  y2="76" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/>
+      <line x1="100" y1="24" x2="130" y2="76" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/>
+      <line x1="100" y1="22" x2="165" y2="76" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/>
+      <!-- Bridge cables right side -->
+      <line x1="300" y1="20" x2="380" y2="76" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+      <line x1="300" y1="22" x2="350" y2="76" stroke="rgba(255,255,255,0.25)" stroke-width="0.8"/>
+      <line x1="300" y1="24" x2="320" y2="76" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/>
+      <line x1="300" y1="24" x2="272" y2="76" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/>
+      <line x1="300" y1="22" x2="237" y2="76" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/>
+      <!-- Center suspension cables -->
+      <line x1="100" y1="20" x2="200" y2="76" stroke="rgba(255,255,255,0.15)" stroke-width="0.6"/>
+      <line x1="300" y1="20" x2="200" y2="76" stroke="rgba(255,255,255,0.15)" stroke-width="0.6"/>
+      <!-- Fireworks bursts -->
+      <!-- Pink burst left -->
+      <g opacity="0.9">
+        <line x1="60" y1="22" x2="60" y2="8"  stroke="#f472b6" stroke-width="1.2"/>
+        <line x1="60" y1="22" x2="72" y2="12" stroke="#f472b6" stroke-width="1.2"/>
+        <line x1="60" y1="22" x2="74" y2="22" stroke="#f472b6" stroke-width="1.2"/>
+        <line x1="60" y1="22" x2="70" y2="32" stroke="#f472b6" stroke-width="1.2"/>
+        <line x1="60" y1="22" x2="58" y2="34" stroke="#f472b6" stroke-width="1.2"/>
+        <line x1="60" y1="22" x2="48" y2="30" stroke="#f472b6" stroke-width="1.2"/>
+        <line x1="60" y1="22" x2="46" y2="22" stroke="#f472b6" stroke-width="1.2"/>
+        <line x1="60" y1="22" x2="50" y2="12" stroke="#f472b6" stroke-width="1.2"/>
+        <circle cx="60" cy="22" r="2" fill="#f472b6"/>
+      </g>
+      <!-- Gold burst center-right -->
+      <g opacity="0.85">
+        <line x1="220" y1="14" x2="220" y2="2"  stroke="#fbbf24" stroke-width="1.2"/>
+        <line x1="220" y1="14" x2="232" y2="4"  stroke="#fbbf24" stroke-width="1.2"/>
+        <line x1="220" y1="14" x2="234" y2="14" stroke="#fbbf24" stroke-width="1.2"/>
+        <line x1="220" y1="14" x2="232" y2="24" stroke="#fbbf24" stroke-width="1.2"/>
+        <line x1="220" y1="14" x2="220" y2="26" stroke="#fbbf24" stroke-width="1.2"/>
+        <line x1="220" y1="14" x2="208" y2="24" stroke="#fbbf24" stroke-width="1.2"/>
+        <line x1="220" y1="14" x2="206" y2="14" stroke="#fbbf24" stroke-width="1.2"/>
+        <line x1="220" y1="14" x2="208" y2="4"  stroke="#fbbf24" stroke-width="1.2"/>
+        <circle cx="220" cy="14" r="2" fill="#fbbf24"/>
+      </g>
+      <!-- Cyan burst right -->
+      <g opacity="0.8">
+        <line x1="350" y1="28" x2="350" y2="16" stroke="#67e8f9" stroke-width="1"/>
+        <line x1="350" y1="28" x2="360" y2="18" stroke="#67e8f9" stroke-width="1"/>
+        <line x1="350" y1="28" x2="362" y2="28" stroke="#67e8f9" stroke-width="1"/>
+        <line x1="350" y1="28" x2="360" y2="38" stroke="#67e8f9" stroke-width="1"/>
+        <line x1="350" y1="28" x2="350" y2="40" stroke="#67e8f9" stroke-width="1"/>
+        <line x1="350" y1="28" x2="340" y2="38" stroke="#67e8f9" stroke-width="1"/>
+        <line x1="350" y1="28" x2="338" y2="28" stroke="#67e8f9" stroke-width="1"/>
+        <line x1="350" y1="28" x2="340" y2="18" stroke="#67e8f9" stroke-width="1"/>
+        <circle cx="350" cy="28" r="1.5" fill="#67e8f9"/>
+      </g>
+      <!-- Sparkle dots -->
+      <circle cx="140" cy="15" r="1.5" fill="#f472b6" opacity="0.8"/>
+      <circle cx="170" cy="8"  r="1"   fill="#fbbf24" opacity="0.7"/>
+      <circle cx="250" cy="20" r="1.5" fill="#a78bfa" opacity="0.8"/>
+      <circle cx="280" cy="10" r="1"   fill="#67e8f9" opacity="0.7"/>
+      <circle cx="80"  cy="35" r="1"   fill="#fbbf24" opacity="0.6"/>
+      <circle cx="180" cy="30" r="1"   fill="#f472b6" opacity="0.6"/>
+      <!-- Bridge lights -->
+      <circle cx="100" cy="76" r="2" fill="#fbbf24" opacity="0.9"/>
+      <circle cx="300" cy="76" r="2" fill="#fbbf24" opacity="0.9"/>
+      <circle cx="50"  cy="76" r="1.2" fill="rgba(255,255,255,0.5)"/>
+      <circle cx="150" cy="76" r="1.2" fill="rgba(255,255,255,0.5)"/>
+      <circle cx="200" cy="76" r="1.2" fill="rgba(255,255,255,0.5)"/>
+      <circle cx="250" cy="76" r="1.2" fill="rgba(255,255,255,0.5)"/>
+      <circle cx="350" cy="76" r="1.2" fill="rgba(255,255,255,0.5)"/>
+    </svg>
+  </div>
+  
+  <div style="position:relative;z-index:2;padding-bottom:18px">
+    <div class="label">7 DAYS · BUSAN NEW YEAR 🎆</div>
+    <h1 style="font-size:22px;margin:4px 0 4px;text-shadow:0 2px 20px rgba(200,80,192,0.4)">🇰🇷 釜山冬日跨年</h1>
+    <div class="dates" style="color:rgba(255,255,255,0.9)">12/26 (六) — 1/1 (五)</div>
+    <div class="meta" style="margin-top:10px">
+      <span>✈️ 桃園 ⇄ 金海</span>
+      <span>🎆 廣安里跨年</span>
+      <span>🎿 Eden Valley 滑雪</span>
+    </div>
   </div>
 </header>
 
@@ -374,338 +598,408 @@ footer {
 
 <main>
   <div class="tab-nav">
-    <button class="tab-btn active" data-tab="day">📅 每日行程</button>
-    <button class="tab-btn" data-tab="overview">🗺 旅程總覽</button>
-    <button class="tab-btn" data-tab="tips">💡 備忘清單</button>
+    <button class="tab-btn active" data-tab="prep">✈️ 出發前 & 備忘</button>
+    <button class="tab-btn" data-tab="day">📅 每日行程</button>
   </div>
 
-  <section id="view-day"></section>
+  <section id="view-day" class="hidden"></section>
 
-  <!-- Overview -->
-  <section id="view-overview" class="hidden">
-    <div class="summary-grid">
-      <div class="summary-card"><div class="k">總天數</div><div class="v">7 天 6 夜</div></div>
-      <div class="summary-card"><div class="k">目的地</div><div class="v">韓國 釜山</div></div>
-      <div class="summary-card"><div class="k">成員</div><div class="v">2大 3小</div></div>
-      <div class="summary-card"><div class="k">住宿</div><div class="v">Centum Hotel</div></div>
+  <!-- Pre-departure Prep -->
+  <section id="view-prep">
+
+    <div class="prep-subtabs" id="prepSubtabs">
+      <button class="prep-sub-btn active" onclick="switchPrepTab('summary',this)">📋 總覽</button>
+      <button class="prep-sub-btn" onclick="switchPrepTab('vbp',this)">🎫 Pass</button>
+      <button class="prep-sub-btn" onclick="switchPrepTab('practical',this)">ℹ️ 資訊</button>
+      <button class="prep-sub-btn" onclick="switchPrepTab('checklist',this)">🎒 清單</button>
+      <button class="prep-sub-btn" onclick="switchPrepTab('apps',this)">📱 APP</button>
     </div>
 
-    <div class="info-section">
-      <h3>每日主題</h3>
-      <div id="overviewList"></div>
-    </div>
+    <!-- ══ Summary ══ -->
+    <div class="prep-panel active" id="pp-summary">
 
-    <div class="info-section">
-      <h3>✈️ 航班資訊</h3>
-      <div class="item">
-        <div class="k">去程 JX902</div>
-        <div class="v">12/26（六）14:50 桃園機場起飛<br>17:55 金海機場抵達（韓國時間）</div>
-      </div>
-      <div class="item">
-        <div class="k">回程 JX901</div>
-        <div class="v">1/1（五）12:30 金海機場起飛<br>14:15 桃園機場抵達（台灣時間）</div>
-      </div>
-      <div class="item">
-        <div class="k">機場 → 飯店</div>
-        <div class="v">金海機場搭釜山金海輕軌至沙上站，轉地鐵 2 號線至 Centum City 站，約 50–60 分鐘</div>
-      </div>
-    </div>
-
-    <div class="info-section">
-      <h3>ℹ️ 實用資訊</h3>
-      <div class="item">
-        <div class="k">貨幣</div>
-        <div class="v">韓圜（KRW）・建議在南浦洞換匯，匯率最好</div>
-      </div>
-      <div class="item">
-        <div class="k">電壓・插座</div>
-        <div class="v">220V・雙圓孔（C / F 型）・帶萬國轉接頭</div>
-      </div>
-      <div class="item">
-        <div class="k">天氣</div>
-        <div class="v">12月平均 0°C–5°C・建議攜帶外套・帽子・手套・暖暖包</div>
-      </div>
-      <div class="item">
-        <div class="k">交通</div>
-        <div class="v">計程車為主（大型計程車最方便）・市區用地鐵・Kakao T 叫車</div>
-      </div>
-      <div class="item">
-        <div class="k">語言</div>
-        <div class="v">基本韓文 + 翻譯 APP（Papago / Google 翻譯）</div>
-      </div>
-      <div class="item">
-        <div class="k">付款</div>
-        <div class="v">現金 + 信用卡（大部分可刷卡）</div>
-      </div>
-      <div class="item">
-        <div class="k">網路</div>
-        <div class="v">KKday / Klook eSIM 或機場購買・抵達直接使用</div>
-      </div>
-    </div>
-
-    <div class="info-section">
-      <h3>🏨 住宿安排</h3>
-      <div class="item">
-        <div class="k">全程住宿</div>
-        <div class="v">Centum Hotel・釜山市海雲台區<br>地鐵 2 號線 Centum City 站旁・步行即達新世界百貨</div>
-      </div>
-    </div>
-
-    <div class="info-section">
-      <h3>🌧 天氣備案</h3>
-      <div class="item">
-        <div class="k">Day 2 大雨備案</div>
-        <div class="v">SEA LIFE 水族館・X the SKY・Running Man 體驗館・東釜山 Outlet・Lotte Mall</div>
-      </div>
-      <div class="item">
-        <div class="k">Day 3 大雨備案</div>
-        <div class="v">ARTE MUSEUM・Running Man 主題館（若 Day 2 未玩）・南浦洞換錢・BIFF 地下街・國際市場・Olive Young</div>
-      </div>
-      <div class="item">
-        <div class="k">Day 4 大雨備案</div>
-        <div class="v">SEA LIFE 水族館・X the SKY・東釜山 Outlet・Lotte Mall・樂天世界（室內設施為主）</div>
-      </div>
-      <div class="item">
-        <div class="k">Day 5 備案（不去滑雪）</div>
-        <div class="v">改去市區景點放鬆：海東龍宮寺・青沙浦咖啡廳・或在海雲台散步逛街</div>
-      </div>
-    </div>
-
-    <div class="info-section">
-      <h3>🎫 Visit Busan Pass 建議</h3>
-      <div class="item">
-        <div class="k">建議方案</div>
-        <div class="v">48 小時通行證・安排 Day 2 & Day 3 啟用</div>
-      </div>
-      <div class="item">
-        <div class="k">Day 2 涵蓋</div>
-        <div class="v">Sky Capsule・X the SKY・Running Man（視情況）</div>
-      </div>
-      <div class="item">
-        <div class="k">Day 3 涵蓋</div>
-        <div class="v">松島海上纜車</div>
-      </div>
-      <div class="item">
-        <div class="k">Day 4 涵蓋</div>
-        <div class="v">Skyline Luge・樂天世界・東釜山 Outlet 折扣</div>
-      </div>
-      <div class="item">
-        <div class="k">Day 5 涵蓋</div>
-        <div class="v">ClubD Oasis（水上樂園＋汗蒸幕）</div>
-      </div>
-      <div class="item">
-        <div class="k">購買地點</div>
-        <div class="v">釜山站 VBP 官方櫃台 / 金海機場旅遊諮詢處（建議提前線上購買）</div>
-      </div>
-    </div>
-
-    <div class="info-section">
-      <h3>💰 每日預算參考（兩家庭）</h3>
-      <div class="item">
-        <div class="k">餐飲</div>
-        <div class="v">約 KRW 250,000</div>
-      </div>
-      <div class="item">
-        <div class="k">交通</div>
-        <div class="v">約 KRW 80,000（地鐵・公車・Kakao T Venti）</div>
-      </div>
-      <div class="item">
-        <div class="k">活動門票</div>
-        <div class="v">約 KRW 100,000（VBP 未涵蓋部分）</div>
-      </div>
-      <div class="item">
-        <div class="k">預估每日花費（參考）</div>
-        <div class="v">
-          Day 1: 約 KRW 150,000（抵達日・輕消費）<br>
-          Day 2–4: 約 KRW 300,000–350,000（景點日）<br>
-          Day 5: 約 KRW 300,000（滑雪日）<br>
-          Day 6: 約 KRW 350,000（購物+跨年）<br>
-          Day 7: 約 KRW 150,000（回程日）<br>
-          全程 7 天總計約 KRW 1,950,000
+      <!-- Hero trip card -->
+      <div style="background:linear-gradient(135deg,#1a1a3e 0%,#0d1b4b 60%,#0d2040 100%);border-radius:16px;padding:20px;margin-bottom:14px;border:0.5px solid #2a2a55;position:relative;overflow:hidden">
+        <div style="position:absolute;top:-20px;right:-20px;font-size:80px;opacity:0.05">🎆</div>
+        <div style="font-size:10px;color:#5555aa;letter-spacing:3px;margin-bottom:12px">TRIP OVERVIEW</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+          <div>
+            <div style="font-size:10px;color:#5555aa;letter-spacing:0.5px;margin-bottom:3px">總天數</div>
+            <div style="font-size:22px;font-weight:800;color:#f0eee8;line-height:1">7<span style="font-size:14px;font-weight:400;color:#6666aa;margin-left:3px">天 6 夜</span></div>
+          </div>
+          <div>
+            <div style="font-size:10px;color:#5555aa;letter-spacing:0.5px;margin-bottom:3px">目的地</div>
+            <div style="font-size:18px;font-weight:800;color:#f0eee8;line-height:1">🇰🇷 釜山</div>
+          </div>
+          <div>
+            <div style="font-size:10px;color:#5555aa;letter-spacing:0.5px;margin-bottom:3px">成員</div>
+            <div style="font-size:14px;font-weight:700;color:#f0eee8">2大 3小</div>
+            <div style="font-size:11px;color:#6666aa">（11・9・6歲）</div>
+          </div>
+          <div>
+            <div style="font-size:10px;color:#5555aa;letter-spacing:0.5px;margin-bottom:3px">住宿</div>
+            <div style="font-size:13px;font-weight:700;color:#f0eee8">Haeundae</div>
+            <div style="font-size:11px;color:#6666aa">Centum Hotel</div>
+          </div>
+        </div>
+        <!-- Flights -->
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="background:rgba(255,255,255,0.04);border-radius:10px;padding:11px 14px;border:0.5px solid rgba(255,255,255,0.07);display:flex;align-items:center;gap:12px">
+            <span style="font-size:20px">✈️</span>
+            <div style="flex:1">
+              <div style="font-size:10px;color:#5555aa;letter-spacing:1px;margin-bottom:2px">去程 JX902</div>
+              <div style="font-size:13px;font-weight:600;color:#f0eee8">12/26（六）14:50 桃園 → 17:55 金海</div>
+            </div>
+            <div style="font-size:12px;font-weight:600;color:#C850C0">3h 05m</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.04);border-radius:10px;padding:11px 14px;border:0.5px solid rgba(255,255,255,0.07);display:flex;align-items:center;gap:12px">
+            <span style="font-size:20px">🛬</span>
+            <div style="flex:1">
+              <div style="font-size:10px;color:#5555aa;letter-spacing:1px;margin-bottom:2px">回程 JX901</div>
+              <div style="font-size:13px;font-weight:600;color:#f0eee8">1/1（五）12:30 金海 → 14:15 桃園</div>
+            </div>
+            <div style="font-size:12px;font-weight:600;color:#4158D0">1h 45m</div>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- Tips / Checklist -->
-  <section id="view-tips" class="hidden">
-    <div class="info-section">
-      <h3>🎒 行李準備清單</h3>
-      <div class="checklist-tabs">
-        <button class="cl-tab-btn active" onclick="switchClTab('docs',this)">📄 證件</button>
-        <button class="cl-tab-btn" onclick="switchClTab('clothes',this)">👗 衣物</button>
-        <button class="cl-tab-btn" onclick="switchClTab('special',this)">🎿 特殊裝備</button>
-      </div>
-      <div class="cl-progress">
-        <div class="cl-progress-bar-wrap"><div class="cl-progress-bar" id="clProgressBar" style="width:0%"></div></div>
-        <div class="cl-progress-label" id="clProgressLabel">0 / 0 完成</div>
+      <!-- Day-by-day timeline -->
+      <div class="info-section">
+        <h3>每日主題一覽</h3>
+        <div id="overviewList"></div>
       </div>
 
-      <!-- 證件 3C -->
-      <div class="checklist-group active" id="cl-docs">
-        <div class="cl-section-title">📄 重要證件</div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="d1"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">🛂 護照 × 5 本</div><div class="cl-item-note">確認有效期限 6 個月以上</div></div></div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="d2"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">機票（去回程）</div></div></div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="d3"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">飯店訂房資料</div></div></div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="d4"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title"><span class="cl-badge blue">提前</span>Visit Busan Pass</div><div class="cl-item-note">建議線上購買並截圖備存</div></div></div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="d5"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">滑雪行程預約確認</div></div></div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="d6"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">ClubD Oasis 預約</div></div></div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="d7"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">💳 海外信用卡 × 2-3 張</div></div></div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="d8"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">💴 韓元現金</div><div class="cl-item-note">換錢建議在南浦洞 BIFF 廣場附近換</div></div></div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="d9"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">📱 海外網路（韓國 SIM/eSIM）</div></div></div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="d10"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">海外旅平險</div></div></div>
-        <div class="cl-section-title">📱 3C 用品</div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="t1"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">🔋 行動電源（隨身帶・不可托運）</div></div></div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="t2"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">充電線（Lightning + Type-C）</div></div></div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="t3"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">多孔 USB 充電頭</div></div></div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="t4"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title"><span class="cl-badge gold">推薦</span>延長線</div><div class="cl-item-note">韓國插座 220V 兩圓孔・帶萬國轉接頭</div></div></div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="t5"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">Apple Watch 充電器</div></div></div>
+      <!-- Food picks -->
+      <div class="info-section">
+        <h3>🍽 推薦美食（親子友善）</h3>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="background:#0f0f1a;border-radius:10px;padding:10px 13px;border:0.5px solid #2a2a45">
+            <div style="font-size:11px;color:#C850C0;font-weight:600;margin-bottom:4px">🥩 海雲台</div>
+            <div style="font-size:12.5px;color:#c0c0e0;line-height:1.7">味贊王鹽烤肉 <span style="color:#5555aa">（專人代烤・可要求不辣）</span><br>加耶冷麵 <span style="color:#5555aa">（平板多語點餐）</span></div>
+          </div>
+          <div style="background:#0f0f1a;border-radius:10px;padding:10px 13px;border:0.5px solid #2a2a45">
+            <div style="font-size:11px;color:#4158D0;font-weight:600;margin-bottom:4px">🍗 南浦洞</div>
+            <div style="font-size:12.5px;color:#c0c0e0;line-height:1.7">密陽血腸豬肉湯飯・李在模披薩<br>巨人炸雞・BIFF廣場黑糖餅</div>
+          </div>
+          <div style="background:#0f0f1a;border-radius:10px;padding:10px 13px;border:0.5px solid #2a2a45">
+            <div style="font-size:11px;color:#e84040;font-weight:600;margin-bottom:4px">🎢 Osiria 樂天世界</div>
+            <div style="font-size:12.5px;color:#c0c0e0;line-height:1.7">劉方寧中餐廳（樂天世界內）・Lotte Mall 美食廣場</div>
+          </div>
+          <div style="background:#0f0f1a;border-radius:10px;padding:10px 13px;border:0.5px solid #2a2a45">
+            <div style="font-size:11px;color:#7c3aed;font-weight:600;margin-bottom:4px">🏬 Centum City</div>
+            <div style="font-size:12.5px;color:#c0c0e0;line-height:1.7">新世界美食街 9F（韓食・中式・日式・咖啡廳）</div>
+          </div>
+        </div>
       </div>
 
-      <!-- 衣物 -->
-      <div class="checklist-group" id="cl-clothes">
-        <div class="cl-section-title">👩 瑞秋衣物</div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="c1"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">發熱衣 × 3</div></div></div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="c2"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">毛衣 × 2・長袖 × 3</div></div></div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="c3"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">羽絨外套・長褲 × 3</div></div></div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="c4"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">圍巾・毛帽・手套</div></div></div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="c5"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">厚襪 × 5・內衣褲・睡衣</div></div></div>
-        <div class="cl-section-title">👨 爸爸衣物</div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="c6"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">發熱衣 × 3・長袖 × 3</div></div></div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="c7"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">羽絨外套・長褲 × 3・毛帽・手套</div></div></div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="c8"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">厚襪 × 5・內褲・睡衣</div></div></div>
-        <div class="cl-section-title">👧 12歲衣物</div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="c9"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">發熱衣 × 3・毛衣 × 2・長袖 × 3</div></div></div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="c10"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">羽絨外套・長褲 × 3・圍巾・毛帽・手套</div></div></div>
-        <div class="cl-section-title">👧 9歲衣物</div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="c11"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">發熱衣 × 3・毛衣 × 2・長袖 × 3</div></div></div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="c12"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">羽絨外套・長褲 × 3・圍巾・毛帽・手套</div></div></div>
-        <div class="cl-section-title">👦 6歲衣物（份量較多）</div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="c13"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">發熱衣 × 4・毛衣 × 3・長袖 × 4</div></div></div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="c14"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">羽絨外套・長褲 × 4・睡衣 × 2</div></div></div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="c15"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">內褲 × 7・手套 × 2・圍巾・厚襪 × 7</div><div class="cl-item-note">6歲容易弄濕，多帶替換</div></div></div>
+    </div><!-- /pp-summary -->
+
+    <!-- ══ VBP & 備案 ══ -->
+    <div class="prep-panel hidden" id="pp-vbp">
+
+      <div class="info-section">
+        <h3>🎫 Visit Busan Pass 使用計畫</h3>
+        <div style="background:rgba(65,88,208,0.08);border-radius:10px;padding:12px 14px;border:0.5px solid rgba(65,88,208,0.2);margin-bottom:12px">
+          <div style="font-size:12px;color:#a0b0ff;font-weight:600;margin-bottom:4px">建議購買 48 小時通行證</div>
+          <div style="font-size:11.5px;color:#8899cc;line-height:1.7">Day 2（12/27）啟用，覆蓋 Day 2–3 主要景點門票<br>購買地點：釜山站 VBP 官方櫃台 / 金海機場旅遊諮詢處<br>💡 建議提前線上購買，節省現場排隊時間</div>
+        </div>
+        <div class="vbp-row">
+          <div class="vbp-day">D2<br>12/27</div>
+          <div class="vbp-content">
+            <div class="vbp-title">海雲台一日遊</div>
+            <div class="vbp-items">🚠 Sky Capsule（普通車廂）<br>🌆 X the SKY 展望台門票<br>🏃 Running Man 體驗館（視情況）</div>
+          </div>
+        </div>
+        <div class="vbp-row">
+          <div class="vbp-day">D3<br>12/28</div>
+          <div class="vbp-content">
+            <div class="vbp-title">西釜山散策</div>
+            <div class="vbp-items">🚠 松島海上纜車 來回</div>
+          </div>
+        </div>
+        <div class="vbp-row">
+          <div class="vbp-day">D4<br>12/29</div>
+          <div class="vbp-content">
+            <div class="vbp-title">Osiria 一日遊</div>
+            <div class="vbp-items">🛷 Skyline Luge 斜坡滑車（1次）<br>🎢 樂天世界 Adventure 門票<br>🛍 東釜山 Outlet 購物折扣</div>
+          </div>
+        </div>
+        <div class="vbp-row">
+          <div class="vbp-day">D5<br>12/30</div>
+          <div class="vbp-content">
+            <div class="vbp-title">Eden Valley / 備案</div>
+            <div class="vbp-items">🏊 ClubD Oasis（水上樂園＋汗蒸幕）<br><span style="color:#5555aa;font-size:11px">※ 若不去滑雪改去 Osiria 可用</span></div>
+          </div>
+        </div>
       </div>
 
-      <!-- 特殊裝備 -->
-      <div class="checklist-group" id="cl-special">
-        <div class="cl-section-title"><span class="cl-badge red">重要</span> 滑雪用品（每人）</div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="s1"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title"><span class="cl-badge red">必備</span>防水雪褲（每人一件）</div><div class="cl-item-note">建議迪卡儂先買好，不要到韓國再買</div></div></div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="s2"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title"><span class="cl-badge red">必備</span>防水滑雪手套（每人一雙）</div><div class="cl-item-note">6歲建議備兩雙替換</div></div></div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="s3"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">厚羊毛襪・脖圍</div></div></div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="s4"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">暖暖包（每人每天 2–3 片）</div></div></div>
-        <div class="cl-section-title">♨️ ClubD Oasis 水上樂園</div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="s5"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">泳衣/泳褲（全家）</div></div></div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="s6"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">泳帽・拖鞋・保濕乳液</div></div></div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="s7"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">保溫水壺</div></div></div>
-        <div class="cl-section-title">💊 醫藥包</div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="s8"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title"><span class="cl-badge red">重要</span>兒童常備藥</div><div class="cl-item-note">退燒藥、感冒藥、止瀉藥、止吐藥、過敏藥</div></div></div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="s9"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">普拿疼・腸胃藥・OK繃・優碘</div></div></div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="s10"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">體溫計・暈車藥</div></div></div>
-        <div class="cl-section-title">🍪 孩子包（每日）</div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="s11"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">水壺・餅乾・巧克力・糖果</div></div></div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="s12"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">濕紙巾・暖暖包・小玩具</div></div></div>
-        <div class="cl-section-title">🧳 行李小提醒</div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="s13"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">保溫瓶・摺疊購物袋</div></div></div>
-        <div class="cl-item" onclick="toggleCl(this)" data-id="s14"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">壓縮袋・行李秤</div><div class="cl-item-note">去程 29 吋行李箱預留 30-40% 空間</div></div></div>
+      <div class="info-section">
+        <h3>🌧 各天雨天備案</h3>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="background:#0f0f1a;border-radius:10px;padding:11px 13px;border:0.5px solid #2a2a45">
+            <div style="font-size:11px;color:#4158D0;font-weight:600;margin-bottom:5px">Day 2 大雨 · 海雲台</div>
+            <div style="font-size:12px;color:#8888bb;line-height:1.8">SEA LIFE 水族館・X the SKY（室內）<br>Running Man 體驗館・東釜山 Outlet・Lotte Mall</div>
+          </div>
+          <div style="background:#0f0f1a;border-radius:10px;padding:11px 13px;border:0.5px solid #2a2a45">
+            <div style="font-size:11px;color:#7c3aed;font-weight:600;margin-bottom:5px">Day 3 大雨 · 西釜山</div>
+            <div style="font-size:12px;color:#8888bb;line-height:1.8">ARTE MUSEUM・Running Man（若未玩）<br>南浦洞換錢・BIFF 地下街・Olive Young 大採購</div>
+          </div>
+          <div style="background:#0f0f1a;border-radius:10px;padding:11px 13px;border:0.5px solid #2a2a45">
+            <div style="font-size:11px;color:#e84040;font-weight:600;margin-bottom:5px">Day 4 大雨 · Osiria</div>
+            <div style="font-size:12px;color:#8888bb;line-height:1.8">SEA LIFE 水族館・X the SKY<br>東釜山 Outlet・Lotte Mall・樂天世界（室內設施為主）</div>
+          </div>
+          <div style="background:#0f0f1a;border-radius:10px;padding:11px 13px;border:0.5px solid #2a2a45">
+            <div style="font-size:11px;color:#0891b2;font-weight:600;margin-bottom:5px">Day 5 不去滑雪 · 備案</div>
+            <div style="font-size:12px;color:#8888bb;line-height:1.8">海東龍宮寺（海景寺廟）<br>青沙浦咖啡廳・海雲台散步逛街</div>
+          </div>
+        </div>
       </div>
 
-      <button class="cl-reset" onclick="resetCl()">↺ 重置所有勾選</button>
-    </div>
+      <div class="info-section">
+        <h3>💰 預估每日花費</h3>
+        <div id="budgetRows"></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0 0;border-top:0.5px solid #1e1e35;margin-top:8px">
+          <span style="font-size:13px;font-weight:700;color:#f0eee8">全程 7 天合計</span>
+          <span style="font-size:16px;font-weight:800;color:#C850C0">KRW ~1,900,000</span>
+        </div>
+      </div>
 
-    <div class="info-section">
-      <h3>🍽 推薦美食清單</h3>
-      <div class="item">
-        <div class="k">海雲台</div>
-        <div class="v">味贊王鹽烤肉（專人代烤・可不辣）・海雲台市場小吃・加耶冷麵（平板多語點餐）</div>
-      </div>
-      <div class="item">
-        <div class="k">南浦洞</div>
-        <div class="v">豬肉湯飯・李在模披薩・巨人炸雞・BIFF廣場黑糖餅・扎嘎其魚板</div>
-      </div>
-      <div class="item">
-        <div class="k">國際市場</div>
-        <div class="v">糖餅・辣炒年糕・糯米糕</div>
-      </div>
-      <div class="item">
-        <div class="k">BIFF 廣場</div>
-        <div class="v">魚板・糖餅・糯米糕・炸物</div>
-      </div>
-      <div class="item">
-        <div class="k">Centum City</div>
-        <div class="v">新世界美食街（各式韓食・中式・日式）・美食廣場</div>
-      </div>
-    </div>
+    </div><!-- /pp-vbp -->
 
-    <div class="info-section">
-      <h3>🚇 交通攻略</h3>
-      <div class="item">
-        <div class="k">機場 → 飯店</div>
-        <div class="v">釜山金海輕軌 → 沙上站 → 地鐵 2 號線 → Centum City 站，約 50–60 分</div>
-      </div>
-      <div class="item">
-        <div class="k">叫車 APP</div>
-        <div class="v">Kakao T（推薦）・大人數建議叫 Venti 或 Van 型，可容納 5 人以上</div>
-      </div>
-      <div class="item">
-        <div class="k">跨年夜散場</div>
-        <div class="v">廣安里跨年後不搭計程車！步行至金蓮山站或水營站（約 15–20 分）搭地鐵，可避開廣安站人潮</div>
-      </div>
-    </div>
+    <!-- ══ Practical Info ══ -->
+    <div class="prep-panel hidden" id="pp-practical">
 
-    <div class="info-section">
-      <h3>🌡 天氣提醒</h3>
-      <p>12/26 – 1/1 釜山冬季，氣溫約 -3°C – 8°C，海邊更冷，廣安里跨年夜務必做好保暖。</p>
-    </div>
+      <div class="fact-grid">
+        <div class="fact-card"><div class="fact-icon">💴</div><div class="fact-label">貨幣</div><div class="fact-value">韓圜（KRW）<br><span style="font-size:11px;color:#5555aa">南浦洞換匯最優惠</span></div></div>
+        <div class="fact-card"><div class="fact-icon">🔌</div><div class="fact-label">電壓・插座</div><div class="fact-value">220V 雙圓孔<br><span style="font-size:11px;color:#5555aa">帶萬國轉接頭</span></div></div>
+        <div class="fact-card"><div class="fact-icon">🌡</div><div class="fact-label">12月天氣</div><div class="fact-value">0°C – 5°C<br><span style="font-size:11px;color:#5555aa">海邊更冷</span></div></div>
+        <div class="fact-card"><div class="fact-icon">🚕</div><div class="fact-label">主要交通</div><div class="fact-value">計程車為主<br><span style="font-size:11px;color:#5555aa">Kakao T 叫車</span></div></div>
+        <div class="fact-card"><div class="fact-icon">💬</div><div class="fact-label">語言</div><div class="fact-value">韓語<br><span style="font-size:11px;color:#5555aa">+ Papago 翻譯</span></div></div>
+        <div class="fact-card"><div class="fact-icon">💳</div><div class="fact-label">付款</div><div class="fact-value">現金 + 信用卡<br><span style="font-size:11px;color:#5555aa">大部分可刷卡</span></div></div>
+      </div>
 
-    <div class="info-section">
-      <h3>🛍 購物備忘</h3>
-      <div class="item"><div class="k">必逛 ⭐⭐⭐⭐⭐</div><div class="v">新世界 Centum City：MUJI 9F・JAJU 8F・Olive Young B1/1F/2F</div></div>
-      <div class="item"><div class="k">必逛 ⭐⭐⭐⭐⭐</div><div class="v">DAISO 大創（步行3分）・ARTBOX（步行8分）</div></div>
-      <div class="item"><div class="k">推薦 ⭐⭐⭐⭐</div><div class="v">Homeplus 大超市・南浦洞國際市場・BIFF廣場黑糖餅</div></div>
-      <div class="item"><div class="k">退稅門檻</div><div class="v">單筆 KRW 15,000 以上・Olive Young 可現場退・帶護照！</div></div>
-    </div>
+      <div class="info-section">
+        <h3>🚇 交通攻略</h3>
+        <div class="item">
+          <div class="k">機場 ↔ 飯店</div>
+          <div class="v">計程車直達（推薦）・或金海輕軌→沙上站→地鐵 2 號線→Centum City 站（約 50–60 分）</div>
+        </div>
+        <div class="item">
+          <div class="k">市區移動</div>
+          <div class="v">地鐵 2 號線貫穿主要景點・Kakao T 叫大型計程車（Venti/Van）可容納全家人</div>
+        </div>
+        <div class="item">
+          <div class="k">⚠️ 跨年夜散場</div>
+          <div class="v">不要在廣安站搭地鐵！步行至金蓮山站或水營站（約 15–20 分）避開人潮，也不建議叫計程車</div>
+        </div>
+      </div>
 
-    <div class="info-section">
-      <h3>📱 必備 APP 清單</h3>
-      <div class="item">
-        <div class="k">🗺 交通導航</div>
-        <div class="v">Kakao T（叫車最方便）・韓巢地鐵（路線查詢）・NAVER Map（地圖導航）・韓國地圖（中文介面）</div>
+      <div class="info-section">
+        <h3>🧾 退稅攻略</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px">
+          <div style="background:#0f0f1a;border-radius:10px;padding:10px 8px;border:0.5px solid #2a2a45;text-align:center">
+            <div style="font-size:16px;margin-bottom:5px">🏪</div>
+            <div style="font-size:11px;font-weight:700;color:#50d090;margin-bottom:3px">現場退稅</div>
+            <div style="font-size:10.5px;color:#6666aa;line-height:1.5">出示護照<br>購買時扣除<br>（Olive Young）</div>
+          </div>
+          <div style="background:#0f0f1a;border-radius:10px;padding:10px 8px;border:0.5px solid #2a2a45;text-align:center">
+            <div style="font-size:16px;margin-bottom:5px">🏢</div>
+            <div style="font-size:11px;font-weight:700;color:#a0b0ff;margin-bottom:3px">市區退稅</div>
+            <div style="font-size:10.5px;color:#6666aa;line-height:1.5">索取退稅單<br>→ 退稅處<br>自助機台</div>
+          </div>
+          <div style="background:#0f0f1a;border-radius:10px;padding:10px 8px;border:0.5px solid #2a2a45;text-align:center">
+            <div style="font-size:16px;margin-bottom:5px">✈️</div>
+            <div style="font-size:11px;font-weight:700;color:#ffd060;margin-bottom:3px">機場退稅</div>
+            <div style="font-size:10.5px;color:#6666aa;line-height:1.5">帶退稅單<br>掃 QR Code<br>辦理完成</div>
+          </div>
+        </div>
+        <div style="background:rgba(200,80,192,0.08);border-radius:10px;padding:10px 13px;border:0.5px solid rgba(200,80,192,0.2);font-size:12px;color:#b080b0;line-height:1.7">
+          💡 門檻：單筆 KRW 15,000 以上 · 3 個月內攜出境<br>
+          ⚠️ 商品超過 KRW 75,000 需到出關後左手邊櫃台查驗<br>
+          📍 釜山藥局有退稅機台，以橘色 Global Tax Free 為主
+        </div>
       </div>
-      <div class="item">
-        <div class="k">🎢 景點票券</div>
-        <div class="v">樂天世界 APP（等待時間查詢）・愛寶樂園 APP・KKday・Klook</div>
-      </div>
-      <div class="item">
-        <div class="k">💬 翻譯通訊</div>
-        <div class="v">KakaoTalk（店家聯繫）・Google 翻譯（拍照翻譯必備）・Papago（韓文即時翻譯）</div>
-      </div>
-      <div class="item">
-        <div class="k">💰 支付換算</div>
-        <div class="v">WOWPASS（換匯電子支付）・幣值轉換器・Naver Pay・昇恆昌 everrich（機場免稅預購）</div>
-      </div>
-      <div class="item">
-        <div class="k">🛍 購物優惠</div>
-        <div class="v">Olive Young APP（會員優惠）・DAISO Mall・Starbucks Korea・GS25 / CU</div>
-      </div>
-      <div class="item">
-        <div class="k">📡 網路建議</div>
-        <div class="v">eSIM 推薦：KKday eSIM・airalo・trifa・Klook eSIM<br>抵達韓國直接使用，不需換卡</div>
-      </div>
-    </div>
 
-    <div class="info-section">
-      <h3>📋 每日攜帶物品</h3>
-      <div class="item"><div class="k">每天必帶</div><div class="v">護照・機票・訂房確認單・T-money 卡・行動電源</div></div>
-      <div class="item"><div class="k">保暖裝備</div><div class="v">保溫瓶・水・暖暖包・帽子・手套</div></div>
-      <div class="item"><div class="k">其他</div><div class="v">濕紙巾・口罩・隨身藥品・防滑鞋・備用衣物</div></div>
-      <div class="item"><div class="k">⭐ 提醒</div><div class="v">SES 提前申請，回程通關更快速！</div></div>
-    </div>
-  </section>
+      <div class="info-section">
+        <h3>🛍 購物必逛清單</h3>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:0.5px solid #1e1e35">
+            <span style="font-size:16px;flex-shrink:0">⭐⭐⭐⭐⭐</span>
+            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">MUJI・JAJU・Olive Young</div><div style="font-size:11px;color:#5555aa">新世界百貨 9F/8F/B1·1F·2F・來釜山一定要逛</div></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:0.5px solid #1e1e35">
+            <span style="font-size:16px;flex-shrink:0">⭐⭐⭐⭐⭐</span>
+            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">DAISO 大創</div><div style="font-size:11px;color:#5555aa">步行 3 分・韓國限定商品超多・生活小物文具</div></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:0.5px solid #1e1e35">
+            <span style="font-size:16px;flex-shrink:0">⭐⭐⭐⭐</span>
+            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">ARTBOX</div><div style="font-size:11px;color:#5555aa">步行 8 分・文具・可愛雜貨・送禮自用都划算</div></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:0.5px solid #1e1e35">
+            <span style="font-size:16px;flex-shrink:0">⭐⭐⭐⭐</span>
+            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">國際市場 / BIFF 廣場</div><div style="font-size:11px;color:#5555aa">南浦洞・伴手禮・乾貨・衣物・黑糖餅必吃</div></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;padding:9px 0">
+            <span style="font-size:16px;flex-shrink:0">⭐⭐⭐⭐</span>
+            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">樂天百貨 Centum City 店</div><div style="font-size:11px;color:#5555aa">新世界百貨旁・更多元品牌選擇</div></div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /pp-practical -->
+
+    <!-- ══ Checklist ══ -->
+    <div class="prep-panel hidden" id="pp-checklist">
+      <div class="info-section">
+        <h3>🎒 行李準備清單</h3>
+        <div class="checklist-tabs">
+          <button class="cl-tab-btn active" onclick="switchClTab('docs',this)">📄 證件 3C</button>
+          <button class="cl-tab-btn" onclick="switchClTab('clothes',this)">👗 衣物</button>
+          <button class="cl-tab-btn" onclick="switchClTab('special',this)">🎿 特殊裝備</button>
+        </div>
+        <div class="cl-progress">
+          <div class="cl-progress-bar-wrap"><div class="cl-progress-bar" id="clProgressBar" style="width:0%"></div></div>
+          <div class="cl-progress-label" id="clProgressLabel">0 / 0 完成</div>
+        </div>
+        <div class="checklist-group active" id="cl-docs">
+          <div class="cl-section-title">📄 重要證件</div>
+          <div class="cl-item" onclick="toggleCl(this)" data-id="d1"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">🛂 護照 × 5 本</div><div class="cl-item-note">確認有效期限 6 個月以上</div></div></div>
+          <div class="cl-item" onclick="toggleCl(this)" data-id="d2"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">機票（去回程確認）</div></div></div>
+          <div class="cl-item" onclick="toggleCl(this)" data-id="d3"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">飯店訂房資料</div></div></div>
+          <div class="cl-item" onclick="toggleCl(this)" data-id="d4"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title"><span class="cl-badge blue">提前購買</span>Visit Busan Pass</div><div class="cl-item-note">建議線上購買並截圖備存</div></div></div>
+          <div class="cl-item" onclick="toggleCl(this)" data-id="d5"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">滑雪行程預約確認單</div></div></div>
+          <div class="cl-item" onclick="toggleCl(this)" data-id="d6"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">💳 海外信用卡 × 2–3 張</div></div></div>
+          <div class="cl-item" onclick="toggleCl(this)" data-id="d7"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">💴 韓元現金</div><div class="cl-item-note">換錢建議在南浦洞，匯率最好</div></div></div>
+          <div class="cl-item" onclick="toggleCl(this)" data-id="d8"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">📡 韓國 eSIM / SIM 卡</div><div class="cl-item-note">KKday / Klook eSIM，抵達直接使用</div></div></div>
+          <div class="cl-item" onclick="toggleCl(this)" data-id="d9"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">海外旅平險</div></div></div>
+          <div class="cl-section-title">📱 3C 用品</div>
+          <div class="cl-item" onclick="toggleCl(this)" data-id="t1"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">🔋 行動電源（隨身帶・不可托運）</div></div></div>
+          <div class="cl-item" onclick="toggleCl(this)" data-id="t2"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">充電線（Lightning + Type-C）</div></div></div>
+          <div class="cl-item" onclick="toggleCl(this)" data-id="t3"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">多孔 USB 充電頭</div></div></div>
+          <div class="cl-item" onclick="toggleCl(this)" data-id="t4"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title"><span class="cl-badge gold">推薦</span>延長線 + 萬國轉接頭</div><div class="cl-item-note">韓國插座 220V 雙圓孔</div></div></div>
+          <div class="cl-item" onclick="toggleCl(this)" data-id="t5"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">Apple Watch 充電器</div></div></div>
+        </div>
+        <div class="checklist-group" id="cl-clothes">
+          <div class="cl-section-title">👩 瑞秋衣物</div>
+          <div class="cl-item" onclick="toggleCl(this)" data-id="c1"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">發熱衣 × 3・毛衣 × 2・長袖 × 3</div></div></div>
+          <div class="cl-item" onclick="toggleCl(this)" data-id="c2"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">羽絨外套・長褲 × 3・睡衣</div></div></div>
+          <div class="cl-item" onclick="toggleCl(this)" data-id="c3"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">圍巾・毛帽・手套・厚襪 × 5</div></div></div>
+          <div class="cl-section-title">👨 爸爸衣物</div>
+          <div class="cl-item" onclick="toggleCl(this)" data-id="c4"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">發熱衣 × 3・長袖 × 3・羽絨外套</div></div></div>
+          <div class="cl-item" onclick="toggleCl(this)" data-id="c5"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">長褲 × 3・毛帽・手套・厚襪 × 5</div></div></div>
+          <div class="cl-section-title">👧 11歲・9歲（各）</div>
+          <div class="cl-item" onclick="toggleCl(this)" data-id="c6"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">發熱衣 × 3・毛衣 × 2・長袖 × 3</div></div></div>
+          <div class="cl-item" onclick="toggleCl(this)" data-id="c7"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">羽絨外套・長褲 × 3・圍巾・毛帽・手套</div></div></div>
+          <div class="cl-section-title">👦 6歲（多備一份替換）</div>
+          <div class="cl-item" onclick="toggleCl(this)" data-id="c8"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">發熱衣 × 4・毛衣 × 3・長袖 × 4</div></div></div>
+          <div class="cl-item" onclick="toggleCl(this)" data-id="c9"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">羽絨外套・長褲 × 4・睡衣 × 2</div></div></div>
+          <div class="cl-item" onclick="toggleCl(this)" data-id="c10"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">內褲 × 7・手套 × 2・圍巾・厚襪 × 7</div><div class="cl-item-note">6歲容易弄濕，多帶替換</div></div></div>
+        </div>
+        <div class="checklist-group" id="cl-special">
+          <div class="cl-section-title"><span class="cl-badge red">必備</span> 滑雪用品（每人）</div>
+          <div class="cl-item" onclick="toggleCl(this)" data-id="s1"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title"><span class="cl-badge red">最重要</span>防水雪褲（每人一件）</div><div class="cl-item-note">建議迪卡儂先買好，不要到韓國再買</div></div></div>
+          <div class="cl-item" onclick="toggleCl(this)" data-id="s2"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title"><span class="cl-badge red">必備</span>防水滑雪手套（每人）</div><div class="cl-item-note">6歲建議備兩雙替換</div></div></div>
+          <div class="cl-item" onclick="toggleCl(this)" data-id="s3"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">厚羊毛襪・脖圍</div></div></div>
+          <div class="cl-item" onclick="toggleCl(this)" data-id="s4"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">暖暖包（每人每天 2–3 片）</div></div></div>
+          <div class="cl-section-title">♨️ ClubD Oasis / 水上樂園</div>
+          <div class="cl-item" onclick="toggleCl(this)" data-id="s5"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">泳衣/泳褲（全家）・泳帽</div></div></div>
+          <div class="cl-item" onclick="toggleCl(this)" data-id="s6"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">拖鞋・保溫水壺・保濕乳液</div></div></div>
+          <div class="cl-section-title">💊 醫藥包</div>
+          <div class="cl-item" onclick="toggleCl(this)" data-id="s7"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title"><span class="cl-badge red">重要</span>兒童常備藥</div><div class="cl-item-note">退燒藥・感冒藥・止瀉藥・止吐藥・抗組織胺</div></div></div>
+          <div class="cl-item" onclick="toggleCl(this)" data-id="s8"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">普拿疼・腸胃藥・OK繃・優碘・體溫計</div></div></div>
+          <div class="cl-section-title">🍪 孩子包（每日）</div>
+          <div class="cl-item" onclick="toggleCl(this)" data-id="s9"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">水壺・餅乾・巧克力・濕紙巾</div></div></div>
+          <div class="cl-item" onclick="toggleCl(this)" data-id="s10"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">暖暖包・小玩具・行動電源（大人保管）</div></div></div>
+          <div class="cl-section-title">🧳 行李小提醒</div>
+          <div class="cl-item" onclick="toggleCl(this)" data-id="s11"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">保溫瓶・摺疊購物袋・壓縮袋</div></div></div>
+          <div class="cl-item" onclick="toggleCl(this)" data-id="s12"><div class="cl-checkbox"></div><div class="cl-item-text"><div class="cl-item-title">行李秤</div><div class="cl-item-note">去程 29 吋行李箱預留 30–40% 空間</div></div></div>
+        </div>
+        <button class="cl-reset" onclick="resetCl()">↺ 重置所有勾選</button>
+      </div>
+    </div><!-- /pp-checklist -->
+
+    <!-- ══ Apps ══ -->
+    <div class="prep-panel hidden" id="pp-apps">
+      <div class="info-section">
+        <h3>📱 出發前必裝 APP</h3>
+        <div style="background:rgba(65,88,208,0.08);border-radius:10px;padding:10px 14px;border:0.5px solid rgba(65,88,208,0.2);margin-bottom:14px;font-size:12px;color:#8899cc">
+          💡 出發前下載設好，建議完成離線地圖與翻譯！大部分 APP 可以下載離線版。
+        </div>
+        <!-- Transport -->
+        <div style="font-size:11px;font-weight:700;color:#5555aa;letter-spacing:0.5px;margin-bottom:8px">🚕 交通・叫車</div>
+        <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px">
+          <div style="background:#0f0f1a;border-radius:10px;padding:10px 12px;border:0.5px solid #2a2a45;display:flex;gap:10px;align-items:center">
+            <span style="font-size:20px;flex-shrink:0">🚖</span>
+            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">Kakao T</div><div style="font-size:11.5px;color:#7777aa">韓國最大叫車 APP・可叫一般計程車・機場接送・代駕</div></div>
+          </div>
+          <div style="background:#0f0f1a;border-radius:10px;padding:10px 12px;border:0.5px solid #2a2a45;display:flex;gap:10px;align-items:center">
+            <span style="font-size:20px;flex-shrink:0">🚇</span>
+            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">韓巢地鐵</div><div style="font-size:11.5px;color:#7777aa">查詢地鐵路線・時刻表・票價・支援中韓雙語</div></div>
+          </div>
+          <div style="background:#0f0f1a;border-radius:10px;padding:10px 12px;border:0.5px solid #2a2a45;display:flex;gap:10px;align-items:center">
+            <span style="font-size:20px;flex-shrink:0">🗺</span>
+            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">韓國地圖 / NAVER Map</div><div style="font-size:11.5px;color:#7777aa">中文介面地圖・可離線使用・搜尋餐廳景點最準確</div></div>
+          </div>
+        </div>
+        <!-- Communication -->
+        <div style="font-size:11px;font-weight:700;color:#5555aa;letter-spacing:0.5px;margin-bottom:8px">💬 翻譯・通訊</div>
+        <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px">
+          <div style="background:#0f0f1a;border-radius:10px;padding:10px 12px;border:0.5px solid #2a2a45;display:flex;gap:10px;align-items:center">
+            <span style="font-size:20px;flex-shrink:0">🐦</span>
+            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">Papago</div><div style="font-size:11.5px;color:#7777aa">NAVER 出品・韓文最強翻譯 APP・拍照即翻超好用</div></div>
+          </div>
+          <div style="background:#0f0f1a;border-radius:10px;padding:10px 12px;border:0.5px solid #2a2a45;display:flex;gap:10px;align-items:center">
+            <span style="font-size:20px;flex-shrink:0">💬</span>
+            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">KakaoTalk</div><div style="font-size:11.5px;color:#7777aa">免費通話・可聯絡飯店、店家、計程車司機</div></div>
+          </div>
+          <div style="background:#0f0f1a;border-radius:10px;padding:10px 12px;border:0.5px solid #2a2a45;display:flex;gap:10px;align-items:center">
+            <span style="font-size:20px;flex-shrink:0">🌐</span>
+            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">Google 翻譯</div><div style="font-size:11.5px;color:#7777aa">拍照・語音・文字翻譯都很好用</div></div>
+          </div>
+        </div>
+        <!-- Tickets & payment -->
+        <div style="font-size:11px;font-weight:700;color:#5555aa;letter-spacing:0.5px;margin-bottom:8px">🎟 票券・支付</div>
+        <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px">
+          <div style="background:#0f0f1a;border-radius:10px;padding:10px 12px;border:0.5px solid #2a2a45;display:flex;gap:10px;align-items:center">
+            <span style="font-size:20px;flex-shrink:0">🎡</span>
+            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">樂天世界 APP</div><div style="font-size:11.5px;color:#7777aa">查看設施等待時間・地圖導覽・可線上購票預約</div></div>
+          </div>
+          <div style="background:#0f0f1a;border-radius:10px;padding:10px 12px;border:0.5px solid #2a2a45;display:flex;gap:10px;align-items:center">
+            <span style="font-size:20px;flex-shrink:0">💳</span>
+            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">WOWPASS</div><div style="font-size:11.5px;color:#7777aa">外國人專屬換幣卡・可換匯・結帳・還能退稅</div></div>
+          </div>
+          <div style="background:#0f0f1a;border-radius:10px;padding:10px 12px;border:0.5px solid #2a2a45;display:flex;gap:10px;align-items:center">
+            <span style="font-size:20px;flex-shrink:0">💱</span>
+            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">幣值轉換器</div><div style="font-size:11.5px;color:#7777aa">即時率換算・購物時最實用</div></div>
+          </div>
+        </div>
+        <!-- Shopping -->
+        <div style="font-size:11px;font-weight:700;color:#5555aa;letter-spacing:0.5px;margin-bottom:8px">🛍 購物・優惠</div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div style="background:#0f0f1a;border-radius:10px;padding:10px 12px;border:0.5px solid #2a2a45;display:flex;gap:10px;align-items:center">
+            <span style="font-size:20px;flex-shrink:0">🌿</span>
+            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">Olive Young APP</div><div style="font-size:11.5px;color:#7777aa">會員優惠・積點・限定組合超好買</div></div>
+          </div>
+          <div style="background:#0f0f1a;border-radius:10px;padding:10px 12px;border:0.5px solid #2a2a45;display:flex;gap:10px;align-items:center">
+            <span style="font-size:20px;flex-shrink:0">🏪</span>
+            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">昇恆昌 everrich APP</div><div class="font-size:11.5px;color:#7777aa">線上預購機場免稅商品・常有限定優惠</div></div>
+          </div>
+          <div style="background:#0f0f1a;border-radius:10px;padding:10px 12px;border:0.5px solid #2a2a45;display:flex;gap:10px;align-items:center">
+            <span style="font-size:20px;flex-shrink:0">🇰🇷</span>
+            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">Visit Korea</div><div style="font-size:11.5px;color:#7777aa">韓國觀光公社官方 APP・優惠券與景點資訊</div></div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /pp-apps -->
+
+  </section><!-- /view-prep -->
+
 </main>
 
 <button class="fab" id="fab">↑</button>
-<footer>🎆 跨年快樂 · 瑞秋家 2大3小 · 釜山見！</footer>
+<footer>🎆 跨年快樂・瑞秋家 2大3小・釜山見！</footer>
 
+<!-- Guide Modal -->
 <div class="guide-modal-overlay" id="guideOverlay">
   <div class="guide-modal" id="guideModal">
     <div class="guide-modal-handle"></div>
@@ -726,19 +1020,17 @@ footer {
 <script>
 const gmap = q => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
 
-// ── TRIP DATES ──
 const TRIP_START = new Date('2025-12-26');
 const TRIP_END   = new Date('2026-01-01');
 
 function getTodayDay() {
-  const now = new Date();
-  now.setHours(0,0,0,0);
-  const start = new Date(TRIP_START);
-  start.setHours(0,0,0,0);
+  const now = new Date(); now.setHours(0,0,0,0);
+  const start = new Date(TRIP_START); start.setHours(0,0,0,0);
   const diff = Math.floor((now - start) / 86400000) + 1;
   if (diff >= 1 && diff <= 7) return diff;
   return null;
 }
+const todayN = getTodayDay();
 
 // ── DAYS DATA ──
 const days = [
@@ -749,7 +1041,7 @@ const days = [
     hotel:"Haeundae Centum Hotel", hotelAddr:"釜山市海雲台區 Centum City 旁",
     hotelMapUrl: gmap("Haeundae Centum Hotel Busan"),
     schedule:[
-      { time:"14:50", title:"✈️ 桃園機場出發 JX902", note:"建議提早到機場辦理登機及退稅" },
+      { time:"14:50", title:"✈️ 桃園機場出發 JX902", note:"建議提早到機場辦理登機" },
       { time:"17:55", title:"🛬 抵達金海機場", note:"入境後提領行李" },
       { time:"18:30", title:"🚐 大型計程車前往飯店", note:"建議預訂 6 人座大型計程車，直達 Centum Hotel",
         mapUrl: gmap("釜山金海国際空港"), addr:"釜山市江西區大渚洞" },
@@ -772,20 +1064,19 @@ const days = [
       { time:"09:30", title:"🚶 前往青沙浦", note:"計程車或步行・海岸拍照打卡",
         mapUrl: gmap("青沙浦灯台 釜山"), addr:"釜山市海雲台區中1洞 674" },
       { time:"10:00", title:"⛵ 青沙浦燈台・海岸散步", note:"韓劇取景地・小漁村復古氛圍・好拍照",
-        mapUrl: gmap("青沙浦灯台 釜山"), addr:"釜山市海雲台區中1洞 674" },
+        mapUrl: gmap("青沙浦灯台 釜山") },
       { time:"10:30", title:"🚠 Sky Capsule（青沙浦 → 尾浦）", note:"VBP 涵蓋・全景玻璃車廂沿海岸線行駛・水晶車廂需補差價",
         mapUrl: gmap("Sky Capsule 海雲台 尾浦"), addr:"釜山市海雲台區尾浦路 20",
         guide: "sky-capsule" },
       { time:"11:30", title:"🍽 海雲台市場午餐", note:"推薦：味贊王鹽烤肉（專人代烤・可要求不辣）",
         mapUrl: gmap("海雲台市場 釜山"), addr:"釜山市海雲台區海雲台路 584" },
-      { time:"12:30", title:"🎨 Q版肖像畫（海雲台市場內）", note:"讓插畫師幫全家畫 Q 版漫畫，超有紀念意義！",
-        mapUrl: gmap("海雲台市場 釜山") },
-      { time:"13:30", title:"🏖 海雲台沙灘散步", note:"冬天沙灘別有風情，拍照後移動" },
+      { time:"12:30", title:"🎨 Q版肖像畫（海雲台市場內）", note:"讓插畫師幫全家畫 Q 版漫畫，超有紀念意義！" },
+      { time:"13:30", title:"🏖 海雲台沙灘散步", note:"冬天沙灘別有風情" },
       { time:"16:30", title:"🌆 BUSAN X the SKY（PASS 適用）", note:"VBP 涵蓋門票・99F 釜山最高展望台・玻璃棧道必拍",
         mapUrl: gmap("X the SKY 釜山 海雲台"), addr:"釜山市海雲台區佑洞 12-1",
         guide: "x-the-sky" },
       { time:"18:30", title:"🏃 Running Man 體驗館", note:"韓綜粉絲必去・闖關任務超有趣",
-        mapUrl: gmap("Running Man Theme Experience World 釜山"), addr:"釜山市海雲台區" },
+        mapUrl: gmap("Running Man Theme Experience World 釜山") },
       { time:"20:00", title:"🏨 回飯店", note:"" }
     ]
   },
@@ -797,43 +1088,40 @@ const days = [
     hotelMapUrl: gmap("Haeundae Centum Hotel Busan"),
     schedule:[
       { time:"08:30", title:"🚕 出發前往甘川", note:"計程車約 30–40 分，建議早出發避人潮" },
-      { time:"09:30", title:"🎨 甘川文化村", note:"⭐ 建議 09:00–10:00 前抵達避開人潮！馬丘比丘式彩色巷弄超好拍",
+      { time:"09:30", title:"🎨 甘川文化村", note:"⭐ 建議 09:00–10:00 前抵達！馬丘比丘式彩色巷弄超好拍",
         mapUrl: gmap("甘川文化村 釜山"), addr:"釜山市沙下區甘川2洞" },
       { time:"11:00", title:"🚠 松島海上纜車", note:"VBP 涵蓋・俯瞰松島海灣・玻璃底車廂走在海面上",
         mapUrl: gmap("松島海上纜車 釜山"), addr:"釜山市西區南部民洞 산180-13" },
       { time:"12:00", title:"🌉 松島天空步道", note:"纜車附近・玻璃步道免費入場",
-        mapUrl: gmap("松島天空步道 釜山"), addr:"釜山市西區 암남공원" },
+        mapUrl: gmap("松島天空步道 釜山") },
       { time:"13:30", title:"🍽 南浦洞午餐", note:"推薦：密陽血腸豬肉湯飯・李在模披薩・巨人炸雞",
         mapUrl: gmap("南浦洞 釜山"), addr:"釜山市中區南浦洞" },
       { time:"14:30", title:"💱 友利換錢所", note:"南浦洞換錢最優惠・記得比較匯率",
-        mapUrl: gmap("南浦洞 換錢 友利"), addr:"南浦洞 BIFF廣場周邊" },
-      { time:"15:00", title:"📱 SES 自動通關申請", note:"機場排隊太浪費時間，建議在此辦理自動通關",
+        mapUrl: gmap("南浦洞 換錢 友利") },
+      { time:"15:00", title:"📱 SES 自動通關申請", note:"回程省時利器・此時辦比機場快",
         guide: "ses-guide" },
-      { time:"16:00", title:"🎬 BIFF 廣場・國際市場", note:"必吃黑糖餅・伴手禮掃貨・逛光復路",
+      { time:"16:00", title:"🎬 BIFF 廣場・國際市場", note:"必吃黑糖餅・伴手禮掃貨",
         mapUrl: gmap("BIFF廣場 釜山"), addr:"釜山市中區南浦洞" },
-      { time:"18:00", title:"🏬 樂天百貨光復店（有時間再逛）", note:"若體力充足可順道逛",
-        mapUrl: gmap("樂天百貨 光復店 釜山") },
       { time:"20:00", title:"🏨 回飯店", note:"" }
     ]
   },
   {
     n:4, date:"12/29", dow:"二",
     title:"Osiria 一日遊：Skyline Luge + 樂天世界",
-    focus:"Skyline Luge・Lotte Premium Outlet・Lotte Mall・樂天世界",
+    focus:"Skyline Luge・Lotte Premium Outlet・Lotte Mall・樂天世界夜間遊行",
     hotel:"Haeundae Centum Hotel", hotelAddr:"釜山市海雲台區 Centum City 旁",
     hotelMapUrl: gmap("Haeundae Centum Hotel Busan"),
     schedule:[
       { time:"09:00", title:"🚕 出發前往 Osiria", note:"計程車約 40 分，或地鐵轉東海線至 Osiria 站" },
-      { time:"10:00", title:"🛷 Skyline Luge 釜山", note:"VBP 涵蓋・斜坡滑車從山頂往下超刺激・小孩跟大人都瘋狂",
+      { time:"10:00", title:"🛷 Skyline Luge 釜山", note:"VBP 涵蓋・斜坡滑車從山頂往下超刺激",
         mapUrl: gmap("Skyline Luge Busan"), addr:"釜山市機張郡機張邑 鰈峙路 1",
         guide: "luge-guide" },
       { time:"11:30", title:"🛍 Lotte Premium Outlet", note:"品牌折扣・Nike・Adidas・各大品牌",
         mapUrl: gmap("Lotte Premium Outlet 東釜山"), addr:"釜山市機張郡機張邑 機張海岸路 147" },
-      { time:"13:00", title:"🍽 午餐・Lotte Mall", note:"Mall 內餐廳多・親子友善・中餐廳劉方寧推薦",
-        mapUrl: gmap("Lotte Mall 東釜山"), addr:"釜山市機張郡機張邑 機張海岸路 147" },
-      { time:"14:00", title:"🛒 Lotte Mall 自由逛街", note:"免稅購物・生活用品・零食・伴手禮",
+      { time:"13:00", title:"🍽 午餐・Lotte Mall", note:"Mall 內餐廳多・親子友善",
         mapUrl: gmap("Lotte Mall 東釜山") },
-      { time:"15:30", title:"🎢 樂天世界 Adventure Busan", note:"VBP 涵蓋門票・亞洲最大室外主題樂園・夜間遊行必看",
+      { time:"14:00", title:"🛒 Lotte Mall 自由逛街", note:"免稅購物・生活用品・零食" },
+      { time:"15:30", title:"🎢 樂天世界 Adventure Busan", note:"VBP 涵蓋門票・夜間遊行必看",
         mapUrl: gmap("樂天世界 釜山 Osiria"), addr:"釜山市機張郡機張邑 機張海岸路 147",
         guide: "lotte-world" },
       { time:"20:00", title:"🏨 回飯店", note:"Osiria 站→東海線→地鐵→Centum City 站" }
@@ -842,7 +1130,7 @@ const days = [
   {
     n:5, date:"12/30", dow:"三",
     title:"Eden Valley 玩雪・雪盆",
-    focus:"海雲台站集合・Eden Valley 玩雪滑雪橇・返回依行程",
+    focus:"海雲台站集合・Eden Valley 玩雪滑雪橇",
     hotel:"Haeundae Centum Hotel", hotelAddr:"釜山市海雲台區 Centum City 旁",
     hotelMapUrl: gmap("Haeundae Centum Hotel Busan"),
     schedule:[
@@ -851,11 +1139,10 @@ const days = [
       { time:"09:20", title:"🏔 Eden Valley 抵達", note:"釜山近郊唯一滑雪場・距市區約 50 分",
         mapUrl: gmap("Eden Valley Resort 釜山"), addr:"慶南 梁山市 上北面 大石里 191",
         guide: "eden-valley" },
-      { time:"09:30", title:"⛷ 玩雪・雪盆・滑雪體驗", note:"6歲→雪盆場・9/11歲→可試初級坡・大人→依喜好選擇",
-        mapUrl: gmap("Eden Valley Ski Resort Korea") },
-      { time:"12:30", title:"🍽 雪場午餐", note:"雪場內餐廳・簡單補充體力" },
-      { time:"15:00", title:"🚕 返回（依行程）", note:"若行程充裕可繼續玩・依實際狀況彈性調整" },
-      { time:"18:00", title:"🏨 回飯店休息", note:"⭐ 若滑雪場回程太晚，可考慮取消泡湯，直接回飯店休息" }
+      { time:"09:30", title:"⛷ 玩雪・雪盆・滑雪體驗", note:"6歲→雪盆場・9/11歲→可試初級坡" },
+      { time:"12:30", title:"🍽 雪場午餐", note:"雪場內餐廳補充體力" },
+      { time:"15:00", title:"🚕 返回（依行程）", note:"依實際狀況彈性調整" },
+      { time:"18:00", title:"🏨 回飯店休息", note:"⭐ 若滑雪場回程太晚，直接回飯店休息" }
     ]
   },
   {
@@ -866,17 +1153,17 @@ const days = [
     hotelMapUrl: gmap("Haeundae Centum Hotel Busan"),
     schedule:[
       { time:"09:30", title:"😴 睡晚一點・出發購物", note:"今天重頭戲在晚上，早上輕鬆出發" },
-      { time:"10:00", title:"🏬 新世界百貨 Centum City 開始逛街", note:"步行 5 分出發・MUJI → JAJU → Olive Young → 午餐 → DAISO → ARTBOX → 下午茶",
+      { time:"10:00", title:"🏬 新世界百貨 Centum City", note:"MUJI → JAJU → Olive Young → 午餐 → DAISO → ARTBOX → 下午茶",
         mapUrl: gmap("新世界百貨 Centum City 釜山"), addr:"釜山市海雲台區 Centum City",
         guide: "centum-shopping" },
-      { time:"15:00", title:"🏨 回飯店・整理戰利品・洗澡", note:"換上保暖衣服・充好電・備好暖暖包" },
-      { time:"17:45", title:"🚕 出發前往廣安里", note:"17:45 出發確保搶到好位置・建議計程車前往",
+      { time:"15:00", title:"🏨 回飯店・整理戰利品・換保暖衣", note:"備好暖暖包・充好電" },
+      { time:"17:45", title:"🚕 出發前往廣安里", note:"提早出發確保搶到好位置",
         mapUrl: gmap("廣安里海灘 釜山") },
-      { time:"18:00", title:"🌉 晚餐・散步・拍照", note:"廣安大橋夜景絕美・找好位置守住" },
+      { time:"18:00", title:"🌉 晚餐・散步・拍照", note:"廣安大橋夜景絕美" },
       { time:"20:00", title:"📍 找位置佔好夜景位", note:"海灘中間偏左至民樂港防波堤之間視角最好",
         guide: "new-year-busan" },
-      { time:"22:00", title:"🎆 官方跨年活動開始", note:"音樂表演・廣安大橋燈光秀開場" },
-      { time:"23:56", title:"🚁 無人機表演・跨年倒數", note:"廣安大橋為幕・數千架無人機倒數表演" },
+      { time:"22:00", title:"🎆 官方跨年活動開始", note:"音樂表演・廣安大橋燈光秀" },
+      { time:"23:56", title:"🚁 無人機表演・跨年倒數", note:"廣安大橋為幕・數千架無人機倒數" },
       { time:"00:00", title:"🎊 跨年煙火！HAPPY 2026！", note:"" },
       { time:"00:30", title:"🚶 散場步行回", note:"步行至金蓮山站或水營站搭地鐵（不要在廣安站搭！）",
         mapUrl: gmap("金蓮山駅 釜山") }
@@ -888,306 +1175,161 @@ const days = [
     focus:"早餐・退房・大型計程車前往機場・JX901 回台",
     hotel:"—", hotelAddr:null, hotelMapUrl:null,
     schedule:[
-      { time:"07:00", title:"🍳 早餐", note:"飯店早餐或附近便利商店" },
+      { time:"07:00", title:"🍳 早餐", note:"飯店早餐或便利商店" },
       { time:"08:00", title:"🧳 收行李", note:"行李秤確認重量・壓縮袋打包戰利品" },
       { time:"08:30", title:"🚪 退房", note:"" },
-      { time:"09:00", title:"🚐 大型計程車前往機場", note:"Haeundae Centum Hotel → 金海機場，約 40–50 分",
+      { time:"09:00", title:"🚐 大型計程車前往機場", note:"約 40–50 分",
         mapUrl: gmap("釜山金海国際空港") },
-      { time:"10:00", title:"✈️ 機場辦理登機・退稅", note:"預留足夠時間辦退稅・行李托運",
+      { time:"10:00", title:"✈️ 機場辦理登機・退稅", note:"預留足夠時間辦退稅",
         guide: "tax-refund" },
       { time:"12:30", title:"🛫 JX901 金海機場出發", note:"" },
       { time:"14:15", title:"🏠 抵達桃園機場", note:"平安回家！7天6夜跨年旅程圓滿結束 🎉" }
     ]
   }
-]
+];
 
-// ── GUIDE DATA ──
+// ── GUIDE DATA (小提醒/攻略卡片內容) ──
+const GUIDES = {
+  "sky-capsule": {
+    icon:"🚠", title:"Sky Capsule 搭乘攻略", sub:"青沙浦 → 尾浦・海景纜車", color:"#4158D0",
+    body:`<p>連接青沙浦與尾浦的海景纜車，全程約 1.5 公里，可俯瞰整段海岸線。</p>
+      <ul>
+        <li><b>車廂種類：</b>一般車廂（VBP 已涵蓋）／水晶透明車廂（需現場加價）</li>
+        <li><b>建議：</b>假日人潮較多，建議提早前往現場排隊或線上預約時段</li>
+        <li><b>拍照重點：</b>車廂內可拍到青沙浦燈塔與海岸線全景</li>
+        <li><b>所需時間：</b>單程約 10–15 分鐘</li>
+      </ul>`
+  },
+  "x-the-sky": {
+    icon:"🌆", title:"BUSAN X the SKY 導覽", sub:"海雲台 99 樓展望台", color:"#7c3aed",
+    body:`<p>釜山最高的觀景台，位於海雲台 LCT 大樓 99–100 樓，VBP（Visit Busan Pass）已含門票。</p>
+      <ul>
+        <li><b>必拍：</b>玻璃棧道（Sky Walk），可俯視腳下街景，建議著襪子或使用現場提供的鞋套</li>
+        <li><b>景觀：</b>白天可遠眺廣安大橋，傍晚時段可等待日落與夜景切換</li>
+        <li><b>建議停留時間：</b>約 1 小時</li>
+        <li><b>小提醒：</b>週末黃昏時段人潮較多，建議提前 15–20 分鐘入場</li>
+      </ul>`
+  },
+  "ses-guide": {
+    icon:"📱", title:"SES 自動通關申請教學", sub:"回程省時利器", color:"#0891b2",
+    body:`<p>SES（Smart Entry Service）是韓國的自動通關系統，申請後回國可走自動通關通道，省去排隊蓋章時間。</p>
+      <ul>
+        <li><b>申請地點：</b>市區內的 SES 申請中心（無需到機場，較不用排隊）</li>
+        <li><b>需準備：</b>護照正本</li>
+        <li><b>流程：</b>現場填寫申請表 → 錄指紋與拍照 → 現場即可完成註冊</li>
+        <li><b>建議：</b>安排在行程較鬆的下午前往，避開週末人潮</li>
+        <li><b>注意：</b>並非所有國籍/簽證別皆可申請，請以現場公告為準</li>
+      </ul>`
+  },
+  "luge-guide": {
+    icon:"🛷", title:"Skyline Luge 釜山攻略", sub:"Osiria・滑坡卡丁車", color:"#e84040",
+    body:`<p>從山頂搭乘纜車上去後，乘坐無動力滑車一路滑下山，適合親子同樂，VBP 已涵蓋門票。</p>
+      <ul>
+        <li><b>玩法：</b>纜車上山 → 滑車滑下山（可重複遊玩多趟，視票種而定）</li>
+        <li><b>賽道：</b>提供不同難度賽道，初次體驗建議選較平緩路線</li>
+        <li><b>建議服裝：</b>保暖外套 + 手套（冬季山頂風大）</li>
+        <li><b>注意事項：</b>年紀太小的兒童需與大人共乘，現場會有身高限制規定</li>
+      </ul>`
+  },
+  "lotte-world": {
+    icon:"🎢", title:"樂天世界 Adventure Busan", sub:"Osiria・遊樂園全攻略", color:"#C850C0",
+    body:`<p>釜山版樂天世界，VBP 已含門票，適合安排半天到一天的時間遊玩。</p>
+      <ul>
+        <li><b>必玩設施：</b>雲霄飛車、自由落體等刺激設施，也有適合親子的溫和遊樂設施</li>
+        <li><b>夜間遊行：</b>晚上有燈光遊行表演，建議提前找好觀賞位置</li>
+        <li><b>建議：</b>先規劃想玩的設施動線，避免來回走冤枉路</li>
+        <li><b>周邊：</b>outlet 及 Lotte Mall 就在附近，可安排購物時段銜接</li>
+      </ul>`
+  },
+  "eden-valley": {
+    icon:"🏔", title:"Eden Valley 滑雪場攻略", sub:"釜山近郊唯一雪場", color:"#4158D0",
+    body:`<p>釜山近郊唯一的滑雪場，距市區約 50 分鐘車程，適合安排一日雪地體驗。</p>
+      <ul>
+        <li><b>裝備租借：</b>現場可租借雪具、雪衣雪褲，建議提早到達辦理</li>
+        <li><b>雪道分級：</b>提供初、中、高級雪道，新手建議先上初級教學區</li>
+        <li><b>穿著建議：</b>保暖層 + 防水外層 + 手套、雪鏡，室內可寄放隨身物品</li>
+        <li><b>用餐：</b>雪場內設有簡易餐飲區，建議先用餐再上雪道</li>
+      </ul>`
+  },
+  "centum-shopping": {
+    icon:"🏬", title:"新世界百貨 Centum City 購物攻略", sub:"MUJI・JAJU・Olive Young 一次逛", color:"#16a34a",
+    body:`<p>全球最大百貨公司之一，涵蓋各式品牌與生活雜貨，適合安排半天悠閒購物。</p>
+      <ul>
+        <li><b>推薦路線：</b>MUJI → JAJU → Olive Young（美妝保養）→ 美食街午餐 → DAISO → ARTBOX（文具雜貨）→ 下午茶</li>
+        <li><b>退稅：</b>單筆消費達一定金額可現場辦理退稅，記得保留收據</li>
+        <li><b>建議：</b>地下樓層設有美食街，適合安排全家午餐</li>
+        <li><b>停留時間：</b>建議預留 3–4 小時較不趕</li>
+      </ul>`
+  },
+  "new-year-busan": {
+    icon:"🎆", title:"廣安里跨年攻略", sub:"卡位・煙火觀賞重點", color:"#C850C0",
+    body:`<p>廣安里海灘是釜山最熱門的跨年煙火觀賞地點之一，以廣安大橋為背景。</p>
+      <ul>
+        <li><b>最佳觀賞位置：</b>海灘中間偏左至民樂港防波堤之間，可完整拍到大橋與煙火</li>
+        <li><b>卡位時間：</b>建議晚間 8 點前抵達卡位，跨年夜人潮眾多</li>
+        <li><b>禦寒準備：</b>海邊風大且久站等待，建議攜帶暖暖包、保溫瓶熱飲</li>
+        <li><b>交通：</b>結束後計程車與地鐵會非常擁擠，建議提前規劃離場路線或預留較長等待時間</li>
+      </ul>`
+  },
+  "tax-refund": {
+    icon:"💰", title:"機場退稅流程教學", sub:"金海機場・出境前辦理", color:"#0891b2",
+    body:`<p>在市區已辦理即時退稅的商品可能仍需在機場海關確認，購物金額較大者請預留充裕時間。</p>
+      <ul>
+        <li><b>流程：</b>辦理登機報到 → 前往海關退稅櫃檯（Tax Refund）出示商品與收據 → 蓋章/掃碼確認 → 過安檢後至退稅機或櫃檯領取現金/退回信用卡</li>
+        <li><b>需準備：</b>護照、退稅單（收據）、購買商品（部分品項需查驗實物，建議託運前先辦理）</li>
+        <li><b>建議：</b>預留至少 40–60 分鐘處理退稅流程，避免趕不上登機</li>
+        <li><b>提醒：</b>退稅金額可選現金或退回原信用卡，現金領取處通常排隊人潮較多</li>
+      </ul>`
+  }
+};
+
 function guideData(key) {
-  const guides = {
-    "sky-capsule": {
-      icon: "🚠", title: "Sky Capsule 海岸列車攻略",
-      sub: "青沙浦→尾浦・VBP 涵蓋・全景海景",
-      color: "#4158D0",
-      body: `
-        <div style="background:linear-gradient(135deg,#4158D0,#1a2a9e);border-radius:12px;padding:14px 16px;margin-bottom:14px;color:#fff">
-          <div style="font-size:11px;opacity:0.8;margin-bottom:6px">青沙浦 → 미포（尾浦） · VBP 涵蓋</div>
-          <div style="font-size:15px;font-weight:700">沿海岸線行駛的彩色膠囊列車</div>
-        </div>
-        <div class="gc-card"><span class="gc-card-icon">🎨</span><div><div class="gc-card-title">4 種顏色車廂</div><div class="gc-card-desc">藍、粉、黃、綠四色膠囊列車，每節 4 人座位，沿海岸架空軌道行駛，海景一覽無遺</div></div></div>
-        <div class="gc-card"><span class="gc-card-icon">💎</span><div><div class="gc-card-title">水晶車廂（Crystal Capsule）</div><div class="gc-card-desc">透明玻璃底板，可以直接看到海面！VBP 可乘普通車廂，升級水晶需補差價 KRW 5,000</div></div></div>
-        <div class="gc-tip"><span class="gc-tip-icon">⭐</span><span>建議早上搭乘，人少且陽光灑在海面上最美。單程 약 5 分鐘・尾浦下車後可步行至海雲台市場。</span></div>
-        <div class="gc-info-row">
-          <span class="gc-badge">VBP 涵蓋普通車廂</span>
-          <span class="gc-badge gold">早上人最少</span>
-          <span class="gc-badge green">4人一車廂</span>
-        </div>
-        <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Sky+Capsule+釜山+青沙浦" target="_blank" style="margin-top:10px;display:inline-flex">🗺 開啟導航</a>`
-    },
-    "x-the-sky": {
-      icon: "🌆", title: "X the SKY 展望台攻略",
-      sub: "海雲台 99F・411m・VBP 涵蓋門票",
-      color: "#4158D0",
-      body: `
-        <div style="background:linear-gradient(135deg,#4158D0,#1a2a9e);border-radius:12px;padding:14px 16px;margin-bottom:14px;color:#fff">
-          <div style="font-size:11px;opacity:0.8;margin-bottom:6px">海雲台 LCT 大廈 99F · 高度 411m</div>
-          <div style="font-size:22px;font-weight:800;line-height:1.2">411m</div>
-          <div style="font-size:13px;opacity:0.85">釜山最高展望台 · VBP 涵蓋</div>
-        </div>
-        <div class="gc-card"><span class="gc-card-icon">🪟</span><div><div class="gc-card-title">全景玻璃觀景台</div><div class="gc-card-desc">釜山市區・海雲台海灘・廣安大橋・韓國南海全景一覽無遺</div></div></div>
-        <div class="gc-card"><span class="gc-card-icon">😱</span><div><div class="gc-card-title">Sky Cliff 玻璃棧道</div><div class="gc-card-desc">從 411m 高空往下看，懸空玻璃地板讓人腿軟，絕對是打卡必備</div></div></div>
-        <div class="gc-tip"><span class="gc-tip-icon">💡</span><span>建議傍晚 16:00–17:00 前往，可同時欣賞白天海景和夕陽漸暗的轉換，比正中午更震撼。</span></div>
-        <div class="gc-info-row">
-          <span class="gc-badge">VBP 涵蓋門票</span>
-          <span class="gc-badge gold">傍晚最美</span>
-        </div>
-        <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=X+the+SKY+釜山+海雲台" target="_blank" style="margin-top:10px;display:inline-flex">🗺 開啟導航</a>`
-    },
-    "ses-guide": {
-      icon: "📱", title: "SES 自動通關申請",
-      sub: "回程省時利器・在韓國辦比機場快",
-      color: "#16a34a",
-      body: `
-        <div style="background:linear-gradient(135deg,#16a34a,#15803d);border-radius:12px;padding:14px 16px;margin-bottom:14px;color:#fff">
-          <div style="font-size:11px;opacity:0.8;margin-bottom:6px">Smart Entry Service · 回程加速通關</div>
-          <div style="font-size:15px;font-weight:700">回台灣自動通關免排隊！</div>
-        </div>
-        <div class="gc-tip" style="margin-bottom:12px"><span class="gc-tip-icon">⭐</span><span>在韓國辦比機場辦快！Day 3 在南浦洞附近有辦理據點，或在金海機場辦也可以。</span></div>
-        <div class="gc-card"><span class="gc-card-icon">👦</span><div><div class="gc-card-title">12歲以上可辦理</div><div class="gc-card-desc">9歲以下無法辦，11歲和9歲請先確認是否符合資格</div></div></div>
-        <div class="gc-card"><span class="gc-card-icon">📋</span><div><div class="gc-card-title">需攜帶</div><div class="gc-card-desc">護照・在台灣已設定的指紋資料。若未在台灣設定，需到台灣入出國及移民署事先辦理</div></div></div>
-        <div class="gc-info-row">
-          <span class="gc-badge green">免費申請</span>
-          <span class="gc-badge">回程省 15–30 分排隊</span>
-        </div>`
-    },
-    "luge-guide": {
-      icon: "🛷", title: "Skyline Luge 斜坡滑車攻略",
-      sub: "Osiria・VBP 涵蓋・全齡適合",
-      color: "#e84040",
-      body: `
-        <div style="background:linear-gradient(135deg,#e84040,#b52c2c);border-radius:12px;padding:14px 16px;margin-bottom:14px;color:#fff">
-          <div style="font-size:11px;opacity:0.8;margin-bottom:6px">Osiria · VBP 涵蓋斜坡滑車體驗</div>
-          <div style="font-size:15px;font-weight:700">從山頂俯衝的重力滑車！</div>
-        </div>
-        <div class="gc-card"><span class="gc-card-icon">🛷</span><div><div class="gc-card-title">斜坡滑車（Luge）</div><div class="gc-card-desc">坐在低重心小車上從山頂滑到山下，自己控制方向和速度，小孩超爽</div></div></div>
-        <div class="gc-card"><span class="gc-card-icon">🚡</span><div><div class="gc-card-title">纜椅（Skyride）上山</div><div class="gc-card-desc">搭開放式纜椅上山，一路可以俯瞰釜山海灣，上去本身就是體驗</div></div></div>
-        <div class="gc-tip"><span class="gc-tip-icon">💡</span><span>VBP 涵蓋 1 次體驗，若孩子玩完還要再玩，需另購票。建議多買幾次，孩子通常玩一次還不過癮！</span></div>
-        <div class="gc-info-row">
-          <span class="gc-badge">VBP 涵蓋 1 次</span>
-          <span class="gc-badge pink">6歲以上可乘</span>
-          <span class="gc-badge gold">開園即衝</span>
-        </div>`
-    },
-    "lotte-world": {
-      icon: "🎢", title: "樂天世界 釜山 攻略",
-      sub: "Osiria・VBP 涵蓋門票・夜間遊行不能錯過",
-      color: "#e84040",
-      body: `
-        <div style="background:linear-gradient(135deg,#e84040,#b52c2c);border-radius:12px;padding:14px 16px;margin-bottom:14px;color:#fff">
-          <div style="font-size:11px;opacity:0.8;margin-bottom:6px">釜山 Osiria · VBP 涵蓋門票</div>
-          <div style="font-size:15px;font-weight:700">亞洲最大室外主題樂園之一</div>
-        </div>
-        <div class="gc-section">🎡 必玩設施</div>
-        <div class="gc-card"><span class="gc-card-icon">🎢</span><div><div class="gc-card-title">Giant Digger</div><div class="gc-card-desc">全韓第二高雲霄飛車，180m 垂直俯衝，膽大必玩</div></div></div>
-        <div class="gc-card"><span class="gc-card-icon">🌊</span><div><div class="gc-card-title">River Splash</div><div class="gc-card-desc">激流泛舟，小孩超愛，冬天穿夠保暖也可玩</div></div></div>
-        <div class="gc-card"><span class="gc-card-icon">🎠</span><div><div class="gc-card-title">兒童專區</div><div class="gc-card-desc">6–12 歲小孩的天堂，旋轉木馬、小飛機、兒童雲霄飛車</div></div></div>
-        <div class="gc-section">🌙 夜間遊行</div>
-        <div class="gc-tip"><span class="gc-tip-icon">⭐</span><span>18:00–18:30 開始夜間遊行，LED 燈光與音樂表演，是整天最值得等待的精彩節目！提前 30 分鐘佔位。</span></div>
-        <div class="gc-info-row">
-          <span class="gc-badge">VBP 涵蓋門票</span>
-          <span class="gc-badge pink">夜間遊行必看</span>
-          <span class="gc-badge green">兒童餐廳・劉方寧</span>
-        </div>`
-    },
-    "eden-valley": {
-      icon: "🎿", title: "Eden Valley 滑雪場攻略",
-      sub: "釜山近郊唯一雪場・距市區約 50 分",
-      color: "#0891b2",
-      body: `
-        <div style="background:linear-gradient(135deg,#0891b2,#0e7490);border-radius:12px;padding:14px 16px;margin-bottom:14px;color:#fff">
-          <div style="font-size:11px;opacity:0.8;margin-bottom:6px">慶南梁山市 · 距釜山市區約 50 分</div>
-          <div style="font-size:14px;font-weight:700">釜山近郊唯一滑雪場</div>
-        </div>
-        <div class="gc-warn"><div class="gc-warn-title">📌 強烈建議：預訂含接送一日遊</div><div class="gc-warn-body">Klook / KKday 有釜山出發含接送＋裝備＋教練的套餐，省去交通麻煩，費用每人約 KRW 100,000–150,000。</div></div>
-        <div class="gc-section">👨‍👩‍👧‍👦 各年齡建議</div>
-        <div class="gc-card"><span class="gc-card-icon">👶</span><div><div class="gc-card-title">6歲</div><div class="gc-card-desc">雪盆場最適合！坐圓形雪盆滑下來，安全又超好玩，不需要技術</div></div></div>
-        <div class="gc-card"><span class="gc-card-icon">👧</span><div><div class="gc-card-title">9歲・11歲</div><div class="gc-card-desc">可以試初級坡，建議先請教練 1 小時打基礎，之後自己玩</div></div></div>
-        <div class="gc-section">🎒 必備裝備</div>
-        <div class="gc-info-row">
-          <span class="gc-badge pink">防水雪褲（最重要）</span>
-          <span class="gc-badge pink">防水手套</span>
-          <span class="gc-badge">厚羊毛襪</span>
-          <span class="gc-badge gold">暖暖包</span>
-          <span class="gc-badge">防曬乳</span>
-        </div>
-        <div class="gc-tip"><span class="gc-tip-icon">💡</span><span>雪場可租借全套裝備，但自備防水雪褲保暖度更好。6歲建議帶兩雙手套替換，濕了還有備用。</span></div>`
-    },
-    "centum-shopping": {
-      icon: "🛍", title: "Centum City 購物完整攻略",
-      sub: "飯店步行 5 分・MUJI・JAJU・Olive Young・DAISO",
-      color: "#7c3aed",
-      body: `
-        <div style="background:linear-gradient(135deg,#7c3aed,#5b21b6);border-radius:12px;padding:14px 16px;margin-bottom:14px;color:#fff">
-          <div style="font-size:11px;opacity:0.8;margin-bottom:8px">新世界百貨 Centum City · 飯店步行約 5 分鐘</div>
-          <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <span style="background:rgba(255,255,255,0.2);padding:3px 10px;border-radius:10px;font-size:12px">✅ 從飯店步行 5 分鐘</span>
-            <span style="background:rgba(255,255,255,0.2);padding:3px 10px;border-radius:10px;font-size:12px">✅ 親子友善</span>
-            <span style="background:rgba(255,255,255,0.2);padding:3px 10px;border-radius:10px;font-size:12px">✅ 下雨天備案首選</span>
-          </div>
-        </div>
-
-        <div class="gc-section">🏬 新世界百貨 Centum City Mall（必逛）</div>
-        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px">
-          <div style="background:#0f0f1a;border-radius:10px;padding:11px 13px;border:0.5px solid #2a2a45">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
-              <div style="font-size:13px;font-weight:700;color:#f0eee8">① MUJI 無印良品</div>
-              <span style="font-size:11px;color:#C850C0;background:rgba(200,80,192,0.1);padding:2px 8px;border-radius:8px">9F ⭐必逛</span>
-            </div>
-            <div style="font-size:11.5px;color:#7777aa;line-height:1.6">日本必買品牌・生活用品・文具・收納・服飾・食品一應俱全<br>🕐 10:30–20:00</div>
-          </div>
-          <div style="background:#0f0f1a;border-radius:10px;padding:11px 13px;border:0.5px solid #2a2a45">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
-              <div style="font-size:13px;font-weight:700;color:#f0eee8">② JAJU</div>
-              <span style="font-size:11px;color:#C850C0;background:rgba(200,80,192,0.1);padding:2px 8px;border-radius:8px">8F ⭐必逛</span>
-            </div>
-            <div style="font-size:11.5px;color:#7777aa;line-height:1.6">韓國版 MUJI・簡約質感生活選物・價格更親民・質感超好<br>🕐 10:30–20:00</div>
-          </div>
-          <div style="background:#0f0f1a;border-radius:10px;padding:11px 13px;border:0.5px solid #2a2a45">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
-              <div style="font-size:13px;font-weight:700;color:#f0eee8">③ Olive Young</div>
-              <span style="font-size:11px;color:#C850C0;background:rgba(200,80,192,0.1);padding:2px 8px;border-radius:8px">B1/1F/2F ⭐必逛</span>
-            </div>
-            <div style="font-size:11.5px;color:#7777aa;line-height:1.6">韓國最大美妝保養連鎖・彩妝・面膜・保養品・限定組合超好買<br>🕐 10:00–22:00 ✅可現場退稅（出示護照）</div>
-          </div>
-          <div style="background:#0f0f1a;border-radius:10px;padding:11px 13px;border:0.5px solid #2a2a45">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
-              <div style="font-size:13px;font-weight:700;color:#f0eee8">④ 新世界美食街</div>
-              <span style="font-size:11px;color:#4158D0;background:rgba(65,88,208,0.15);padding:2px 8px;border-radius:8px">9F</span>
-            </div>
-            <div style="font-size:11.5px;color:#7777aa;line-height:1.6">各式韓食・中式・日式・咖啡廳選擇多・適合全家用餐<br>🕐 10:30–21:00</div>
-          </div>
-        </div>
-
-        <div class="gc-section">🚶 步行 5–10 分可達</div>
-        <div class="gc-card"><span class="gc-card-icon">🟡</span><div><div class="gc-card-title">⑤ DAISO 大創（步行約 3 分）</div><div class="gc-card-desc">韓國限定商品超多・文具・旅行小物・廚房・分裝瓶必買！¥1,000 起・10:00–22:00</div></div></div>
-        <div class="gc-card"><span class="gc-card-icon">🐻</span><div><div class="gc-card-title">⑥ ARTBOX（步行約 8 分）</div><div class="gc-card-desc">文具・可愛雜貨・杯子・飾品・玩具・禮盒・送禮自用都很划算・¥1,000–¥10,000</div></div></div>
-        <div class="gc-card"><span class="gc-card-icon">🛒</span><div><div class="gc-card-title">⑦ Homeplus（步行約 7 分）</div><div class="gc-card-desc">大型超市・零食・泡麵・伴手禮・水果・生活用品一次購足・10:00–24:00</div></div></div>
-
-        <div class="gc-section">💡 Day 6 建議動線</div>
-        <div style="background:#0f0f1a;border-radius:10px;padding:12px 14px;border:0.5px solid #2a2a45;font-size:12px;color:#8888bb;line-height:2">
-          09:30 飯店出發 →<br>
-          10:00 新世界百貨（MUJI → JAJU）→<br>
-          11:30 午餐・美食街 →<br>
-          12:30 Olive Young → DAISO →<br>
-          14:00 ARTBOX →<br>
-          15:30 咖啡休息 →<br>
-          15:00 回飯店整理・換裝 →<br>
-          17:45 出發廣安里 🎆
-        </div>
-
-        <div class="gc-warn" style="margin-top:12px">
-          <div class="gc-warn-title">💳 退稅小提醒</div>
-          <div class="gc-warn-body">Olive Young 可現場直接退稅（出示護照），單筆 KRW 15,000 以上即可。<br>其他店家需索取「退稅單」，到百貨公司退稅處或自助機台辦理。</div>
-        </div>`
-    },
-    "new-year-busan": {
-      icon: "🎆", title: "廣安里跨年 完整攻略",
-      sub: "最佳位置・倒數攻略・散場路線",
-      color: "#C850C0",
-      body: `
-        <div style="background:linear-gradient(135deg,#C850C0,#8b1a9e);border-radius:12px;padding:14px 16px;margin-bottom:14px;color:#fff">
-          <div style="font-size:11px;opacity:0.8;margin-bottom:6px">廣安里海灘 · 2025/12/31 → 2026/1/1</div>
-          <div style="font-size:16px;font-weight:700">廣安大橋跨年倒數 🎆</div>
-        </div>
-        <div class="gc-section">📍 最佳觀賞位置</div>
-        <div class="gc-card"><span class="gc-card-icon">⭐</span><div><div class="gc-card-title">海灘中間偏左 → 民樂港防波堤</div><div class="gc-card-desc">廣安大橋正面視角最佳，無人機秀以大橋為背景展開。建議 20:00 前到場佔位！</div></div></div>
-        <div class="gc-section">🎆 跨年時程</div>
-        <div style="font-size:12px;color:#8888bb;line-height:2;background:#0f0f1a;border-radius:10px;padding:12px 14px;border:0.5px solid #2a2a45">
-          22:00 官方跨年活動開始<br>
-          23:56 無人機表演開始倒數<br>
-          00:00 跨年煙火！🎊<br>
-          00:30 散場
-        </div>
-        <div class="gc-section">⚠️ 散場路線（超重要！）</div>
-        <div class="gc-warn">
-          <div class="gc-warn-title">❌ 不要在廣安站搭地鐵</div>
-          <div class="gc-warn-body">
-            跨年夜廣安里人潮極多，廣安站會擠爆。<br><br>
-            ✅ <strong>建議步行至以下兩站之一：</strong><br>
-            🚇 金蓮山站（Geumnyeonsan）・步行約 15-20 分<br>
-            🚇 水營站（Suyeong）・步行約 15-20 分<br><br>
-            <strong>跨年夜不建議搭計程車！</strong>擁堵嚴重。
-          </div>
-        </div>
-        <div class="gc-tip" style="margin-top:10px"><span class="gc-tip-icon">🧤</span><span>廣安里海邊冬夜超冷！暖暖包貼手貼腳、毛帽圍巾手套全副武裝。小孩可帶折疊小凳子。提早晚餐（18:00 前）避免排隊。</span></div>`
-    },
-    "tax-refund": {
-      icon: "🧾", title: "韓國退稅攻略",
-      sub: "現場・市區・機場退稅三種方式",
-      color: "#16a34a",
-      body: `
-        <div style="background:linear-gradient(135deg,#16a34a,#15803d);border-radius:12px;padding:14px 16px;margin-bottom:14px;color:#fff">
-          <div style="font-size:11px;opacity:0.8;margin-bottom:6px">消費門檻：單筆 KRW 15,000 以上 · 3個月內攜帶出境</div>
-          <div style="font-size:15px;font-weight:700">退稅分 3 種方式</div>
-        </div>
-
-        <div class="gc-section">① 現場退稅（最方便）</div>
-        <div class="gc-card"><span class="gc-card-icon">🏪</span><div><div class="gc-card-title">出示護照・購買時直接扣除退稅金額</div><div class="gc-card-desc">適用店家：Olive Young、部分藥局、百貨公司專櫃。購買時出示護照，不需再去海關查驗，超簡單！</div></div></div>
-
-        <div class="gc-section">② 市區退稅</div>
-        <div class="gc-card"><span class="gc-card-icon">🏢</span><div><div class="gc-card-title">索取退稅單 → 前往退稅處辦理</div><div class="gc-card-desc">在無法現場退稅的店家消費後，索取「Tax Refund 單」，前往百貨公司或熱門商圈的市區退稅處或自助機台辦理。</div></div></div>
-
-        <div class="gc-section">③ 機場退稅</div>
-        <div class="gc-card"><span class="gc-card-icon">✈️</span><div><div class="gc-card-title">出境當天帶退稅單+護照+未拆封商品</div><div class="gc-card-desc">掃描 QR Code 辦理退稅即可成功。若商品超過 KRW 75,000 且系統提示需查驗，需至出關後左手邊的櫃台查驗。</div></div></div>
-
-        <div class="gc-warn" style="margin-top:10px">
-          <div class="gc-warn-title">💡 釜山特別提醒</div>
-          <div class="gc-warn-body">釜山很多藥局有退稅機台，但機台對應不同家退稅行號，不一定每台都適用。以橘色的 Global Tax Free 為大宗，其他要去機場或港口才能辦。</div>
-        </div>
-
-        <div class="gc-tip" style="margin-top:10px"><span class="gc-tip-icon">🛫</span><span>回程機場預留足夠時間！退稅隊伍可能很長，建議 10:00 前到機場，預留至少 2 小時辦理登機＋退稅。</span></div>`
-    }
-  };
-  return guides[key] || null;
-}
-function renderGuide(key) {
-  const g = guideData(key);
-  if (!g) return '';
-  const colorMap = {
-    "#e84040": { bg:"rgba(232,64,64,0.1)", border:"rgba(232,64,64,0.3)", text:"#ff8080" },
-    "#4158D0": { bg:"rgba(65,88,208,0.1)", border:"rgba(65,88,208,0.3)", text:"#a0b0ff" },
-    "#0891b2": { bg:"rgba(8,145,178,0.1)", border:"rgba(8,145,178,0.3)", text:"#60d0f0" },
-    "#7c3aed": { bg:"rgba(124,58,237,0.1)", border:"rgba(124,58,237,0.3)", text:"#c090ff" },
-    "#C850C0": { bg:"rgba(200,80,192,0.1)", border:"rgba(200,80,192,0.3)", text:"#e090e0" },
-  };
-  const c = colorMap[g.color] || colorMap["#4158D0"];
-  return `<button class="guide-trigger" onclick="openGuideModal('${key}')"
-    style="background:${c.bg};border:1.5px solid ${c.border};color:${c.text}">
-    <span class="gt-icon">${g.icon}</span>
-    <div class="gt-text">
-      <div class="gt-title">${g.title}</div>
-      <div class="gt-sub">${g.sub}</div>
-    </div>
-    <span class="gt-arrow">▶</span>
-  </button>`;
+  return GUIDES[key] || null;
 }
 
-// ── RENDER FUNCTIONS ──
+// ── DOM refs ──
+const scroller    = document.getElementById("dayScroller");
+const viewDay     = document.getElementById("view-day");
+const viewPrep    = document.getElementById("view-prep");
+const dayScrollerEl = document.querySelector(".day-scroller");
+const overviewList  = document.getElementById("overviewList");
+
 let activeDay = 1;
-let activeTab = "day";
+let activeTab = "prep";
+let activePrepTab = "summary";
 
-const scroller = document.getElementById("dayScroller");
-const viewDay = document.getElementById("view-day");
-const viewOverview = document.getElementById("view-overview");
-const viewTips = document.getElementById("view-tips");
-const overviewList = document.getElementById("overviewList");
+// ── TAB SWITCHING ──
+function setTab(t) {
+  activeTab = t;
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b.dataset.tab === t));
+  viewDay.classList.toggle("hidden", t !== "day");
+  viewPrep.classList.toggle("hidden", t !== "prep");
+  dayScrollerEl.style.display = t === "day" ? "" : "none";
+}
+document.querySelectorAll(".tab-btn").forEach(b =>
+  b.addEventListener("click", () => {
+    setTab(b.dataset.tab);
+    window.scrollTo({top:0, behavior:"smooth"});
+  })
+);
 
-// Auto-select today or overview
-const todayN = getTodayDay();
+function switchPrepTab(tab, btn) {
+  activePrepTab = tab;
+  document.querySelectorAll(".prep-panel").forEach(p => {
+    p.classList.remove("active"); p.style.display = "none";
+  });
+  document.querySelectorAll(".prep-sub-btn").forEach(b => b.classList.remove("active"));
+  const el = document.getElementById("pp-" + tab);
+  if (el) { el.classList.add("active"); el.style.display = "block"; }
+  if (btn) btn.classList.add("active");
+  window.scrollTo({top:0, behavior:"smooth"});
+}
 
+// ── SCROLLER ──
 function renderScroller() {
   scroller.innerHTML = days.map(d => {
-    let cls = d.n === activeDay ? 'active' : '';
-    if (d.n === todayN && d.n !== activeDay) cls += ' today';
+    let cls = d.n === activeDay ? "active" : "";
+    if (d.n === todayN && d.n !== activeDay) cls += " today";
     return `<div class="day-pill ${cls}" data-day="${d.n}">
       <div class="n">DAY ${d.n}</div>
       <div class="d">${d.date} ${d.dow}</div>
@@ -1201,11 +1343,12 @@ function renderScroller() {
       renderDay();
       const act = scroller.querySelector(".day-pill.active");
       if (act) act.scrollIntoView({behavior:"smooth",inline:"center",block:"nearest"});
-      window.scrollTo({top:0,behavior:"smooth"});
+      window.scrollTo({top:0, behavior:"smooth"});
     });
   });
 }
 
+// ── DAY VIEW ──
 function renderDay() {
   const d = days.find(x => x.n === activeDay);
   const isToday = d.n === todayN;
@@ -1216,9 +1359,9 @@ function renderDay() {
       <div class="sch-dot-col"><div class="sch-dot"></div><div class="sch-line"></div></div>
       <div class="sch-content">
         <div class="sch-title">${s.title}</div>
-        ${s.note ? `<div class="sch-note">${s.note}</div>` : ''}
-        ${s.mapUrl ? `<a class="map-link" href="${s.mapUrl}" target="_blank">🗺 ${s.addr || '開啟地圖'}</a>` : ''}
-        ${s.guide ? renderGuide(s.guide) : ''}
+        ${s.note ? `<div class="sch-note">${s.note}</div>` : ""}
+        ${s.mapUrl ? `<a class="map-link" href="${s.mapUrl}" target="_blank">🗺 ${s.addr||"開啟地圖"}</a>` : ""}
+        ${s.guide ? renderGuide(s.guide) : ""}
       </div>
     </div>`).join("");
 
@@ -1229,16 +1372,16 @@ function renderDay() {
         <div class="hname">${d.hotel}</div>
       </div></div>
       <div class="hotel-strip-details">
-        ${d.hotelAddr ? `<div class="hotel-detail-row">📍 <a href="${d.hotelMapUrl}" target="_blank">${d.hotelAddr}</a></div>` : ''}
-        ${d.hotelMapUrl ? `<a class="hotel-map-btn" href="${d.hotelMapUrl}" target="_blank">🗺 開啟 Google Maps 導航</a>` : ''}
+        ${d.hotelAddr ? `<div class="hotel-detail-row">📍 <a href="${d.hotelMapUrl}" target="_blank">${d.hotelAddr}</a></div>` : ""}
+        ${d.hotelMapUrl ? `<a class="hotel-map-btn" href="${d.hotelMapUrl}" target="_blank">🗺 開啟 Google Maps 導航</a>` : ""}
       </div>
-    </div>` : '';
+    </div>` : "";
 
   viewDay.innerHTML = `
     <div class="day-hero">
       <div class="tags">
         <span class="tag default">DAY ${d.n} · ${d.date} (${d.dow})</span>
-        ${isToday ? '<span class="tag new-year">📍 今天</span>' : ''}
+        ${isToday ? '<span class="tag new-year">📍 今天</span>' : ""}
         <span class="tag busan">🇰🇷 釜山</span>
       </div>
       <h2>${d.title}</h2>
@@ -1251,10 +1394,11 @@ function renderDay() {
     ${hotelHtml}`;
 }
 
+// ── OVERVIEW LIST ──
 function renderOverviewList() {
   overviewList.innerHTML = days.map(d => `
     <div class="item" style="cursor:pointer" data-jump="${d.n}">
-      <div class="k">Day ${d.n} · ${d.date} ${d.dow}${d.n === todayN ? ' <span style=\'font-size:10px;background:rgba(200,80,192,0.2);color:#C850C0;padding:2px 7px;border-radius:8px;margin-left:4px\'>今天</span>' : ''}</div>
+      <div class="k">Day ${d.n} · ${d.date} ${d.dow}${d.n===todayN?` <span style="font-size:10px;background:rgba(200,80,192,0.2);color:#C850C0;padding:2px 7px;border-radius:8px;margin-left:4px">今天</span>`:""}</div>
       <div class="v">${d.title}</div>
     </div>`).join("");
   overviewList.querySelectorAll("[data-jump]").forEach(el => {
@@ -1268,18 +1412,32 @@ function renderOverviewList() {
   });
 }
 
-function setTab(t) {
-  activeTab = t;
-  document.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b.dataset.tab === t));
-  viewDay.classList.toggle("hidden", t !== "day");
-  viewOverview.classList.toggle("hidden", t !== "overview");
-  viewTips.classList.toggle("hidden", t !== "tips");
-}
-document.querySelectorAll(".tab-btn").forEach(b => b.addEventListener("click", () => setTab(b.dataset.tab)));
-
-// ── MODAL ──
+// ── GUIDE MODAL ──
 const overlay = document.getElementById("guideOverlay");
-const modal = document.getElementById("guideModal");
+const modal   = document.getElementById("guideModal");
+
+function renderGuide(key) {
+  const g = guideData(key);
+  if (!g) return "";
+  const colorMap = {
+    "#e84040":{ bg:"rgba(232,64,64,0.1)", border:"rgba(232,64,64,0.3)", text:"#ff8080" },
+    "#4158D0":{ bg:"rgba(65,88,208,0.1)", border:"rgba(65,88,208,0.3)", text:"#a0b0ff" },
+    "#0891b2":{ bg:"rgba(8,145,178,0.1)", border:"rgba(8,145,178,0.3)", text:"#60d0f0" },
+    "#7c3aed":{ bg:"rgba(124,58,237,0.1)", border:"rgba(124,58,237,0.3)", text:"#c090ff" },
+    "#C850C0":{ bg:"rgba(200,80,192,0.1)", border:"rgba(200,80,192,0.3)", text:"#e090e0" },
+    "#16a34a":{ bg:"rgba(22,163,74,0.1)", border:"rgba(22,163,74,0.3)", text:"#50d090" },
+  };
+  const c = colorMap[g.color] || colorMap["#4158D0"];
+  return `<button class="guide-trigger" onclick="openGuideModal('${key}')"
+    style="background:${c.bg};border:1.5px solid ${c.border};color:${c.text}">
+    <span class="gt-icon">${g.icon}</span>
+    <div class="gt-text">
+      <div class="gt-title">${g.title}</div>
+      <div class="gt-sub">${g.sub}</div>
+    </div>
+    <span class="gt-arrow">▶</span>
+  </button>`;
+}
 
 function openGuideModal(key) {
   const g = guideData(key);
@@ -1315,7 +1473,6 @@ function toggleCl(el) {
   el.querySelector(".cl-checkbox").textContent = d[id] ? "✓" : "";
   updateClProgress();
 }
-
 function updateClProgress() {
   const ag = document.querySelector(".checklist-group.active");
   if (!ag) return;
@@ -1324,18 +1481,21 @@ function updateClProgress() {
   let done = 0;
   items.forEach(el => { if (d[el.dataset.id]) done++; });
   const pct = items.length ? Math.round(done/items.length*100) : 0;
-  document.getElementById("clProgressBar").style.width = pct + "%";
-  document.getElementById("clProgressLabel").textContent = `${done} / ${items.length} 完成`;
+  const bar = document.getElementById("clProgressBar");
+  const lbl = document.getElementById("clProgressLabel");
+  if (bar) bar.style.width = pct + "%";
+  if (lbl) lbl.textContent = done + " / " + items.length + " 完成";
 }
-
 function initCl() {
   const d = getCl();
   document.querySelectorAll(".cl-item").forEach(el => {
-    if (d[el.dataset.id]) { el.classList.add("checked"); el.querySelector(".cl-checkbox").textContent = "✓"; }
+    if (d[el.dataset.id]) {
+      el.classList.add("checked");
+      el.querySelector(".cl-checkbox").textContent = "✓";
+    }
   });
   updateClProgress();
 }
-
 function switchClTab(tab, btn) {
   const map = { docs:"cl-docs", clothes:"cl-clothes", special:"cl-special" };
   document.querySelectorAll(".checklist-group").forEach(g => g.classList.remove("active"));
@@ -1345,7 +1505,6 @@ function switchClTab(tab, btn) {
   if (btn) btn.classList.add("active");
   updateClProgress();
 }
-
 function resetCl() {
   if (!confirm("確定要重置所有勾選嗎？")) return;
   try { localStorage.removeItem(CL_KEY); } catch(e) {}
@@ -1356,32 +1515,58 @@ function resetCl() {
   updateClProgress();
 }
 
+// ── BUDGET RENDER ──
+function renderBudget() {
+  const el = document.getElementById("budgetRows");
+  if (!el) return;
+  const rows = [
+    { day:"Day 1 · 12/26", label:"抵達日", amt:150000, color:"#6666aa" },
+    { day:"Day 2 · 12/27", label:"海雲台・Sky Capsule", amt:300000, color:"#4158D0" },
+    { day:"Day 3 · 12/28", label:"西釜山・甘川・南浦洞", amt:280000, color:"#7c3aed" },
+    { day:"Day 4 · 12/29", label:"Osiria・樂天世界", amt:350000, color:"#e84040" },
+    { day:"Day 5 · 12/30", label:"Eden Valley 滑雪", amt:300000, color:"#0891b2" },
+    { day:"Day 6 · 12/31", label:"購物天堂・廣安里跨年", amt:350000, color:"#C850C0" },
+    { day:"Day 7 · 1/1",  label:"回程日", amt:150000, color:"#16a34a" },
+  ];
+  const max = Math.max(...rows.map(r => r.amt));
+  el.innerHTML = rows.map(r => `
+    <div class="budget-row">
+      <div class="budget-day"><div style="font-size:10px;color:#5555aa">${r.day.split("·")[0].trim()}</div><div style="font-size:11px;color:#8888bb;margin-top:1px">${r.label}</div></div>
+      <div class="budget-bar-wrap"><div class="budget-bar" style="width:${Math.round(r.amt/max*100)}%;background:${r.color}"></div></div>
+      <div class="budget-amt" style="color:${r.color}">~${(r.amt/1000).toFixed(0)}K</div>
+    </div>`).join("");
+}
+
 // ── FAB ──
 const fab = document.getElementById("fab");
 window.addEventListener("scroll", () => fab.classList.toggle("show", window.scrollY > 300));
 fab.addEventListener("click", () => window.scrollTo({top:0,behavior:"smooth"}));
 
 // ── INIT ──
-// If today is in trip range, show that day in day tab
-// Otherwise show overview
+// Always open on prep/overview tab
+// (During the trip, user can tap 📅 to see today's schedule)
 if (todayN) {
   activeDay = todayN;
-  activeTab = "day";
-} else {
-  // Before or after trip: show overview
-  if (new Date() < TRIP_START) {
-    activeTab = "overview";
-  }
 }
+activeTab = "prep";
 
 renderScroller();
 renderDay();
 renderOverviewList();
 initCl();
+renderBudget();
 
-if (activeTab !== "day") setTab(activeTab);
+// Ensure all prep panels hidden first, then show summary
+document.querySelectorAll(".prep-panel").forEach(p => {
+  p.classList.remove("active");
+  p.style.display = "none";
+});
+const firstPanel = document.getElementById("pp-summary");
+if (firstPanel) { firstPanel.classList.add("active"); firstPanel.style.display = "block"; }
+document.querySelectorAll(".prep-sub-btn").forEach((b, i) => b.classList.toggle("active", i === 0));
 
-// scroll to today pill
+setTab("prep");
+
 setTimeout(() => {
   const act = scroller.querySelector(".day-pill.active, .day-pill.today");
   if (act) act.scrollIntoView({behavior:"smooth",inline:"center",block:"nearest"});
