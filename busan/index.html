@@ -27,7 +27,6 @@ body {
   background: linear-gradient(135deg, #0d0d2b 0%, #1a0d3a 40%, #0d1b4b 70%, #0d2040 100%);
   color: #fff;
   padding: 20px 18px 22px;
-  position: sticky; top: 0; z-index: 50;
   padding-top: calc(20px + env(safe-area-inset-top));
   border-bottom: 0.5px solid rgba(255,255,255,0.08);
   overflow: hidden;
@@ -64,8 +63,8 @@ body {
   border-bottom: 0.5px solid #1e1e35;
   padding: 10px 0;
   position: sticky;
-  top: calc(90px + env(safe-area-inset-top));
-  z-index: 40;
+  top: env(safe-area-inset-top);
+  z-index: 50;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
@@ -90,7 +89,7 @@ body {
 .day-pill.today .n { color: #C850C0; }
 
 /* ── MAIN ── */
-main { padding: 16px 16px 80px; max-width: 600px; margin: 0 auto; }
+main { padding: 16px 16px 24px; max-width: 600px; margin: 0 auto; }
 
 /* ── TAB NAV ── */
 .tab-nav {
@@ -633,8 +632,7 @@ footer {
           </div>
           <div>
             <div style="font-size:10px;color:#5555aa;letter-spacing:0.5px;margin-bottom:3px">成員</div>
-            <div style="font-size:14px;font-weight:700;color:#f0eee8">2大 3小</div>
-            <div style="font-size:11px;color:#6666aa">（11・9・6歲）</div>
+            <div style="font-size:14px;font-weight:700;color:#f0eee8">4大 5小</div>
           </div>
           <div>
             <div style="font-size:10px;color:#5555aa;letter-spacing:0.5px;margin-bottom:3px">住宿</div>
@@ -989,6 +987,30 @@ footer {
             <div><div style="font-size:13px;font-weight:600;color:#f0eee8">Visit Korea</div><div style="font-size:11.5px;color:#7777aa">韓國觀光公社官方 APP・優惠券與景點資訊</div></div>
           </div>
         </div>
+        <!-- Extra practical apps -->
+        <div style="font-size:11px;font-weight:700;color:#5555aa;letter-spacing:0.5px;margin:14px 0 8px">✈️ 其他實用 APP</div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div style="background:#0f0f1a;border-radius:10px;padding:10px 12px;border:0.5px solid #2a2a45;display:flex;gap:10px;align-items:center">
+            <span style="font-size:20px;flex-shrink:0">💳</span>
+            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">Naver Pay</div><div style="font-size:11.5px;color:#7777aa">行動支付・優惠多・實體與線上都適用</div></div>
+          </div>
+          <div style="background:#0f0f1a;border-radius:10px;padding:10px 12px;border:0.5px solid #2a2a45;display:flex;gap:10px;align-items:center">
+            <span style="font-size:20px;flex-shrink:0">🏬</span>
+            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">CU / GS25</div><div style="font-size:11.5px;color:#7777aa">便利商店 APP・會員優惠與集點・商品資訊查詢</div></div>
+          </div>
+          <div style="background:#0f0f1a;border-radius:10px;padding:10px 12px;border:0.5px solid #2a2a45;display:flex;gap:10px;align-items:center">
+            <span style="font-size:20px;flex-shrink:0">🛒</span>
+            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">다이소몰（Daiso Mall）</div><div style="font-size:11.5px;color:#7777aa">生活用品線上購物・可查詢商品與庫存・部分商品可線上購買</div></div>
+          </div>
+          <div style="background:#0f0f1a;border-radius:10px;padding:10px 12px;border:0.5px solid #2a2a45;display:flex;gap:10px;align-items:center">
+            <span style="font-size:20px;flex-shrink:0">🧳</span>
+            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">FindTag</div><div style="font-size:11.5px;color:#7777aa">綁定防丟器裝置・可定位行李・避免行李遺失（親子出遊尤其實用）</div></div>
+          </div>
+          <div style="background:#0f0f1a;border-radius:10px;padding:10px 12px;border:0.5px solid #2a2a45;display:flex;gap:10px;align-items:center">
+            <span style="font-size:20px;flex-shrink:0">🛡</span>
+            <div><div style="font-size:13px;font-weight:600;color:#f0eee8">國泰人壽</div><div style="font-size:11.5px;color:#7777aa">旅平險服務・理賠申請・緊急支援與保單查詢</div></div>
+          </div>
+        </div>
       </div>
     </div><!-- /pp-apps -->
 
@@ -997,7 +1019,7 @@ footer {
 </main>
 
 <button class="fab" id="fab">↑</button>
-<footer>🎆 跨年快樂・瑞秋家 2大3小・釜山見！</footer>
+<footer>🎆 跨年快樂・釜山見！</footer>
 
 <!-- Guide Modal -->
 <div class="guide-modal-overlay" id="guideOverlay">
@@ -1018,7 +1040,8 @@ footer {
 </div>
 
 <script>
-const gmap = q => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
+// 韓國境內地圖搜尋以 Naver Map 為主（Google Maps 在韓國無法提供完整導航資料）
+const gmap = q => `https://map.naver.com/p/search/${encodeURIComponent(q)}`;
 
 const TRIP_START = new Date('2025-12-26');
 const TRIP_END   = new Date('2026-01-01');
@@ -1038,19 +1061,19 @@ const days = [
     n:1, date:"12/26", dow:"六",
     title:"出發日：桃園飛釜山，廣安里夜景",
     focus:"14:50 JX902 起飛・17:55 抵韓・大型計程車接送・廣安里無人機秀",
-    hotel:"Haeundae Centum Hotel", hotelAddr:"釜山市海雲台區 Centum City 旁",
-    hotelMapUrl: gmap("Haeundae Centum Hotel Busan"),
+    hotel:"Haeundae Centum Hotel", hotelAddr:"부산 해운대구 센텀3로 20",
+    hotelMapUrl: gmap("0517209000"), hotelPhone:"0517209000",
     schedule:[
       { time:"14:50", title:"✈️ 桃園機場出發 JX902", note:"建議提早到機場辦理登機" },
       { time:"17:55", title:"🛬 抵達金海機場", note:"入境後提領行李" },
       { time:"18:30", title:"🚐 大型計程車前往飯店", note:"建議預訂 6 人座大型計程車，直達 Centum Hotel",
-        mapUrl: gmap("釜山金海国際空港"), addr:"釜山市江西區大渚洞" },
+        mapUrl: gmap("김해국제공항"), addr:"부산 강서구 공항진입로 108" },
       { time:"19:30", title:"🏨 Check-in・整理行李", note:"Haeundae Centum Hotel",
-        mapUrl: gmap("Haeundae Centum Hotel Busan"), addr:"釜山市海雲台區 Centum City" },
+        mapUrl: gmap("Haeundae Centum Hotel Busan"), addr:"부산 해운대구 센텀3로 20" },
       { time:"20:30", title:"🍽 晚餐・南浦洞", note:"親子友善餐廳・可要求不辣",
-        mapUrl: gmap("南浦洞 釜山 美食"), addr:"釜山市中區南浦洞" },
+        mapUrl: gmap("남포동 맛집"), addr:"부산 중구 남포동" },
       { time:"21:00", title:"🚁 廣安里無人機秀（若趕得上）", note:"廣安大橋為背景的無人機表演・若天候取消則回飯店休息",
-        mapUrl: gmap("廣安里海灘 釜山"), addr:"廣安里海灘中間位置最佳" },
+        mapUrl: gmap("광안리해수욕장"), addr:"부산 수영구 광안리해수욕장 (해변 중앙)" },
       { time:"22:00", title:"🏨 回飯店休息", note:"" }
     ]
   },
@@ -1058,25 +1081,25 @@ const days = [
     n:2, date:"12/27", dow:"日",
     title:"海雲台一日遊：Sky Capsule & X the SKY",
     focus:"青沙浦・Sky Capsule・Q版肖像畫・海雲台市場・X the SKY・Running Man",
-    hotel:"Haeundae Centum Hotel", hotelAddr:"釜山市海雲台區 Centum City 旁",
-    hotelMapUrl: gmap("Haeundae Centum Hotel Busan"),
+    hotel:"Haeundae Centum Hotel", hotelAddr:"부산 해운대구 센텀3로 20",
+    hotelMapUrl: gmap("0517209000"), hotelPhone:"0517209000",
     schedule:[
       { time:"09:30", title:"🚶 前往青沙浦", note:"計程車或步行・海岸拍照打卡",
-        mapUrl: gmap("青沙浦灯台 釜山"), addr:"釜山市海雲台區中1洞 674" },
+        mapUrl: gmap("청사포 등대"), addr:"부산 해운대구 중동 591-7" },
       { time:"10:00", title:"⛵ 青沙浦燈台・海岸散步", note:"韓劇取景地・小漁村復古氛圍・好拍照",
-        mapUrl: gmap("青沙浦灯台 釜山") },
+        mapUrl: gmap("청사포 등대") },
       { time:"10:30", title:"🚠 Sky Capsule（青沙浦 → 尾浦）", note:"VBP 涵蓋・全景玻璃車廂沿海岸線行駛・水晶車廂需補差價",
-        mapUrl: gmap("Sky Capsule 海雲台 尾浦"), addr:"釜山市海雲台區尾浦路 20",
+        mapUrl: gmap("해운대 블루라인파크 미포정거장"), addr:"부산 해운대구 달맞이길62번길 13",
         guide: "sky-capsule" },
       { time:"11:30", title:"🍽 海雲台市場午餐", note:"推薦：味贊王鹽烤肉（專人代烤・可要求不辣）",
-        mapUrl: gmap("海雲台市場 釜山"), addr:"釜山市海雲台區海雲台路 584" },
+        mapUrl: gmap("해운대전통시장"), addr:"부산 해운대구 구남로41번길 22-1" },
       { time:"12:30", title:"🎨 Q版肖像畫（海雲台市場內）", note:"讓插畫師幫全家畫 Q 版漫畫，超有紀念意義！" },
       { time:"13:30", title:"🏖 海雲台沙灘散步", note:"冬天沙灘別有風情" },
       { time:"16:30", title:"🌆 BUSAN X the SKY（PASS 適用）", note:"VBP 涵蓋門票・99F 釜山最高展望台・玻璃棧道必拍",
-        mapUrl: gmap("X the SKY 釜山 海雲台"), addr:"釜山市海雲台區佑洞 12-1",
+        mapUrl: gmap("부산 엑스더스카이"), addr:"부산 해운대구 달맞이길 30",
         guide: "x-the-sky" },
       { time:"18:30", title:"🏃 Running Man 體驗館", note:"韓綜粉絲必去・闖關任務超有趣",
-        mapUrl: gmap("Running Man Theme Experience World 釜山") },
+        mapUrl: gmap("런닝맨 부산") },
       { time:"20:00", title:"🏨 回飯店", note:"" }
     ]
   },
@@ -1084,24 +1107,24 @@ const days = [
     n:3, date:"12/28", dow:"一",
     title:"西釜山文化散策：甘川・松島・南浦洞",
     focus:"甘川文化村・松島海上纜車・BIFF廣場換錢・SES申請",
-    hotel:"Haeundae Centum Hotel", hotelAddr:"釜山市海雲台區 Centum City 旁",
-    hotelMapUrl: gmap("Haeundae Centum Hotel Busan"),
+    hotel:"Haeundae Centum Hotel", hotelAddr:"부산 해운대구 센텀3로 20",
+    hotelMapUrl: gmap("0517209000"), hotelPhone:"0517209000",
     schedule:[
       { time:"08:30", title:"🚕 出發前往甘川", note:"計程車約 30–40 分，建議早出發避人潮" },
       { time:"09:30", title:"🎨 甘川文化村", note:"⭐ 建議 09:00–10:00 前抵達！馬丘比丘式彩色巷弄超好拍",
-        mapUrl: gmap("甘川文化村 釜山"), addr:"釜山市沙下區甘川2洞" },
+        mapUrl: gmap("감천문화마을"), addr:"부산 사하구 감내2로 203" },
       { time:"11:00", title:"🚠 松島海上纜車", note:"VBP 涵蓋・俯瞰松島海灣・玻璃底車廂走在海面上",
-        mapUrl: gmap("松島海上纜車 釜山"), addr:"釜山市西區南部民洞 산180-13" },
+        mapUrl: gmap("송도해상케이블카"), addr:"부산 서구 송도해변로 171" },
       { time:"12:00", title:"🌉 松島天空步道", note:"纜車附近・玻璃步道免費入場",
-        mapUrl: gmap("松島天空步道 釜山") },
+        mapUrl: gmap("송도구름산책로") },
       { time:"13:30", title:"🍽 南浦洞午餐", note:"推薦：密陽血腸豬肉湯飯・李在模披薩・巨人炸雞",
-        mapUrl: gmap("南浦洞 釜山"), addr:"釜山市中區南浦洞" },
-      { time:"14:30", title:"💱 友利換錢所", note:"南浦洞換錢最優惠・記得比較匯率",
-        mapUrl: gmap("南浦洞 換錢 友利") },
+        mapUrl: gmap("남포동"), addr:"부산 중구 남포동" },
+      { time:"14:30", title:"💱 友利換錢所", note:"南浦洞換錢最優惠・記得比較匯率・找不到店可撥 010-7670-7987 或直接輸入電話號碼搜尋",
+        mapUrl: gmap("우리환전 남포점") },
       { time:"15:00", title:"📱 SES 自動通關申請", note:"回程省時利器・此時辦比機場快",
         guide: "ses-guide" },
       { time:"16:00", title:"🎬 BIFF 廣場・國際市場", note:"必吃黑糖餅・伴手禮掃貨",
-        mapUrl: gmap("BIFF廣場 釜山"), addr:"釜山市中區南浦洞" },
+        mapUrl: gmap("비프광장"), addr:"부산 중구 구덕로 58-1" },
       { time:"20:00", title:"🏨 回飯店", note:"" }
     ]
   },
@@ -1109,20 +1132,20 @@ const days = [
     n:4, date:"12/29", dow:"二",
     title:"Osiria 一日遊：Skyline Luge + 樂天世界",
     focus:"Skyline Luge・Lotte Premium Outlet・Lotte Mall・樂天世界夜間遊行",
-    hotel:"Haeundae Centum Hotel", hotelAddr:"釜山市海雲台區 Centum City 旁",
-    hotelMapUrl: gmap("Haeundae Centum Hotel Busan"),
+    hotel:"Haeundae Centum Hotel", hotelAddr:"부산 해운대구 센텀3로 20",
+    hotelMapUrl: gmap("0517209000"), hotelPhone:"0517209000",
     schedule:[
       { time:"09:00", title:"🚕 出發前往 Osiria", note:"計程車約 40 分，或地鐵轉東海線至 Osiria 站" },
       { time:"10:00", title:"🛷 Skyline Luge 釜山", note:"VBP 涵蓋・斜坡滑車從山頂往下超刺激",
-        mapUrl: gmap("Skyline Luge Busan"), addr:"釜山市機張郡機張邑 鰈峙路 1",
+        mapUrl: gmap("Skyline Luge Busan"), addr:"부산 기장군 기장해안로 205",
         guide: "luge-guide" },
       { time:"11:30", title:"🛍 Lotte Premium Outlet", note:"品牌折扣・Nike・Adidas・各大品牌",
-        mapUrl: gmap("Lotte Premium Outlet 東釜山"), addr:"釜山市機張郡機張邑 機張海岸路 147" },
+        mapUrl: gmap("롯데프리미엄아울렛 동부산점"), addr:"부산 기장군 기장해안로 147" },
       { time:"13:00", title:"🍽 午餐・Lotte Mall", note:"Mall 內餐廳多・親子友善",
-        mapUrl: gmap("Lotte Mall 東釜山") },
+        mapUrl: gmap("롯데몰 동부산점") },
       { time:"14:00", title:"🛒 Lotte Mall 自由逛街", note:"免稅購物・生活用品・零食" },
       { time:"15:30", title:"🎢 樂天世界 Adventure Busan", note:"VBP 涵蓋門票・夜間遊行必看",
-        mapUrl: gmap("樂天世界 釜山 Osiria"), addr:"釜山市機張郡機張邑 機張海岸路 147",
+        mapUrl: gmap("롯데월드 어드벤처 부산"), addr:"부산 기장군 동부산관광로 42",
         guide: "lotte-world" },
       { time:"20:00", title:"🏨 回飯店", note:"Osiria 站→東海線→地鐵→Centum City 站" }
     ]
@@ -1131,13 +1154,13 @@ const days = [
     n:5, date:"12/30", dow:"三",
     title:"Eden Valley 玩雪・雪盆",
     focus:"海雲台站集合・Eden Valley 玩雪滑雪橇",
-    hotel:"Haeundae Centum Hotel", hotelAddr:"釜山市海雲台區 Centum City 旁",
-    hotelMapUrl: gmap("Haeundae Centum Hotel Busan"),
+    hotel:"Haeundae Centum Hotel", hotelAddr:"부산 해운대구 센텀3로 20",
+    hotelMapUrl: gmap("0517209000"), hotelPhone:"0517209000",
     schedule:[
       { time:"07:30", title:"🚕 海雲台站集合・出發", note:"建議預訂含接送一日遊行程",
-        mapUrl: gmap("海雲台駅 釜山") },
+        mapUrl: gmap("해운대역") },
       { time:"09:20", title:"🏔 Eden Valley 抵達", note:"釜山近郊唯一滑雪場・距市區約 50 分",
-        mapUrl: gmap("Eden Valley Resort 釜山"), addr:"慶南 梁山市 上北面 大石里 191",
+        mapUrl: gmap("에덴밸리리조트"), addr:"경남 양산시 원동면 어실로 1206",
         guide: "eden-valley" },
       { time:"09:30", title:"⛷ 玩雪・雪盆・滑雪體驗", note:"6歲→雪盆場・9/11歲→可試初級坡" },
       { time:"12:30", title:"🍽 雪場午餐", note:"雪場內餐廳補充體力" },
@@ -1149,16 +1172,16 @@ const days = [
     n:6, date:"12/31", dow:"四",
     title:"購物天堂・廣安里跨年！",
     focus:"新世界百貨血拼・整理戰利品・廣安里官方跨年倒數",
-    hotel:"Haeundae Centum Hotel", hotelAddr:"釜山市海雲台區 Centum City 旁",
-    hotelMapUrl: gmap("Haeundae Centum Hotel Busan"),
+    hotel:"Haeundae Centum Hotel", hotelAddr:"부산 해운대구 센텀3로 20",
+    hotelMapUrl: gmap("0517209000"), hotelPhone:"0517209000",
     schedule:[
       { time:"09:30", title:"😴 睡晚一點・出發購物", note:"今天重頭戲在晚上，早上輕鬆出發" },
       { time:"10:00", title:"🏬 新世界百貨 Centum City", note:"MUJI → JAJU → Olive Young → 午餐 → DAISO → ARTBOX → 下午茶",
-        mapUrl: gmap("新世界百貨 Centum City 釜山"), addr:"釜山市海雲台區 Centum City",
+        mapUrl: gmap("신세계백화점 센텀시티점"), addr:"부산 해운대구 센텀남대로 35",
         guide: "centum-shopping" },
       { time:"15:00", title:"🏨 回飯店・整理戰利品・換保暖衣", note:"備好暖暖包・充好電" },
       { time:"17:45", title:"🚕 出發前往廣安里", note:"提早出發確保搶到好位置",
-        mapUrl: gmap("廣安里海灘 釜山") },
+        mapUrl: gmap("광안리해수욕장") },
       { time:"18:00", title:"🌉 晚餐・散步・拍照", note:"廣安大橋夜景絕美" },
       { time:"20:00", title:"📍 找位置佔好夜景位", note:"海灘中間偏左至民樂港防波堤之間視角最好",
         guide: "new-year-busan" },
@@ -1166,7 +1189,7 @@ const days = [
       { time:"23:56", title:"🚁 無人機表演・跨年倒數", note:"廣安大橋為幕・數千架無人機倒數" },
       { time:"00:00", title:"🎊 跨年煙火！HAPPY 2026！", note:"" },
       { time:"00:30", title:"🚶 散場步行回", note:"步行至金蓮山站或水營站搭地鐵（不要在廣安站搭！）",
-        mapUrl: gmap("金蓮山駅 釜山") }
+        mapUrl: gmap("금련산역") }
     ]
   },
   {
@@ -1179,7 +1202,7 @@ const days = [
       { time:"08:00", title:"🧳 收行李", note:"行李秤確認重量・壓縮袋打包戰利品" },
       { time:"08:30", title:"🚪 退房", note:"" },
       { time:"09:00", title:"🚐 大型計程車前往機場", note:"約 40–50 分",
-        mapUrl: gmap("釜山金海国際空港") },
+        mapUrl: gmap("김해국제공항") },
       { time:"10:00", title:"✈️ 機場辦理登機・退稅", note:"預留足夠時間辦退稅",
         guide: "tax-refund" },
       { time:"12:30", title:"🛫 JX901 金海機場出發", note:"" },
@@ -1249,16 +1272,54 @@ const GUIDES = {
         <li><b>雪道分級：</b>提供初、中、高級雪道，新手建議先上初級教學區</li>
         <li><b>穿著建議：</b>保暖層 + 防水外層 + 手套、雪鏡，室內可寄放隨身物品</li>
         <li><b>用餐：</b>雪場內設有簡易餐飲區，建議先用餐再上雪道</li>
+        <li><b>電話：</b>0553798000（Naver Map 搜尋店名或電話號碼皆可，中文名稱搜不到）</li>
       </ul>`
   },
   "centum-shopping": {
-    icon:"🏬", title:"新世界百貨 Centum City 購物攻略", sub:"MUJI・JAJU・Olive Young 一次逛", color:"#16a34a",
-    body:`<p>全球最大百貨公司之一，涵蓋各式品牌與生活雜貨，適合安排半天悠閒購物。</p>
+    icon:"🏬", title:"釜山必逛購物地圖・Centum City", sub:"從飯店步行 5 分鐘・日系生活雜貨天堂", color:"#16a34a",
+    body:`<p>從 Haeundae Centum Hotel 步行約 5 分鐘即達，大部分店家都在同一區域，親子友善，也是下雨天備案首選。</p>
+      <div style="font-weight:700;color:#f0eee8;margin:10px 0 4px">🏢 新世界百貨 Centum City Mall</div>
       <ul>
-        <li><b>推薦路線：</b>MUJI → JAJU → Olive Young（美妝保養）→ 美食街午餐 → DAISO → ARTBOX（文具雜貨）→ 下午茶</li>
-        <li><b>退稅：</b>單筆消費達一定金額可現場辦理退稅，記得保留收據</li>
-        <li><b>建議：</b>地下樓層設有美食街，適合安排全家午餐</li>
-        <li><b>停留時間：</b>建議預留 3–4 小時較不趕</li>
+        <li><b>① MUJI 無印良品</b>（9F）－日本必買品牌，生活用品、文具、收納、服飾、食品一應俱全・10:30–20:00・價格中等</li>
+        <li><b>② JAJU</b>（8F）－韓國版 MUJI，簡約質感生活選物，價格更親民・10:30–20:00・價格中等偏低</li>
+        <li><b>③ Olive Young</b>（B1／1F／2F）－韓國最大美妝保養連鎖，彩妝、面膜、保養品、限定組合超好買・10:00–22:00・價格中等</li>
+        <li><b>④ 新世界美食街</b>（9F）－各式韓食、中式、日式、咖啡廳選擇多，適合全家用餐・10:30–21:00・價格中等</li>
+      </ul>
+      <div style="font-weight:700;color:#f0eee8;margin:10px 0 4px">🚶 步行 5–10 分鐘內可到</div>
+      <ul>
+        <li><b>⑤ DAISO 大創</b>－步行約 3 分・韓國大創商品更多元，文具、收納、廚房、旅行小物、分裝瓶必買・10:00–22:00・價格超便宜 ₩1,000 起</li>
+        <li><b>⑥ ARTBOX</b>－步行約 8 分（或計程車約 2 分）・文具、可愛雜貨、杯子、飾品、玩偶，生活小物超好逛・10:30–22:00・價格 ₩1,000–₩10,000</li>
+        <li><b>⑦ Homeplus</b>－步行約 7 分・大型超市，零食、泡麵、伴手禮、水果、生活用品一次買足・10:00–24:00・價格便宜</li>
+      </ul>
+      <div style="font-weight:700;color:#f0eee8;margin:10px 0 4px">⭐ 推薦指數</div>
+      <ul>
+        <li><b>必逛 ★★★★★：</b>MUJI／JAJU／Olive Young（來釜山一定要逛！）、DAISO（韓國限定商品超多！）</li>
+        <li><b>推薦 ★★★★☆：</b>ARTBOX（送禮自用兩相宜）、Homeplus（伴手禮補貨好地方）</li>
+        <li><b>推薦 ★★★★★：</b>新世界美食街（選擇多，方便又好吃）</li>
+      </ul>
+      <div style="font-weight:700;color:#f0eee8;margin:10px 0 4px">🕐 建議行程（Day 6 購物日安排）</div>
+      <ul>
+        <li>09:30 飯店出發 → 10:00 新世界百貨開始逛街</li>
+        <li>10:00–11:30 MUJI → JAJU</li>
+        <li>11:30–12:30 午餐・美食街</li>
+        <li>12:30–14:00 Olive Young → DAISO</li>
+        <li>14:00–15:30 ARTBOX</li>
+        <li>15:30–16:00 咖啡休息</li>
+        <li>17:00 前往廣安里跨年煙火</li>
+      </ul>
+      <div style="font-weight:700;color:#f0eee8;margin:10px 0 4px">🚕 交通方式</div>
+      <ul>
+        <li><b>步行：</b>飯店出發約 5 分鐘內到新世界百貨</li>
+        <li><b>地鐵：</b>Centum City 站（2 號線）直達</li>
+        <li><b>計程車：</b>商圈內短距離 ₩3,000–₩5,000</li>
+      </ul>
+      <div style="font-weight:700;color:#f0eee8;margin:10px 0 4px">💡 小提醒</div>
+      <ul>
+        <li>新世界百貨營業時間依公告為準，部分店家可能因天氣或活動調整營業時間</li>
+        <li>大量購買後建議回飯店先放東西再出發</li>
+        <li>有些店可退稅（滿 ₩30,000 以上）</li>
+        <li>附近便利商店：GS25、CU、7-ELEVEN（步行 2–5 分鐘內）</li>
+        <li>洗手間：各商場、百貨內皆有（參考商場樓層指示）</li>
       </ul>`
   },
   "new-year-busan": {
@@ -1272,14 +1333,37 @@ const GUIDES = {
       </ul>`
   },
   "tax-refund": {
-    icon:"💰", title:"機場退稅流程教學", sub:"金海機場・出境前辦理", color:"#0891b2",
-    body:`<p>在市區已辦理即時退稅的商品可能仍需在機場海關確認，購物金額較大者請預留充裕時間。</p>
+    icon:"💰", title:"韓國退稅標準 & 步驟", sub:"現場・市區・機場港口 三種方式", color:"#0891b2",
+    body:`<p>韓國退稅分成現場退稅、市區退稅及機場退稅三種。</p>
       <ul>
-        <li><b>流程：</b>辦理登機報到 → 前往海關退稅櫃檯（Tax Refund）出示商品與收據 → 蓋章/掃碼確認 → 過安檢後至退稅機或櫃檯領取現金/退回信用卡</li>
-        <li><b>需準備：</b>護照、退稅單（收據）、購買商品（部分品項需查驗實物，建議託運前先辦理）</li>
-        <li><b>建議：</b>預留至少 40–60 分鐘處理退稅流程，避免趕不上登機</li>
-        <li><b>提醒：</b>退稅金額可選現金或退回原信用卡，現金領取處通常排隊人潮較多</li>
-      </ul>`
+        <li><b>消費門檻：</b>單筆消費達 ₩15,000 韓元以上</li>
+        <li><b>期限限制：</b>需於 3 個月內攜帶出境</li>
+      </ul>
+      <div style="font-weight:700;color:#50d090;margin:10px 0 4px">① 現場退稅</div>
+      <ul>
+        <li>需要護照，購買時已直接扣除，沒有特別狀況不用另外找海關查驗</li>
+        <li>例：Olive Young、部分藥局、專櫃</li>
+        <li>流程：出示護照 → 購買時直接扣除退稅</li>
+      </ul>
+      <div style="font-weight:700;color:#a0b0ff;margin:10px 0 4px">② 市區退稅</div>
+      <ul>
+        <li>在無法現場退稅的店家消費後，需索取「退稅單（Tax Refund）」</li>
+        <li>前往百貨公司或熱門商圈的市區退稅處或自助機台辦理</li>
+        <li>流程：索取退稅單 → 退稅處／自助機台 → 領取退稅</li>
+      </ul>
+      <div style="font-weight:700;color:#ffd060;margin:10px 0 4px">③ 機場、港口退稅</div>
+      <ul>
+        <li>出境當天，帶著所有退稅單據、護照與未拆封的商品，前往機場處理</li>
+        <li>當天搭船離開在碼頭沒有機台，需用手機連上現場 WiFi，掃描對應退稅公司的 QRcode 辦理退稅即可成功，不用特別去請海關查驗</li>
+        <li>流程：準備退稅單據、護照與未拆封商品 → 掃描 QRcode 辦理退稅 → 退稅成功</li>
+        <li style="color:#e090e0">⚠️ 若商品超過 ₩75,000，且系統提示需查驗，請至出關後左手邊的櫃檯查驗</li>
+      </ul>
+      <div style="background:rgba(255,215,96,0.08);border-radius:10px;padding:10px 13px;border:0.5px solid rgba(255,215,96,0.2);font-size:12.5px;color:#d0c090;line-height:1.7;margin-top:8px">
+        💡 釜山很多藥局也有退稅機台，但機台會對應不同家退稅的行號，不一定每台都適用，以橘色的 Global Tax Free 為大宗。其他要去機場或港口才可以辦。
+      </div>
+      <div style="margin-top:10px">
+        <b>建議：</b>預留至少 40–60 分鐘處理機場退稅流程，避免趕不上登機；退稅金額可選現金或退回原信用卡，現金領取處通常排隊人潮較多。
+      </div>`
   }
 };
 
@@ -1372,8 +1456,9 @@ function renderDay() {
         <div class="hname">${d.hotel}</div>
       </div></div>
       <div class="hotel-strip-details">
-        ${d.hotelAddr ? `<div class="hotel-detail-row">📍 <a href="${d.hotelMapUrl}" target="_blank">${d.hotelAddr}</a></div>` : ""}
-        ${d.hotelMapUrl ? `<a class="hotel-map-btn" href="${d.hotelMapUrl}" target="_blank">🗺 開啟 Google Maps 導航</a>` : ""}
+        ${d.hotelAddr ? `<div class="hotel-detail-row">📍 ${d.hotelAddr}</div>` : ""}
+        ${d.hotelPhone ? `<div class="hotel-detail-row">📞 <a href="tel:${d.hotelPhone}">${d.hotelPhone}</a></div>` : ""}
+        ${d.hotelMapUrl ? `<a class="hotel-map-btn" href="${d.hotelMapUrl}" target="_blank">🗺 開啟 Naver Map 導航（電話搜尋）</a>` : ""}
       </div>
     </div>` : "";
 
