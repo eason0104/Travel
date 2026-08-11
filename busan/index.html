@@ -1128,8 +1128,8 @@ const todayN = getTodayDay();
 const days = [
   {
     n:1, date:"12/26", dow:"六",
-    title:"出發日：桃園飛釜山，廣安里夜景",
-    focus:"14:50 JX902 起飛・17:55 抵韓・大型計程車接送・廣安里無人機秀",
+    title:"出發日：桃園飛釜山・廣安里夜景",
+    focus:"14:50 JX902 起飛・17:55 抵韓・大型計程車接送・廣安里夜景",
     hotel:"Haeundae Centum Hotel", hotelAddr:"부산 해운대구 센텀3로 20",
     hotelMapUrl: gmap("0517209000"), hotelPhone:"0517209000",
     schedule:[
@@ -1137,38 +1137,39 @@ const days = [
       { time:"17:55", title:"🛬 抵達金海機場", note:"入境後提領行李" },
       { time:"18:30", title:"🚐 大型計程車前往飯店", note:"建議預訂 6 人座大型計程車，直達 Centum Hotel",
         mapUrl: gmap("김해국제공항"), addr:"부산 강서구 공항진입로 108" },
-      { time:"19:30", title:"🏨 Check-in・整理行李", note:"Haeundae Centum Hotel",
-        mapUrl: gmap("Haeundae Centum Hotel Busan"), addr:"부산 해운대구 센텀3로 20" },
-      { time:"20:30", title:"🍽 晚餐・南浦洞", note:"親子友善餐廳・可要求不辣",
-        mapUrl: gmap("남포동 맛집"), addr:"부산 중구 남포동" },
-      { time:"21:00", title:"🚁 廣安里無人機秀（若趕得上）", note:"廣安大橋為背景的無人機表演・若天候取消則回飯店休息",
-        mapUrl: gmap("광안리해수욕장"), addr:"부산 수영구 광안리해수욕장 (해변 중앙)" },
+      { time:"19:30", title:"🏨 入住 Haeundae Centum Hotel", note:"整理行李",
+        mapUrl: gmap("0517209000"), addr:"부산 해운대구 센텀3로 20" },
+      { time:"20:30", title:"🍽 廣安里晚餐", note:"親子友善餐廳・可要求不辣",
+        mapUrl: gmap("광안리 맛집"), addr:"부산 수영구 광안리" },
+      { time:"21:00", title:"🌉 廣安大橋夜景", note:"廣安里海灘散步・欣賞廣安大橋夜景",
+        mapUrl: gmap("광안리해수욕장"), addr:"부산 수영구 광안리해수욕장" },
+      { time:"21:00", title:"🚁 廣安里無人機秀（若當天有演出）", note:"廣安大橋為背景的無人機表演・確認當天是否有場次",
+        guide: "day1-weather" },
       { time:"22:00", title:"🏨 回飯店休息", note:"" }
     ]
   },
   {
     n:2, date:"12/27", dow:"日",
     title:"海雲台一日遊：Sky Capsule & X the SKY",
-    focus:"青沙浦・Sky Capsule・Q版肖像畫・海雲台市場・X the SKY・Running Man",
+    focus:"青沙浦散步・Sky Capsule・Q版肖像・X the SKY・Running Man",
     hotel:"Haeundae Centum Hotel", hotelAddr:"부산 해운대구 센텀3로 20",
     hotelMapUrl: gmap("0517209000"), hotelPhone:"0517209000",
     schedule:[
-      { time:"09:30", title:"🚶 前往青沙浦", note:"計程車或步行・海岸拍照打卡",
+      { time:"09:30", title:"🚶 青沙浦散步", note:"計程車或步行・海岸拍照打卡",
         mapUrl: gmap("청사포 등대"), addr:"부산 해운대구 중동 591-7" },
-      { time:"10:00", title:"⛵ 青沙浦燈台・海岸散步", note:"韓劇取景地・小漁村復古氛圍・好拍照",
-        mapUrl: gmap("청사포 등대") },
-      { time:"10:30", title:"🚠 Sky Capsule（青沙浦 → 尾浦）", note:"VBP 涵蓋・全景玻璃車廂沿海岸線行駛・水晶車廂需補差價",
+      { time:"10:30", title:"🚠 Sky Capsule（青沙浦 → 尾浦）", note:"VBP 啟用・全景玻璃車廂沿海岸線行駛・水晶車廂需補差價",
         mapUrl: gmap("해운대 블루라인파크 미포정거장"), addr:"부산 해운대구 달맞이길62번길 13",
         guide: "sky-capsule" },
       { time:"11:30", title:"🍽 海雲台市場午餐", note:"推薦：味贊王鹽烤肉（專人代烤・可要求不辣）",
         mapUrl: gmap("해운대전통시장"), addr:"부산 해운대구 구남로41번길 22-1" },
       { time:"12:30", title:"🎨 Q版肖像畫（海雲台市場內）", note:"讓插畫師幫全家畫 Q 版漫畫，超有紀念意義！" },
       { time:"13:30", title:"🏖 海雲台沙灘散步", note:"冬天沙灘別有風情" },
-      { time:"16:30", title:"🌆 BUSAN X the SKY（PASS 適用）", note:"VBP 涵蓋門票・99F 釜山最高展望台・玻璃棧道必拍",
+      { time:"16:30", title:"🌆 BUSAN X the SKY（VBP 適用）", note:"99F 釜山最高展望台・玻璃棧道必拍",
         mapUrl: gmap("부산 엑스더스카이"), addr:"부산 해운대구 달맞이길 30",
         guide: "x-the-sky" },
       { time:"18:30", title:"🏃 Running Man 體驗館", note:"韓綜粉絲必去・闖關任務超有趣",
-        mapUrl: gmap("런닝맨 부산") },
+        mapUrl: gmap("런닝맨 부산"),
+        guide: "day2-weather" },
       { time:"20:00", title:"🏨 回飯店", note:"" }
     ]
   },
@@ -1182,18 +1183,21 @@ const days = [
       { time:"08:30", title:"🚕 出發前往甘川", note:"計程車約 30–40 分，建議早出發避人潮" },
       { time:"09:30", title:"🎨 甘川文化村", note:"⭐ 建議 09:00–10:00 前抵達！馬丘比丘式彩色巷弄超好拍",
         mapUrl: gmap("감천문화마을"), addr:"부산 사하구 감내2로 203" },
-      { time:"11:00", title:"🚠 松島海上纜車", note:"VBP 涵蓋・俯瞰松島海灣・玻璃底車廂走在海面上",
+      { time:"11:00", title:"🚠 松島海上纜車（VBP 適用）", note:"俯瞰松島海灣・玻璃底車廂走在海面上",
         mapUrl: gmap("송도해상케이블카"), addr:"부산 서구 송도해변로 171" },
       { time:"12:00", title:"🌉 松島天空步道", note:"纜車附近・玻璃步道免費入場",
         mapUrl: gmap("송도구름산책로") },
       { time:"13:30", title:"🍽 南浦洞午餐", note:"推薦：密陽血腸豬肉湯飯・李在模披薩・巨人炸雞",
         mapUrl: gmap("남포동"), addr:"부산 중구 남포동" },
-      { time:"14:30", title:"💱 友利換錢所", note:"南浦洞換錢最優惠・記得比較匯率・找不到店可撥 010-7670-7987 或直接輸入電話號碼搜尋",
+      { time:"14:30", title:"💱 友利換錢所", note:"南浦洞換錢最優惠・找不到店可撥 010-7670-7987 或輸入電話號碼搜尋",
         mapUrl: gmap("우리환전 남포점") },
       { time:"15:00", title:"📱 SES 自動通關申請", note:"回程省時利器・此時辦比機場快",
         guide: "ses-guide" },
       { time:"16:00", title:"🎬 BIFF 廣場・國際市場", note:"必吃黑糖餅・伴手禮掃貨",
         mapUrl: gmap("비프광장"), addr:"부산 중구 구덕로 58-1" },
+      { time:"18:00", title:"🏬 樂天百貨光復店（依時間）", note:"若體力充足可順道逛",
+        mapUrl: gmap("롯데백화점 광복점"),
+        guide: "day3-weather" },
       { time:"20:00", title:"🏨 回飯店", note:"" }
     ]
   },
@@ -1205,24 +1209,25 @@ const days = [
     hotelMapUrl: gmap("0517209000"), hotelPhone:"0517209000",
     schedule:[
       { time:"09:00", title:"🚕 出發前往 Osiria", note:"計程車約 40 分，或地鐵轉東海線至 Osiria 站" },
-      { time:"10:00", title:"🛷 Skyline Luge 釜山", note:"VBP 涵蓋・斜坡滑車從山頂往下超刺激",
+      { time:"10:00", title:"🛷 Skyline Luge 釜山（VBP 適用）", note:"斜坡滑車從山頂往下超刺激",
         mapUrl: gmap("Skyline Luge Busan"), addr:"부산 기장군 기장해안로 205",
         guide: "luge-guide" },
-      { time:"11:30", title:"🛍 Lotte Premium Outlet", note:"品牌折扣・Nike・Adidas・各大品牌",
+      { time:"11:30", title:"🛍 東釜山 Lotte Premium Outlet", note:"品牌折扣・Nike・Adidas・各大品牌",
         mapUrl: gmap("롯데프리미엄아울렛 동부산점"), addr:"부산 기장군 기장해안로 147" },
-      { time:"13:00", title:"🍽 午餐・Lotte Mall", note:"Mall 內餐廳多・親子友善",
+      { time:"13:00", title:"🍽 Lotte Mall 午餐", note:"Mall 內餐廳多・親子友善",
         mapUrl: gmap("롯데몰 동부산점") },
       { time:"14:00", title:"🛒 Lotte Mall 自由逛街", note:"免稅購物・生活用品・零食" },
-      { time:"15:30", title:"🎢 樂天世界 Adventure Busan", note:"VBP 涵蓋門票・夜間遊行必看",
+      { time:"15:30", title:"🎢 Lotte World Adventure Busan（VBP 適用）", note:"夜間遊行必看！",
         mapUrl: gmap("롯데월드 어드벤처 부산"), addr:"부산 기장군 동부산관광로 42",
         guide: "lotte-world" },
-      { time:"20:00", title:"🏨 回飯店", note:"Osiria 站→東海線→地鐵→Centum City 站" }
+      { time:"20:00", title:"🏨 回飯店", note:"Osiria 站→東海線→地鐵→Centum City 站",
+        guide: "day4-weather" }
     ]
   },
   {
     n:5, date:"12/30", dow:"三",
     title:"Eden Valley 玩雪・雪盆",
-    focus:"海雲台站集合・Eden Valley 玩雪滑雪橇",
+    focus:"海雲台站集合・Eden Valley 玩雪・雪盆・雪地活動",
     hotel:"Haeundae Centum Hotel", hotelAddr:"부산 해운대구 센텀3로 20",
     hotelMapUrl: gmap("0517209000"), hotelPhone:"0517209000",
     schedule:[
@@ -1231,57 +1236,167 @@ const days = [
       { time:"09:20", title:"🏔 Eden Valley 抵達", note:"釜山近郊唯一滑雪場・距市區約 50 分",
         mapUrl: gmap("에덴밸리리조트"), addr:"경남 양산시 원동면 어실로 1206",
         guide: "eden-valley" },
-      { time:"09:30", title:"⛷ 玩雪・雪盆・滑雪體驗", note:"6歲→雪盆場・9/11歲→可試初級坡" },
+      { time:"09:30", title:"⛷ 玩雪・雪盆・雪地活動", note:"6歲→雪盆場・9/11歲→可試初級坡・雪地活動體驗" },
       { time:"12:30", title:"🍽 雪場午餐", note:"雪場內餐廳補充體力" },
-      { time:"15:00", title:"🚕 返回（依行程）", note:"依實際狀況彈性調整" },
+      { time:"15:00", title:"🚕 返回釜山（依行程）", note:"依雪場公告決定是否照常出團",
+        guide: "day5-weather" },
       { time:"18:00", title:"🏨 回飯店休息", note:"⭐ 若滑雪場回程太晚，直接回飯店休息" }
     ]
   },
   {
     n:6, date:"12/31", dow:"四",
-    title:"購物天堂・廣安里跨年！",
-    focus:"新世界百貨血拼・整理戰利品・廣安里官方跨年倒數",
+    title:"Centum City 購物 × 民樂水邊 × 廣安里跨年！",
+    focus:"新世界百貨血拼・民樂水邊公園散步・廣安里官方跨年倒數",
     hotel:"Haeundae Centum Hotel", hotelAddr:"부산 해운대구 센텀3로 20",
     hotelMapUrl: gmap("0517209000"), hotelPhone:"0517209000",
     schedule:[
-      { time:"09:30", title:"😴 睡晚一點・出發購物", note:"今天重頭戲在晚上，早上輕鬆出發" },
-      { time:"10:00", title:"🏬 新世界百貨 Centum City", note:"MUJI → JAJU → Olive Young → 午餐 → DAISO → ARTBOX → 下午茶",
+      { time:"09:30", title:"🚶 飯店出發（步行約 5 分鐘）", note:"今天重頭戲在晚上，早上輕鬆出發" },
+      { time:"09:35", title:"🏬 新世界百貨 Centum City（至 13:30）", note:"MUJI → JAJU → Olive Young → 地下超市・午餐在百貨內解決",
         mapUrl: gmap("신세계백화점 센텀시티점"), addr:"부산 해운대구 센텀남대로 35",
         guide: "centum-shopping" },
-      { time:"15:00", title:"🏨 回飯店・整理戰利品・換保暖衣", note:"備好暖暖包・充好電" },
-      { time:"17:45", title:"🚕 出發前往廣安里", note:"提早出發確保搶到好位置",
+      { time:"11:30", title:"🍽 百貨內午餐", note:"新世界美食街（9F）或各層餐廳" },
+      { time:"13:30", title:"🏨 回飯店休息（步行約 5 分鐘）", note:"把今天買的東西放回房間・休息補充體力・晚上跨年要耗體力！" },
+      { time:"15:30", title:"🚇 地鐵 2 號線出發", note:"Centum City 站 → Millak（民樂）站，約 2 分鐘・1 站",
+        mapUrl: gmap("센텀시티역") },
+      { time:"15:50", title:"☕ 咖啡廳 + 可愛動物（바다마루）", note:"釜山廣域市水營區民樂水邊路 29・6 樓 604–605",
+        mapUrl: gmap("바다마루 민락 동물"), addr:"부산 수영구 민락수변로 29, 6층" },
+      { time:"16:40", title:"🌊 民樂水邊公園散步", note:"一路沿著海邊散步・可看廣安大橋・Marine City・海景步道・日落",
+        mapUrl: gmap("민락수변공원"), addr:"부산 수영구 민락수변로" },
+      { time:"17:20", title:"🏖 沿海步道走到廣安里海水浴場", note:"步行約 15 分鐘・民樂水邊公園至廣安里有漂亮海岸步道",
         mapUrl: gmap("광안리해수욕장") },
-      { time:"18:00", title:"🌉 晚餐・散步・拍照", note:"廣安大橋夜景絕美" },
-      { time:"20:00", title:"📍 找位置佔好夜景位", note:"海灘中間偏左至民樂港防波堤之間視角最好",
+      { time:"18:00", title:"🍽 廣安里晚餐", note:"本家王骨馬鈴薯排骨湯・豬肉湯飯・烤肉・海鮮",
+        mapUrl: gmap("광안리 맛집") },
+      { time:"19:30", title:"🎆 廣安里自由活動・尋找跨年位置", note:"沙灘散步・廣安大橋夜景・便利商店買宵夜・卡好位置",
         guide: "new-year-busan" },
-      { time:"22:00", title:"🎆 官方跨年活動開始", note:"音樂表演・廣安大橋燈光秀" },
-      { time:"23:56", title:"🚁 無人機表演・跨年倒數", note:"廣安大橋為幕・數千架無人機倒數" },
-      { time:"00:00", title:"🎊 跨年煙火！HAPPY 2026！", note:"" },
-      { time:"00:30", title:"🚶 散場步行回", note:"步行至金蓮山站或水營站搭地鐵（不要在廣安站搭！）",
-        mapUrl: gmap("금련산역") }
+      { time:"00:00", title:"🎊 跨年倒數！HAPPY 2026！", note:"廣安大橋煙火・無人機秀" },
+      { time:"00:30", title:"🚶 散場回飯店（推薦方案）", note:"步行至民樂站（約 15 分）→ 地鐵 2 號線 → Centum City → 步行回飯店（全程約 25–30 分）・不用卡車陣！",
+        mapUrl: gmap("민락역") }
     ]
   },
   {
     n:7, date:"1/1", dow:"五",
-    title:"返程回家",
-    focus:"早餐・退房・大型計程車前往機場・JX901 回台",
+    title:"返程回台灣",
+    focus:"早餐・收行李・退房・大型計程車・金海機場・JX901 回台",
     hotel:"—", hotelAddr:null, hotelMapUrl:null,
     schedule:[
-      { time:"07:00", title:"🍳 早餐", note:"飯店早餐或便利商店" },
+      { time:"07:00", title:"🍳 早餐", note:"飯店早餐或附近便利商店" },
       { time:"08:00", title:"🧳 收行李", note:"行李秤確認重量・壓縮袋打包戰利品" },
       { time:"08:30", title:"🚪 退房", note:"" },
-      { time:"09:00", title:"🚐 大型計程車前往機場", note:"約 40–50 分",
+      { time:"09:00", title:"🚐 大型計程車前往金海機場", note:"約 40–50 分",
         mapUrl: gmap("김해국제공항") },
-      { time:"10:00", title:"✈️ 機場辦理登機・退稅", note:"預留足夠時間辦退稅",
+      { time:"10:00", title:"✈️ 機場辦理登機・退稅", note:"預留足夠時間辦退稅・行李托運",
         guide: "tax-refund" },
       { time:"12:30", title:"🛫 JX901 金海機場出發", note:"" },
       { time:"14:15", title:"🏠 抵達桃園機場", note:"平安回家！7天6夜跨年旅程圓滿結束 🎉" }
     ]
   }
-];
+]
 
 // ── GUIDE DATA (小提醒/攻略卡片內容) ──
 const GUIDES = {
+  "day1-weather": {
+    icon:"🌤", title:"Day 1 天氣備案", sub:"依天氣彈性調整", color:"#4158D0",
+    body:`<div style="margin-bottom:10px">
+        <div style="font-weight:700;color:#ffd060;margin-bottom:6px">☀️ 晴天・小雨</div>
+        <ul><li>廣安里晚餐後賞大橋夜景</li><li>21:00 無人機秀（若當天有演出）</li><li>回飯店休息</li></ul>
+      </div>
+      <div>
+        <div style="font-weight:700;color:#8899cc;margin-bottom:6px">🌧 大雨備案</div>
+        <ul><li>廣安里晚餐</li><li>Centum City 逛街</li><li>回飯店休息</li></ul>
+      </div>`
+  },
+  "day2-weather": {
+    icon:"🌤", title:"Day 2 天氣備案", sub:"海雲台雨天方案", color:"#4158D0",
+    body:`<div style="margin-bottom:10px">
+        <div style="font-weight:700;color:#ffd060;margin-bottom:6px">☀️ 晴天・小雨</div>
+        <ul><li>照原行程即可（青沙浦→Sky Capsule→X the SKY→Running Man）</li></ul>
+      </div>
+      <div>
+        <div style="font-weight:700;color:#8899cc;margin-bottom:6px">🌧 大雨備案</div>
+        <ul>
+          <li>SEA LIFE Busan Aquarium（水族館）</li>
+          <li>BUSAN X the SKY（VBP 適用）</li>
+          <li>海雲台市場</li>
+          <li>Q 版肖像畫</li>
+          <li>Running Man 體驗館</li>
+        </ul>
+      </div>`
+  },
+  "day3-weather": {
+    icon:"🌤", title:"Day 3 天氣備案", sub:"西釜山雨天方案", color:"#4158D0",
+    body:`<div style="margin-bottom:10px">
+        <div style="font-weight:700;color:#ffd060;margin-bottom:6px">☀️ 晴天・小雨</div>
+        <ul><li>照原行程即可</li></ul>
+      </div>
+      <div>
+        <div style="font-weight:700;color:#8899cc;margin-bottom:6px">🌧 大雨備案</div>
+        <ul>
+          <li>BIFF 地下街</li>
+          <li>國際市場（有頂棚）</li>
+          <li>樂天百貨光復店</li>
+          <li>南浦地下街</li>
+          <li>咖啡廳休息</li>
+        </ul>
+      </div>`
+  },
+  "day4-weather": {
+    icon:"🌤", title:"Day 4 天氣備案", sub:"Osiria 寒流大雨方案", color:"#e84040",
+    body:`<div style="margin-bottom:10px">
+        <div style="font-weight:700;color:#ffd060;margin-bottom:6px">☀️ 晴天</div>
+        <ul><li>照原行程：Luge → Outlet → Lotte Mall → 樂天世界</li></ul>
+      </div>
+      <div style="margin-bottom:10px">
+        <div style="font-weight:700;color:#aaaacc;margin-bottom:6px">🌦 小雨</div>
+        <ul><li>Skyline Luge（依現場天候）</li><li>Outlet → Lotte Mall → 樂天世界</li></ul>
+      </div>
+      <div style="margin-bottom:12px">
+        <div style="font-weight:700;color:#8899cc;margin-bottom:6px">🌧 大雨・寒流備案</div>
+        <ul>
+          <li>東釜山 Outlet</li><li>Lotte Mall</li>
+          <li>樂天世界（以室內設施為主）</li><li>咖啡廳</li>
+        </ul>
+      </div>
+      <div style="background:rgba(232,64,64,0.08);border-radius:10px;padding:12px 14px;border:0.5px solid rgba(232,64,64,0.25)">
+        <div style="font-weight:700;color:#ff8080;margin-bottom:6px">⭐ 備案新選擇：Vaunce Universe Busan</div>
+        <div style="font-size:12.5px;color:#d0c0c0;line-height:1.7">
+          2026 年新開的超大型室內運動樂園，下雨寒流完全不受影響！<br>
+          📍 38 Dongbusangwangwang-ro, Gijang-eup（就在 Osiria 附近）<br><br>
+          <b>設施亮點：</b><br>
+          🟠 約 1,500 坪大型室內空間<br>
+          🦘 專業彈跳床（Trampoline）<br>
+          🧗 室內攀岩<br>
+          🎢 Zip Coaster 室內高空滑索<br>
+          🏃 體能闖關・障礙設施<br><br>
+          <b>票價：</b>3 小時票約 ₩32,000／人（成人兒童同價，90cm 以上適用）
+        </div>
+      </div>`
+  },
+  "day5-weather": {
+    icon:"🌤", title:"Day 5 天氣備案", sub:"Eden Valley 雨天推薦順序", color:"#0891b2",
+    body:`<div style="margin-bottom:10px">
+        <div style="font-weight:700;color:#ffd060;margin-bottom:6px">☀️ 晴天・小雨</div>
+        <ul><li>依雪場公告決定是否照常出團</li></ul>
+      </div>
+      <div>
+        <div style="font-weight:700;color:#8899cc;margin-bottom:6px">🌧 大雨備案（推薦順序）</div>
+        <div style="margin-bottom:8px">
+          <div style="color:#ffd060;font-weight:700;font-size:12.5px">🥇 SEA LIFE Busan Aquarium ⭐⭐⭐⭐⭐</div>
+          <div style="font-size:12px;color:#aaaacc;margin-top:3px;line-height:1.6">海底隧道・企鵝・水獺・鯊魚・海龜・餵食秀</div>
+        </div>
+        <div style="margin-bottom:8px">
+          <div style="color:#a0b0ff;font-weight:700;font-size:12.5px">🥈 Museum 1 ⭐⭐⭐⭐⭐</div>
+          <div style="font-size:12px;color:#aaaacc;margin-top:3px;line-height:1.6">LED 沉浸式展覽・光影互動・超好拍照</div>
+        </div>
+        <div style="margin-bottom:8px">
+          <div style="color:#c090ff;font-weight:700;font-size:12.5px">🥉 Club D OASIS ⭐⭐⭐⭐⭐</div>
+          <div style="font-size:12px;color:#aaaacc;margin-top:3px;line-height:1.6">室內水樂園・溫泉・汗蒸幕・親子休息空間</div>
+        </div>
+        <div style="background:rgba(65,88,208,0.08);border-radius:10px;padding:10px 13px;border:0.5px solid rgba(65,88,208,0.2);font-size:12px;color:#9999bb;line-height:1.7;margin-top:8px">
+          💡 <b style="color:#a0b0ff">Champion 1250 X</b>（釜山室內樂園）就在你住的新世界百貨 Centum City 裡！旋轉鞦韆、充氣遊戲區、大型室內遊樂設施，若孩子還有體力可加碼！<br>
+          也可考慮 <b style="color:#a0b0ff">Busan National Science Museum</b>（科學互動・恐龍・機器人・太空展示）
+        </div>
+      </div>`
+  },
   "sky-capsule": {
     icon:"🚠", title:"Sky Capsule 搭乘攻略", sub:"青沙浦 → 尾浦・海景纜車", color:"#4158D0",
     body:`<p>連接青沙浦與尾浦的海景纜車，全程約 1.5 公里，可俯瞰整段海岸線。</p>
@@ -1330,7 +1445,7 @@ const GUIDES = {
         <li><b>必玩設施：</b>雲霄飛車、自由落體等刺激設施，也有適合親子的溫和遊樂設施</li>
         <li><b>夜間遊行：</b>晚上有燈光遊行表演，建議提前找好觀賞位置</li>
         <li><b>建議：</b>先規劃想玩的設施動線，避免來回走冤枉路</li>
-        <li><b>周邊：</b>outlet 及 Lotte Mall 就在附近，可安排購物時段銜接</li>
+        <li><b>周邊：</b>Outlet 及 Lotte Mall 就在附近，可安排購物時段銜接</li>
       </ul>`
   },
   "eden-valley": {
@@ -1341,7 +1456,7 @@ const GUIDES = {
         <li><b>雪道分級：</b>提供初、中、高級雪道，新手建議先上初級教學區</li>
         <li><b>穿著建議：</b>保暖層 + 防水外層 + 手套、雪鏡，室內可寄放隨身物品</li>
         <li><b>用餐：</b>雪場內設有簡易餐飲區，建議先用餐再上雪道</li>
-        <li><b>電話：</b>0553798000（Naver Map 搜尋店名或電話號碼皆可，中文名稱搜不到）</li>
+        <li><b>電話：</b>0553798000（Naver Map 搜尋店名或電話號碼皆可）</li>
       </ul>`
   },
   "centum-shopping": {
@@ -1349,57 +1464,46 @@ const GUIDES = {
     body:`<p>從 Haeundae Centum Hotel 步行約 5 分鐘即達，大部分店家都在同一區域，親子友善，也是下雨天備案首選。</p>
       <div style="font-weight:700;color:#f0eee8;margin:10px 0 4px">🏢 新世界百貨 Centum City Mall</div>
       <ul>
-        <li><b>① MUJI 無印良品</b>（9F）－日本必買品牌，生活用品、文具、收納、服飾、食品一應俱全・10:30–20:00・價格中等</li>
-        <li><b>② JAJU</b>（8F）－韓國版 MUJI，簡約質感生活選物，價格更親民・10:30–20:00・價格中等偏低</li>
-        <li><b>③ Olive Young</b>（B1／1F／2F）－韓國最大美妝保養連鎖，彩妝、面膜、保養品、限定組合超好買・10:00–22:00・價格中等</li>
-        <li><b>④ 新世界美食街</b>（9F）－各式韓食、中式、日式、咖啡廳選擇多，適合全家用餐・10:30–21:00・價格中等</li>
+        <li><b>① MUJI 無印良品</b>（9F）－日本必買品牌，生活用品、文具、收納、服飾・10:30–20:00</li>
+        <li><b>② JAJU</b>（8F）－韓國版 MUJI，簡約質感生活選物，價格更親民・10:30–20:00</li>
+        <li><b>③ Olive Young</b>（B1／1F／2F）－韓國最大美妝保養連鎖，彩妝、面膜、限定組合・10:00–22:00</li>
+        <li><b>④ 新世界美食街</b>（9F）－各式韓食、中式、日式、咖啡廳・10:30–21:00</li>
+        <li><b>🎡 Champion 1250 X</b>（百貨內）－室內遊樂園！旋轉鞦韆、充氣遊戲、大型設施，雨天備案首選！</li>
       </ul>
       <div style="font-weight:700;color:#f0eee8;margin:10px 0 4px">🚶 步行 5–10 分鐘內可到</div>
       <ul>
-        <li><b>⑤ DAISO 大創</b>－步行約 3 分・韓國大創商品更多元，文具、收納、廚房、旅行小物、分裝瓶必買・10:00–22:00・價格超便宜 ₩1,000 起</li>
-        <li><b>⑥ ARTBOX</b>－步行約 8 分（或計程車約 2 分）・文具、可愛雜貨、杯子、飾品、玩偶，生活小物超好逛・10:30–22:00・價格 ₩1,000–₩10,000</li>
-        <li><b>⑦ Homeplus</b>－步行約 7 分・大型超市，零食、泡麵、伴手禮、水果、生活用品一次買足・10:00–24:00・價格便宜</li>
+        <li><b>⑤ DAISO 大創</b>－步行約 3 分・韓國限定商品超多，₩1,000 起・10:00–22:00</li>
+        <li><b>⑥ ARTBOX</b>－步行約 8 分・文具、可愛雜貨、飾品・10:30–22:00</li>
+        <li><b>⑦ Homeplus</b>－步行約 7 分・大型超市，零食、伴手禮一次買足・10:00–24:00</li>
+        <li><b>⑧ 地下超市</b>－新世界百貨地下・日式食品・零食・熟食</li>
       </ul>
-      <div style="font-weight:700;color:#f0eee8;margin:10px 0 4px">⭐ 推薦指數</div>
+      <div style="font-weight:700;color:#f0eee8;margin:10px 0 4px">🕐 Day 6 建議動線</div>
       <ul>
-        <li><b>必逛 ★★★★★：</b>MUJI／JAJU／Olive Young（來釜山一定要逛！）、DAISO（韓國限定商品超多！）</li>
-        <li><b>推薦 ★★★★☆：</b>ARTBOX（送禮自用兩相宜）、Homeplus（伴手禮補貨好地方）</li>
-        <li><b>推薦 ★★★★★：</b>新世界美食街（選擇多，方便又好吃）</li>
-      </ul>
-      <div style="font-weight:700;color:#f0eee8;margin:10px 0 4px">🕐 建議行程（Day 6 購物日安排）</div>
-      <ul>
-        <li>09:30 飯店出發 → 10:00 新世界百貨開始逛街</li>
+        <li>09:35 新世界百貨開始逛街</li>
         <li>10:00–11:30 MUJI → JAJU</li>
         <li>11:30–12:30 午餐・美食街</li>
-        <li>12:30–14:00 Olive Young → DAISO</li>
-        <li>14:00–15:30 ARTBOX</li>
-        <li>15:30–16:00 咖啡休息</li>
-        <li>17:00 前往廣安里跨年煙火</li>
-      </ul>
-      <div style="font-weight:700;color:#f0eee8;margin:10px 0 4px">🚕 交通方式</div>
-      <ul>
-        <li><b>步行：</b>飯店出發約 5 分鐘內到新世界百貨</li>
-        <li><b>地鐵：</b>Centum City 站（2 號線）直達</li>
-        <li><b>計程車：</b>商圈內短距離 ₩3,000–₩5,000</li>
-      </ul>
-      <div style="font-weight:700;color:#f0eee8;margin:10px 0 4px">💡 小提醒</div>
-      <ul>
-        <li>新世界百貨營業時間依公告為準，部分店家可能因天氣或活動調整營業時間</li>
-        <li>大量購買後建議回飯店先放東西再出發</li>
-        <li>有些店可退稅（滿 ₩30,000 以上）</li>
-        <li>附近便利商店：GS25、CU、7-ELEVEN（步行 2–5 分鐘內）</li>
-        <li>洗手間：各商場、百貨內皆有（參考商場樓層指示）</li>
+        <li>12:30–13:30 Olive Young → DAISO → ARTBOX → 地下超市</li>
+        <li>13:30 回飯店休息・換保暖衣物</li>
+        <li>15:30 出發民樂水邊 → 廣安里跨年</li>
       </ul>`
   },
   "new-year-busan": {
-    icon:"🎆", title:"廣安里跨年攻略", sub:"卡位・煙火觀賞重點", color:"#C850C0",
-    body:`<p>廣安里海灘是釜山最熱門的跨年煙火觀賞地點之一，以廣安大橋為背景。</p>
+    icon:"🎆", title:"廣安里跨年攻略", sub:"卡位・煙火・散場路線", color:"#C850C0",
+    body:`<p>廣安里海灘是釜山最熱門的跨年煙火觀賞地點，以廣安大橋為背景。</p>
       <ul>
         <li><b>最佳觀賞位置：</b>海灘中間偏左至民樂港防波堤之間，可完整拍到大橋與煙火</li>
-        <li><b>卡位時間：</b>建議晚間 8 點前抵達卡位，跨年夜人潮眾多</li>
-        <li><b>禦寒準備：</b>海邊風大且久站等待，建議攜帶暖暖包、保溫瓶熱飲</li>
-        <li><b>交通：</b>結束後計程車與地鐵會非常擁擠，建議提前規劃離場路線或預留較長等待時間</li>
-      </ul>`
+        <li><b>卡位時間：</b>建議晚間 8 點前抵達，跨年夜人潮眾多</li>
+        <li><b>禦寒準備：</b>海邊風大且久站，攜帶暖暖包、保溫瓶熱飲</li>
+        <li><b>活動時間：</b>00:00 跨年倒數與煙火</li>
+      </ul>
+      <div style="font-weight:700;color:#f0eee8;margin:10px 0 6px">🚶 散場回飯店（推薦方案 ⭐⭐⭐⭐⭐）</div>
+      <div style="background:rgba(200,80,192,0.08);border-radius:10px;padding:10px 13px;border:0.5px solid rgba(200,80,192,0.2);font-size:12.5px;color:#d0b0d0;line-height:1.8">
+        因為跨年散場後計程車通常非常難叫，也容易塞車。<br>
+        👉 步行約 15 分鐘 → <b>民樂站（Millak）</b><br>
+        👉 地鐵 2 號線 → <b>Centum City</b><br>
+        👉 步行約 5 分鐘 → 回飯店<br>
+        全程約 25–30 分鐘，不用卡在車陣裡！
+      </div>`
   },
   "tax-refund": {
     icon:"💰", title:"韓國退稅標準 & 步驟", sub:"現場・市區・機場港口 三種方式", color:"#0891b2",
@@ -1423,19 +1527,17 @@ const GUIDES = {
       <div style="font-weight:700;color:#ffd060;margin:10px 0 4px">③ 機場、港口退稅</div>
       <ul>
         <li>出境當天，帶著所有退稅單據、護照與未拆封的商品，前往機場處理</li>
-        <li>當天搭船離開在碼頭沒有機台，需用手機連上現場 WiFi，掃描對應退稅公司的 QRcode 辦理退稅即可成功，不用特別去請海關查驗</li>
-        <li>流程：準備退稅單據、護照與未拆封商品 → 掃描 QRcode 辦理退稅 → 退稅成功</li>
+        <li>掃描對應退稅公司的 QRcode 辦理退稅即可成功</li>
         <li style="color:#e090e0">⚠️ 若商品超過 ₩75,000，且系統提示需查驗，請至出關後左手邊的櫃檯查驗</li>
       </ul>
       <div style="background:rgba(255,215,96,0.08);border-radius:10px;padding:10px 13px;border:0.5px solid rgba(255,215,96,0.2);font-size:12.5px;color:#d0c090;line-height:1.7;margin-top:8px">
-        💡 釜山很多藥局也有退稅機台，但機台會對應不同家退稅的行號，不一定每台都適用，以橘色的 Global Tax Free 為大宗。其他要去機場或港口才可以辦。
+        💡 釜山很多藥局也有退稅機台，但機台對應不同家退稅行號，以橘色的 Global Tax Free 為大宗。其他要去機場或港口才可以辦。
       </div>
       <div style="margin-top:10px">
-        <b>建議：</b>預留至少 40–60 分鐘處理機場退稅流程，避免趕不上登機；退稅金額可選現金或退回原信用卡，現金領取處通常排隊人潮較多。
+        <b>建議：</b>預留至少 40–60 分鐘處理機場退稅流程，退稅金額可選現金或退回信用卡。
       </div>`
   }
-};
-
+}
 function guideData(key) {
   return GUIDES[key] || null;
 }
