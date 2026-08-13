@@ -1122,7 +1122,6 @@ function getTodayDay() {
   if (diff >= 1 && diff <= 7) return diff;
   return null;
 }
-const todayN = getTodayDay();
 
 // ── DAYS DATA ──
 const days = [
@@ -1554,12 +1553,34 @@ let activeTab = "prep";
 let activePrepTab = "summary";
 
 // ── TAB SWITCHING ──
+// ── STATE PERSISTENCE (sessionStorage) ──
+const STATE_KEY = "busan_trip_state";
+
+function saveState() {
+  try {
+    sessionStorage.setItem(STATE_KEY, JSON.stringify({
+      tab: activeTab,
+      day: activeDay,
+      prepTab: activePrepTab
+    }));
+  } catch(e) {}
+}
+
+function restoreState() {
+  try {
+    const raw = sessionStorage.getItem(STATE_KEY);
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch(e) { return null; }
+}
+
 function setTab(t) {
   activeTab = t;
   document.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b.dataset.tab === t));
   viewDay.classList.toggle("hidden", t !== "day");
   viewPrep.classList.toggle("hidden", t !== "prep");
   dayScrollerEl.style.display = t === "day" ? "" : "none";
+  saveState();
 }
 document.querySelectorAll(".tab-btn").forEach(b =>
   b.addEventListener("click", () => {
@@ -1580,6 +1601,7 @@ function switchPrepTab(tab, btn) {
   if (el) { el.classList.add("active"); el.classList.remove("hidden"); el.style.display = "block"; }
   if (btn) btn.classList.add("active");
   window.scrollTo({top:0, behavior:"smooth"});
+  saveState();
 }
 
 // ── SCROLLER ──
@@ -1598,6 +1620,7 @@ function renderScroller() {
       setTab("day");
       renderScroller();
       renderDay();
+      saveState();
       const act = scroller.querySelector(".day-pill.active");
       if (act) act.scrollIntoView({behavior:"smooth",inline:"center",block:"nearest"});
       window.scrollTo({top:0, behavior:"smooth"});
@@ -1801,12 +1824,25 @@ window.addEventListener("scroll", () => fab.classList.toggle("show", window.scro
 fab.addEventListener("click", () => window.scrollTo({top:0,behavior:"smooth"}));
 
 // ── INIT ──
-// Always open on prep/overview tab
-// (During the trip, user can tap 📅 to see today's schedule)
-if (todayN) {
+const todayN = getTodayDay();
+
+// Try to restore last viewed state
+const savedState = restoreState();
+
+if (savedState) {
+  // Restore exactly where user was
+  activeDay    = savedState.day     || 1;
+  activeTab    = savedState.tab     || "prep";
+  activePrepTab = savedState.prepTab || "summary";
+} else if (todayN) {
+  // First visit during trip: go to today
   activeDay = todayN;
+  activeTab = "day";
+} else {
+  // Before / after trip: show prep overview
+  activeTab = "prep";
+  activePrepTab = "summary";
 }
-activeTab = "prep";
 
 renderScroller();
 renderDay();
@@ -1814,22 +1850,34 @@ renderOverviewList();
 initCl();
 renderBudget();
 
-// Ensure all prep panels hidden first, then show summary
+// Apply the restored / default tab
+setTab(activeTab);
+
+// Apply the restored / default prep sub-tab
 document.querySelectorAll(".prep-panel").forEach(p => {
   p.classList.remove("active");
   p.classList.add("hidden");
   p.style.display = "none";
 });
-const firstPanel = document.getElementById("pp-summary");
-if (firstPanel) { firstPanel.classList.add("active"); firstPanel.classList.remove("hidden"); firstPanel.style.display = "block"; }
-document.querySelectorAll(".prep-sub-btn").forEach((b, i) => b.classList.toggle("active", i === 0));
+document.querySelectorAll(".prep-sub-btn").forEach(b => b.classList.remove("active"));
+const restoredPanel = document.getElementById("pp-" + activePrepTab);
+if (restoredPanel) {
+  restoredPanel.classList.add("active");
+  restoredPanel.classList.remove("hidden");
+  restoredPanel.style.display = "block";
+}
+document.querySelectorAll(".prep-sub-btn").forEach(b => {
+  if (b.getAttribute("onclick") && b.getAttribute("onclick").includes("'" + activePrepTab + "'")) {
+    b.classList.add("active");
+  }
+});
 
-setTab("prep");
-
+// Scroll active day pill into view
 setTimeout(() => {
   const act = scroller.querySelector(".day-pill.active, .day-pill.today");
-  if (act) act.scrollIntoView({behavior:"smooth",inline:"center",block:"nearest"});
+  if (act) act.scrollIntoView({behavior:"smooth", inline:"center", block:"nearest"});
 }, 100);
+
 </script>
 </body>
 </html>
